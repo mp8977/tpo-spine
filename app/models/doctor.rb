@@ -19,4 +19,5 @@ class Doctor < ActiveRecord::Base
   has_and_belongs_to_many :patients
   has_and_belongs_to_many :nurses
   belongs_to :hospital
+  has_many :appointments
 end

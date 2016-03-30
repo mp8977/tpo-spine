@@ -7,4 +7,5 @@ class CheckUp < ActiveRecord::Base
   has_and_belongs_to_many :diets
   has_and_belongs_to_many :medicine
   has_and_belongs_to_many :illnesses
+  has_one :appointment
 end

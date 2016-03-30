@@ -17,4 +17,5 @@ class Patient < ActiveRecord::Base
   has_many :contact_people
   belongs_to :address
   has_many :measurement_homes
+  has_many :appointments
 end

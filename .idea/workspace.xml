@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="1d6b7702-97bb-44ba-9b8a-926a9053972a" name="Default" comment="dodajanje termina v bazo">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/check_up.rb" afterPath="$PROJECT_DIR$/app/models/check_up.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/doctor.rb" afterPath="$PROJECT_DIR$/app/models/doctor.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/patient.rb" afterPath="$PROJECT_DIR$/app/models/patient.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
     </list>
     <ignored path="TPO_spine.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -136,6 +132,7 @@
   <component name="Git.Settings">
     <option name="PREVIOUS_COMMIT_AUTHORS">
       <list>
+        <option value="dl4184 &lt;dl4184@student.uni-lj.si&gt;" />
         <option value="dl4184" />
       </list>
     </option>
@@ -509,6 +506,13 @@
       <option name="number" value="Default" />
       <updated>1459235228324</updated>
     </task>
+    <task id="LOCAL-00001" summary="dodajanje termina v bazo">
+      <created>1459365285835</created>
+      <option name="number" value="00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1459365285835</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">

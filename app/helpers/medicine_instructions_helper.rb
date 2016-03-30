@@ -1,0 +1,2 @@
+module MedicineInstructionsHelper
+end

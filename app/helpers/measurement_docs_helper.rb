@@ -1,0 +1,2 @@
+module MeasurementDocsHelper
+end

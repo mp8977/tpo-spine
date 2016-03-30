@@ -1,0 +1,2 @@
+module MeasurementHomesHelper
+end

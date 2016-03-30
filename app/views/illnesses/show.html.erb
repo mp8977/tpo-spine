@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Illnessnumber:</strong>
+  <%= @illness.illnessNumber %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @illness.name %>
+</p>
+
+<p>
+  <strong>Isallergy:</strong>
+  <%= @illness.isAllergy %>
+</p>
+
+<%= link_to 'Edit', edit_illness_path(@illness) %> |
+<%= link_to 'Back', illnesses_path %>

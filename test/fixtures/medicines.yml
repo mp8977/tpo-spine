@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  medicineNumber: MyString
+  name: MyString
+  inUse: false
+
+two:
+  medicineNumber: MyString
+  name: MyString
+  inUse: false

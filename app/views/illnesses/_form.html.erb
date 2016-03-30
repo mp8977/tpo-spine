@@ -1,0 +1,29 @@
+<%= form_for(@illness) do |f| %>
+  <% if @illness.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@illness.errors.count, "error") %> prohibited this illness from being saved:</h2>
+
+      <ul>
+      <% @illness.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :illnessNumber %><br>
+    <%= f.text_field :illnessNumber %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :isAllergy %><br>
+    <%= f.check_box :isAllergy %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

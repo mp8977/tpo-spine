@@ -1,0 +1,10 @@
+class CreateMeasurementHomes < ActiveRecord::Migration
+  def change
+    create_table :measurement_homes do |t|
+      t.references :patient, foreign_key: true
+      t.references :part_measurement, foreign_key: true
+
+      t.timestamps null: false
+    end
+  end
+end

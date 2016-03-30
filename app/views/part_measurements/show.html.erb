@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @part_measurement.name %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @part_measurement.unit %>
+</p>
+
+<p>
+  <strong>Value:</strong>
+  <%= @part_measurement.value %>
+</p>
+
+<%= link_to 'Edit', edit_part_measurement_path(@part_measurement) %> |
+<%= link_to 'Back', part_measurements_path %>

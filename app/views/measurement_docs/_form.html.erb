@@ -1,0 +1,17 @@
+<%= form_for(@measurement_doc) do |f| %>
+  <% if @measurement_doc.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@measurement_doc.errors.count, "error") %> prohibited this measurement_doc from being saved:</h2>
+
+      <ul>
+      <% @measurement_doc.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

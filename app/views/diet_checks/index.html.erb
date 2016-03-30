@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Diet Checks</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @diet_checks.each do |diet_check| %>
+      <tr>
+        <td><%= diet_check.name %></td>
+        <td><%= link_to 'Show', diet_check %></td>
+        <td><%= link_to 'Edit', edit_diet_check_path(diet_check) %></td>
+        <td><%= link_to 'Destroy', diet_check, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Diet check', new_diet_check_path %>

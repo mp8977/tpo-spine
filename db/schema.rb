@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329000025) do
+ActiveRecord::Schema.define(version: 20160330190028) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -29,6 +29,19 @@ ActiveRecord::Schema.define(version: 20160329000025) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
   end
+
+  create_table "appointments", force: :cascade do |t|
+    t.datetime "date"
+    t.integer  "check_up_id", limit: 4
+    t.integer  "doctor_id",   limit: 4
+    t.integer  "patient_id",  limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "appointments", ["check_up_id"], name: "fk_rails_3d1ece398e", using: :btree
+  add_index "appointments", ["doctor_id"], name: "fk_rails_8db8e1e8a5", using: :btree
+  add_index "appointments", ["patient_id"], name: "fk_rails_c63da04ab4", using: :btree
 
   create_table "check_ups", force: :cascade do |t|
     t.date     "date"
@@ -265,6 +278,9 @@ ActiveRecord::Schema.define(version: 20160329000025) do
   end
 
   add_foreign_key "addresses", "posts"
+  add_foreign_key "appointments", "check_ups"
+  add_foreign_key "appointments", "doctors"
+  add_foreign_key "appointments", "patients"
   add_foreign_key "check_ups", "doctors"
   add_foreign_key "check_ups", "patients"
   add_foreign_key "contact_people", "addresses"

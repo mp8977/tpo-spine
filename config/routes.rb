@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount Dashing::Engine, at: Dashing.config.engine_path
   resources :appointments
   resources :illnesses
   resources :doctor_has_nurses

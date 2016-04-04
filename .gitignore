@@ -10,7 +10,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 !/log/.keep
-/config/database.yml
 /tmp
-.idea/workspace.xml
 
+config/database.yml
+.idea/TPO_spine.iml
+.idea/workspace.xml

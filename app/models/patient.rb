@@ -14,7 +14,7 @@ class Patient < ActiveRecord::Base
   has_many :doctors, through: :check_ups
   has_and_belongs_to_many :doctors
   belongs_to :user
-  has_many :contact_people
+  has_one :contact_person
   belongs_to :address
   has_many :measurement_homes
   has_many :appointments

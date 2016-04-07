@@ -1,9 +1,16 @@
-current_valuation = 0
+=begin
 
-Dashing.scheduler.every '2s' do
-  last_valuation = current_valuation
-  current_valuation = rand(100)
-
-  Dashing.send_event('valuation', { current: current_valuation, last: last_valuation })
-  Dashing.send_event('synergy',   { value: rand(100) })
+require 'json'
+patId=1
+patient=Patient.find(patId)
+patientInfo = [{label: patient.firstName},
+               {label: patient.lastName},
+               {label: patient.cardNumber},
+               {label: patient.phone},
+               {label: patient.birthDate}]
+patientInfo = patientInfo.to_json
+Dashing.send_event('patient',   { items: patientInfo })
+Dashing.scheduler.every '10s' do
+  puts(patientInfo)
 end
+=end

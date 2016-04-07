@@ -48,3 +48,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 #dashing rails
 gem 'dashing-rails'
 gem 'puma'
+
+gem 'nokogiri'
+gem 'htmlentities'

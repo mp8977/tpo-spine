@@ -1,14 +1,23 @@
 <% content_for :title do %>
-  My super sweet dashboard
+  TPO-spine
 <% end %>
+
 
 <div class="gridster">
   <ul>
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="welcome" data-view="Text" data-title="Hello" data-text="This is your shiny new dashboard." data-moreinfo="Protip: You can drag the widgets around!"></div>
-    </li>
-
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="pat" data-view="Patient"  data-title="Patient" ></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="illness" data-view="Illness"  data-title="Illnesses" ></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="allergy">
+      <div data-id="allergy" data-view="Allergy"  data-title="Allergies" ></div>
+    </li>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="diet" data-view="Diet"  data-title="Diet" ></div>
+    </li>
+    <!--<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="synergy" data-view="Meter" data-title="Synergy" data-min="0" data-max="100"></div>
     </li>
 
@@ -22,7 +31,7 @@
 
     <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
       <div data-id="convergence" data-view="Graph" data-title="Convergence" style="background-color:#ff9618"></div>
-    </li>
+    </li>-->
   </ul>
-  <center><div style="font-size: 12px">Try this: curl -X PUT 'http://<%= request.host %>:<%= request.port %>/dashing/widgets/welcome' -d "widget[text]=Dashing is awesome"</div></center>
 </div>
+

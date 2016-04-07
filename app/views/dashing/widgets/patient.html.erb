@@ -1,0 +1,19 @@
+<div class="container">
+  <div data-bind="title" class="title"></div>
+  <br>
+  <% patId=1
+     patient=Patient.find(patId)
+     address=Address.find(patient.address_id)
+     post=Post.find(address.post_id)
+  %>
+
+  <div class="info">
+    <%= patient.firstName+" "+patient.lastName %><br>
+    <%= address.streetName+" "+address.streetNumber %><br>
+    <%= post.postNumber+" "+post.postName %><br>
+    <%= patient.phone %><br>
+    <%= patient.birthDate %><br>
+    <%= patient.cardNumber %><br>
+  </div>
+
+</div>

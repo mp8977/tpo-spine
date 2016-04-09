@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
             :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "E-mail nima veljavne oblike."}
 
 
-
   has_many :patients
+  accepts_nested_attributes_for :patients, allow_destroy: true
+
 end

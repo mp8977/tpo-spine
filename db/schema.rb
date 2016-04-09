@@ -126,7 +126,7 @@ ActiveRecord::Schema.define(version: 20160330190028) do
 
   create_table "doctors", force: :cascade do |t|
     t.string   "doctorNumber", limit: 255
-    t.string   "type",         limit: 255
+    t.string "doctorType", limit: 255
     t.string   "email",        limit: 255
     t.string   "password",     limit: 255
     t.string   "lastName",     limit: 255

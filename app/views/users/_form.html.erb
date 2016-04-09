@@ -1,25 +1,64 @@
-<%= form_for(@user) do |f| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+<%= form_for(@user) do |u| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
-      <ul>
-      <% @user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <%= u.fields_for :patients do |p| %>
+        <table align="center">
+          <tr>
+            <td align="right">*Email:</td>
+            <td align="left">
+              <%= u.text_field :email, :required => true, :type => 'email', :pattern => '([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})' %>
+            </td>
+          </tr>
+          <tr>
+            <td align="right">*Geslo:</td>
+            <td align="left">
+              <%= u.text_field :password, :required => true, :type => 'password', :pattern => '(?=.*[a-zA-Z])(?=.*[0-9]).{6,40}' %>
+            </td>
+          </tr>
+
+          <!-- manjkajo preverjanje errorjev mogoce sploh ni potrebno tukaj-->
+
+
+          <tr>
+            <td align="right">Sifra pacienta:</td>
+            <td align="left"><%= p.text_field :cardNumber %></td>
+          </tr>
+          <tr>
+            <td align="right">Priimek:</td>
+            <td align="left"><%= p.text_field :lastName %></td>
+          </tr>
+          <tr>
+            <td align="right">Ime:</td>
+            <td align="left"><%= p.text_field :firstName %></td>
+          </tr>
+          <tr>
+            <td align="right">Rojstni datum:</td>
+            <td align="left"><%= p.date_select :birthDate, include_blank: true %></td>
+          </tr>
+          <tr>
+            <td align="right">Spol</td>
+            <td align="left"><%= p.text_field :sex %></td>
+          </tr>
+          <tr>
+            <td align="right">Telefon:</td>
+            <td align="left"><%= p.text_field :phone %></td>
+          </tr>
+        </table>
+
+    <% end %>
+
+    <div class="actions">
+      <%= u.submit class: "btn btn-success", value: "Poslji" %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

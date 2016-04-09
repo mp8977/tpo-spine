@@ -28,11 +28,10 @@ class DoctorsController < ApplicationController
 
     respond_to do |format|
       if @doctor.save
-        format.html { redirect_to @doctor, notice: 'Doctor was successfully created.' }
-        format.json { render :show, status: :created, location: @doctor }
+        format.html { redirect_to doctors_path, notice: 'Doctor was successfully created.' }
       else
         format.html { render :new }
-        format.json { render json: @doctor.errors, status: :unprocessable_entity }
+        #format.json { render json: @doctor.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,7 +52,7 @@ class DoctorsController < ApplicationController
 
   # DELETE /doctors/1
   # DELETE /doctors/1.json
-  def destroy
+  def destroy # ne brises ampak samo oznacis, da je bil zbrisan
     @doctor.destroy
     respond_to do |format|
       format.html { redirect_to doctors_url, notice: 'Doctor was successfully destroyed.' }
@@ -69,6 +68,6 @@ class DoctorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def doctor_params
-      params.require(:doctor).permit(:doctorNumber, :type, :email, :password, :lastName, :firstName, :phone, :limitPatient)
+      params.require(:doctor).permit(:doctorNumber, :doctorType, :email, :password, :lastName, :firstName, :phone, :limitPatient)
     end
 end

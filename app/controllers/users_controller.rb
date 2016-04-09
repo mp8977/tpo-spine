@@ -15,16 +15,20 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    @user.patients.build # vec kot jih imas, vec pacientov se kreira (dodaj nov profil pacienta v formi?)
+
   end
 
   # GET /users/1/edit
   def edit
+    @user = User.find(user_id_param[:id])
+    #@patient = @user.patients.first
   end
 
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.new(user_patient_params)
 
     respond_to do |format|
       if @user.save
@@ -41,7 +45,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
-      if @user.update(user_params)
+      if @user.update(user_patient_params)
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
@@ -62,13 +66,31 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+  # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:email, :password)
+  # Never trust parameters from the scary internet, only allow the white list through.
+  #def user_params
+  # params.require(:user).permit(:email, :password)
+  #end
+
+  def user_patient_params
+    params.require(:user).permit(:id, :email, :password, patients_attributes: [:cardNumber, :lastName,
+                                                                               :firstName, :birthDate, :sex,
+                                                                               :phone, :id])
+
+
+    #preimenuj tag za patient attributes
+    #parameters[:patients_attributes] = parameters[:patient]
+    #parameters.delete(:patient)
+    #puts 'novi parametri.....'
+    #puts parameters
+    #ps = {:p => parameters}
+  end
+
+  def user_id_param
+    params.permit(:id)
     end
 end

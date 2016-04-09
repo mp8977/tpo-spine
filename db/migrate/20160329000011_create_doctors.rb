@@ -2,7 +2,7 @@ class CreateDoctors < ActiveRecord::Migration
   def change
     create_table :doctors do |t|
       t.string :doctorNumber
-      t.string :type
+      t.string :doctorType
       t.string :email
       t.string :password
       t.string :lastName

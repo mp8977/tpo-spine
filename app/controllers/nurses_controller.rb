@@ -63,7 +63,7 @@ class NursesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_nurse
+  def set_nurse # ce nebi bilo tega, bi najbrz mogral dodat :id v nurse_params
       @nurse = Nurse.find(params[:id])
     end
 

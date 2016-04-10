@@ -15,8 +15,9 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
-    @user.patients.build # vec kot jih imas, vec pacientov se kreira (dodaj nov profil pacienta v formi?)
-
+    patient1 = @user.patients.build # vec kot jih imas, vec pacientov se kreira (dodaj nov profil pacienta v formi?)
+    patient1.build_contact_person # one to one relationship -> funkcija ima drugo ime !
+    @address = Address.new # da lahko v view sploh prikazem field-e
   end
 
   # GET /users/1/edit
@@ -29,11 +30,15 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     @user = User.new(user_patient_params)
+    puts "paramss"
+    puts user_patient_params
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @user }
+        session[:user_id] = @user.id
+        # TODO redirecti na form za dodajanje naslova in omogoci skip probi samo render pa pol od tam klicat create
+        format.html { redirect_to new_address_path, notice: 'User was successfully created.' }
+        #format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -77,9 +82,10 @@ class UsersController < ApplicationController
   #end
 
   def user_patient_params
-    params.require(:user).permit(:id, :email, :password, patients_attributes: [:cardNumber, :lastName,
-                                                                               :firstName, :birthDate, :sex,
-                                                                               :phone, :id])
+    params.require(:user).permit(:id, :email, :password,
+                                 patients_attributes: [:cardNumber, :lastName, :firstName, :birthDate, :sex,
+                                                       :phone, :id, contact_person_attributes:
+                                                           [:lastName, :firstName, :phone, :relationship]])
 
 
     #preimenuj tag za patient attributes

@@ -19,4 +19,6 @@ class Patient < ActiveRecord::Base
   belongs_to :address
   has_many :measurement_homes
   has_many :appointments
+
+  accepts_nested_attributes_for :contact_person
 end

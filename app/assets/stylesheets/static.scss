@@ -1,0 +1,25 @@
+// Place all the styles related to the static controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+#userCases {
+  top: 30%;
+  bottom: 30%;
+  left: 30%;
+  right: 30%;
+  margin-top: -9em; /*set to a negative number 1/2 of your height*/
+  margin-left: -15em; /*set to a negative number 1/2 of your width*/
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+  position: fixed;
+}
+
+#userOptionButton {
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+  border: 1px solid #ccc;
+  background-color: #f3f3f3;
+  position: fixed;
+}
+

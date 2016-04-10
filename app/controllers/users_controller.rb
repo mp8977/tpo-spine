@@ -35,8 +35,10 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        session[:user_id] = @user.id
-        # TODO redirecti na form za dodajanje naslova in omogoci skip probi samo render pa pol od tam klicat create
+        #puts 'user patients'
+        #puts @user.patients
+        session[:patient_id] = @user.patients.first.id
+        #session[:]
         format.html { redirect_to new_address_path, notice: 'User was successfully created.' }
         #format.json { render :show, status: :created, location: @user }
       else

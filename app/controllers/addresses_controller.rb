@@ -16,7 +16,7 @@ class AddressesController < ApplicationController
   def new
     @address = Address.new
     puts "evooooooo meeeeeeeeeeeeeeeee -------------------------"
-    puts session[:user_id]
+    puts session[:patient_id]
   end
 
   # GET /addresses/1/edit
@@ -28,14 +28,14 @@ class AddressesController < ApplicationController
   def create
     @address = Address.new(address_params)
     puts 'v creatu------------'
-    puts session[:user_id]
+    puts session[:patient_id]
 
     # TODO poglej za first_or_create
 
     respond_to do |format|
       if @address.save
         # shrani userju foreign key do tega naslova
-        current_patient = Patient.find(session[:user_id])
+        current_patient = Patient.find(session[:patient_id])
         current_patient.address = @address
         current_patient.save
         format.html { redirect_to @address, notice: 'Address was successfully created.' }

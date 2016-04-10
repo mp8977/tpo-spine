@@ -1,21 +1,10 @@
-<%  patId=1
-    checkUp=CheckUp.where("patient_id = ?",patId).last
-    dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
-    dietIds=[];
-    dietChecks.each do |dietCheck|
-        dietIds.push(dietCheck.diet_id)
-    end
-    dietNames=[]
-    for el in dietIds
-        dietNames.push(Diet.find(el).name)
-    end
-%>
 <div class="container">
     <div data-bind="title" class="title"></div>
     <br>
-
-    <%for i in 0.. dietNames.count%>
-        <%= dietNames[i]%><br>
-    <% end%>
-
+    <div id="info-diet"></div>
 </div>
+
+<script>
+  var diets=$("#diet").data("info");
+  $("#info-diet").append(diets);
+</script>

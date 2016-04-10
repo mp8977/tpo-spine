@@ -10,7 +10,7 @@ patientInfo = [{label: patient.firstName},
                {label: patient.birthDate}]
 patientInfo = patientInfo.to_json
 Dashing.send_event('patient',   { items: patientInfo })
-Dashing.scheduler.every '10s' do
-  puts(patientInfo)
+Dashing.scheduler.every '1d' do
+
 end
 =end

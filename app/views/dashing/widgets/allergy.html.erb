@@ -1,28 +1,10 @@
-<%  patId=1
-    checkUp=CheckUp.where("patient_id = ?",patId).last
-    illnessChecks=IllnessCheck.where("check_up_id = ?",checkUp.id)
-    illnessIds=[];
-    illnessChecks.each do |illnessCheck|
-      illnessIds.push(illnessCheck.illness_id)
-    end
-    illnessNames=[]
-    illnessIds.each do |el|
-      illnessNames.push(Illness.where("id=? and isAllergy=?",el,true).limit(1).name)
-    end
-%>
-<script>
-  var size=<%= illnessNames.count()%>;
-  if(size==0)
-    $('#allergy').hide();
-</script>
 <div class="containerIll">
     <div data-bind="title" class="title"></div>
     <br>
-    <div class="info">
-      test
-      <% illnessNames.each do |name|%>
-        <%= name%><br>
-     <%end%>
-    </div>
+    <div id="info-allergy"></div>
 </div>
 
+<script>
+  var allergies=$("#allergy").data("info");
+  $("#info-allergy").append(allergies);
+</script>

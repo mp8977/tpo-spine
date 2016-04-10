@@ -1,37 +1,68 @@
+
 <% content_for :title do %>
   TPO-spine
 <% end %>
 
+<%  require 'json'
+    patId=1
+    checkUp=CheckUp.where("patient_id = ?",patId).last
+    dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
+    dietIds=[];
+    dietChecks.each do |dietCheck|
+      dietIds.push(dietCheck.diet_id)
+    end
+    dietNames=[]
+
+    for el in dietIds
+      dietNames.push(Diet.find(el).name)
+    end
+    dietNames=dietNames.take(5)
+    dietN=dietNames.join(tag(:br))
+
+    illnessChecks=IllnessCheck.where("check_up_id = ?",checkUp.id)
+    illnessIds=[];
+    illnessChecks.each do |illnessCheck|
+      illnessIds.push(illnessCheck.illness_id)
+    end
+    allergyNames=[]
+    illnessNames=[]
+    illnessIds.each do |el|
+      diagnose=Illness.find(el)
+      if diagnose.isAllergy
+        allergyNames.push(diagnose.name)
+      else
+        illnessNames.push(diagnose.name)
+      end
+    end
+    allergyNames=allergyNames.take(5)
+    illnessNames=illnessNames.take(5)
+    allergyN=allergyNames.join(tag(:br))
+    illnessN=illnessNames.join(tag(:br))
+
+%>
 
 <div class="gridster">
+
   <ul>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="pat" data-view="Patient"  data-title="Patient" ></div>
+      <div data-id="pat" data-view="Patient"  data-title="Pacient" ></div>
     </li>
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="illness" data-view="Illness"  data-title="Illnesses" ></div>
-    </li>
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1" id="allergy">
-      <div data-id="allergy" data-view="Allergy"  data-title="Allergies" ></div>
-    </li>
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="diet" data-view="Diet"  data-title="Diet" ></div>
-    </li>
-    <!--<li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="synergy" data-view="Meter" data-title="Synergy" data-min="0" data-max="100"></div>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="2">
-      <div data-id="buzzwords" data-view="List" data-unordered="true" data-title="Buzzwords" data-moreinfo="# of times said around the office"></div>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="valuation" data-view="Number" data-title="Current Valuation" data-moreinfo="In billions" data-prefix="$"></div>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="convergence" data-view="Graph" data-title="Convergence" style="background-color:#ff9618"></div>
-    </li>-->
+    <%if illnessNames.count>0%>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="illness" data-view="Illness"  data-title="Bolezni" data-info="<%= illnessN %>"></div>
+      </li>
+    <% end %>
+    <%if allergyNames.count>0%>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="allergy"  data-view="Allergy"  data-title="Alergije" data-info="<%= allergyN %>"></div>
+      </li>
+    <% end %>
+    <%if dietNames.count>0%>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
+      </li>
+    <%end%>
   </ul>
 </div>
+
 

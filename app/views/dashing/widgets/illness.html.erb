@@ -1,4 +1,9 @@
 <div class="container">
     <div data-bind="title" class="title"></div>
     <br>
+    <div id="info-illness"></div>
 </div>
+<script>
+  var illnesses=$("#illness").data("info");
+  $("#info-illness").append(illnesses);
+</script>

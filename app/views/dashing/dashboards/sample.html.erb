@@ -1,4 +1,3 @@
-
 <% content_for :title do %>
   TPO-spine
 <% end %>
@@ -6,6 +5,8 @@
 <%  require 'json'
     patId=1
     checkUp=CheckUp.where("patient_id = ?",patId).last
+
+    #diete
     dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
     dietIds=[];
     dietChecks.each do |dietCheck|
@@ -14,11 +15,12 @@
     dietNames=[]
 
     for el in dietIds
-      dietNames.push(Diet.find(el).name)
+      dietNames.push(Diet.where("id=?",el).first.name)
     end
     dietNames=dietNames.take(5)
     dietN=dietNames.join(tag(:br))
 
+    #alergije in bolezni
     illnessChecks=IllnessCheck.where("check_up_id = ?",checkUp.id)
     illnessIds=[];
     illnessChecks.each do |illnessCheck|
@@ -27,7 +29,7 @@
     allergyNames=[]
     illnessNames=[]
     illnessIds.each do |el|
-      diagnose=Illness.find(el)
+      diagnose=Illness.where("id=?",el).first
       if diagnose.isAllergy
         allergyNames.push(diagnose.name)
       else
@@ -39,6 +41,39 @@
     allergyN=allergyNames.join(tag(:br))
     illnessN=illnessNames.join(tag(:br))
 
+
+    #naslednji pregled
+    nextAppointment=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc')[0]
+    nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
+    nextDate=nextAppointment.date
+    nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+    if nextDoctor.nil?||nextAppointment.nil?
+      nextAppointmentString=''
+    else
+      nextAppointmentString='Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>'
+    end
+
+    #zdravila
+    medicineChecks=MedicineCheck.where("check_up_id = ?",checkUp.id)
+    medicineIds=[];
+
+    medicineChecks.each do |medicineCheck|
+      medicineIds.push(medicineCheck.medicine_id)
+    end
+    medicineIds=medicineIds.take(5)
+
+    medicineNames=[]
+    medicineUrl=[]
+    for el in medicineIds
+      med=Medicine.where("id=?",el).first
+      medicineNames.push(med.name)
+      medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
+    end
+
+    medicineString=''
+    for i in 0..medicineUrl.count
+      medicineString+=("<a href='"+medicineUrl[i].to_s+"'>"+medicineNames[i].to_s+"</a><br />")
+    end
 %>
 
 <div class="gridster">
@@ -62,7 +97,16 @@
         <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
       </li>
     <%end%>
+    <%if nextAppointmentString.length>0%>
+      <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+        <div id="nextAppointment"  data-view="Appointment"  data-title="Termini" data-info="<%= nextAppointmentString %>"></div>
+      </li>
+    <% end %>
+    <%if medicineNames.count>0%>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+          <div id="medicine"  data-view="Medicine"  data-title="Zdravila" data-info="<%= medicineString %>"></div>
+        </li>
+    <% end %>
   </ul>
 </div>
-
 

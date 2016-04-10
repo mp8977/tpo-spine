@@ -3,13 +3,11 @@
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-// Widget-illness styles
+// Widget-medicine styles
 // ----------------------------------------------------------------------------
-
-.widget-illness {
-  background-color: #843616;
+.widget-medicine {
+  background-color: #405c84;
   vertical-align: baseline !important;
-
   .title{
     font-size: 35px;
     margin-top: 20%;
@@ -17,9 +15,12 @@
     color: rgba(255, 255, 255, 0.9);
   }
 
-  #info-illness{
-    font-size: 20px;
-    color: #cccccc;
+  #info-medicine{
     color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+  }
+  #info-medicine a:hover{
+    text-decoration: underline;
+    color: #ffffff
   }
 }

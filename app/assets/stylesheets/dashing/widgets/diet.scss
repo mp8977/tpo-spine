@@ -5,7 +5,7 @@
 // ----------------------------------------------------------------------------
 // Widget-diet styles
 // ----------------------------------------------------------------------------
-$title-color:       rgba(255, 255, 255, 0.7);
+
 .widget-diet {
   background-color: #27841b;
   vertical-align: baseline !important;
@@ -14,10 +14,12 @@ $title-color:       rgba(255, 255, 255, 0.7);
     font-size: 35px;
     margin-top: 20%;
     font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
   }
 
-  .info{
+  #info-diet{
     font-size: 20px;
     color: #cccccc;
+    color: rgba(255, 255, 255, 0.8);
   }
 }

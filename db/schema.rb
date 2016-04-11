@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160403000008) do
+ActiveRecord::Schema.define(version: 20160411094121) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -109,8 +109,9 @@ ActiveRecord::Schema.define(version: 20160403000008) do
   create_table "diets", force: :cascade do |t|
     t.string   "dietNumber", limit: 255
     t.string   "name",       limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
   end
 
   create_table "doctor_has_nurses", force: :cascade do |t|
@@ -135,16 +136,15 @@ ActiveRecord::Schema.define(version: 20160403000008) do
 
   create_table "doctors", force: :cascade do |t|
     t.string   "doctorNumber",           limit: 255
-    t.string "doctorType", limit: 255
     t.string   "lastName",               limit: 255
     t.string   "firstName",              limit: 255
     t.string   "phone",                  limit: 255
     t.integer  "limitPatient",           limit: 4
     t.integer  "hospital_id",            limit: 4
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", limit: 255, default: "", null: false
+    t.string "encrypted_password", limit: 255, default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.integer  "sign_in_count",          limit: 4,   default: 0
@@ -154,6 +154,8 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "last_sign_in_ip",        limit: 255
     t.integer  "failed_attempts",        limit: 4,   default: 0
     t.datetime "locked_at"
+    t.string "category", limit: 255
+    t.boolean "deleted", default: false, null: false
   end
 
   add_index "doctors", ["hospital_id"], name: "fk_rails_5d3ea700f7", using: :btree
@@ -162,8 +164,9 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "hospitalNumber", limit: 255
     t.string   "hospitalName",   limit: 255
     t.integer  "address_id",     limit: 4
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
   end
 
   add_index "hospitals", ["address_id"], name: "fk_rails_1673fa1e63", using: :btree
@@ -182,8 +185,9 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "illnessNumber", limit: 255
     t.string   "name",          limit: 255
     t.boolean  "isAllergy"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
   end
 
   create_table "measurement_docs", force: :cascade do |t|
@@ -245,10 +249,10 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "firstName",              limit: 255
     t.string   "phone",                  limit: 255
     t.integer  "hospital_id",            limit: 4
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "email", limit: 255, default: "", null: false
+    t.string "encrypted_password", limit: 255, default: "", null: false
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.integer  "sign_in_count",          limit: 4,   default: 0
@@ -258,6 +262,7 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "last_sign_in_ip",        limit: 255
     t.integer  "failed_attempts",        limit: 4,   default: 0
     t.datetime "locked_at"
+    t.boolean "deleted", default: false, null: false
   end
 
   add_index "nurses", ["hospital_id"], name: "fk_rails_1ddb00e94b", using: :btree
@@ -282,8 +287,9 @@ ActiveRecord::Schema.define(version: 20160403000008) do
     t.string   "sex",        limit: 255
     t.integer  "user_id",    limit: 4
     t.integer  "address_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "deleted", default: false, null: false
   end
 
   add_index "patients", ["address_id"], name: "fk_rails_39783febcc", using: :btree

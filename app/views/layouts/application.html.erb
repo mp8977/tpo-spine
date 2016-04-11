@@ -8,13 +8,13 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-<!-- ADMIN SideBar -->
-  <% if admin_signed_in? %>
-    <div class="container">
-      <div class="row profile">
+<div class="container">
+  <div class="row profile">
+    <!-- ADMIN SideBar -->
+    <% if admin_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag '/assets/user-icon.png' %>
+            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
@@ -47,12 +47,23 @@
             <!-- END MENU -->
           </div>
         </div>
-      </div>
-    </div>
-  <% end %>
-<!--END ADMIN SideBar -->
+    <% end %>
+    <!--END ADMIN SideBar -->
 
-<%= yield %>
+    <% if admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?%>
+        <div class="col-md-9">
+          <div class="profile-content">
+            <%= yield %>
+          </div>
+        </div>
+    <% end %>
+
+    <% if !(admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?)%>
+        <%= yield %>
+    <% end %>
+
+  </div>
+</div>
 
 </body>
 </html>

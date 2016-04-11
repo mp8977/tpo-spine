@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   resources :check_ups
   resources :check_ups
   resources :addresses
-  resources :admins
+  #resources :admins
 
 
 

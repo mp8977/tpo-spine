@@ -9,6 +9,7 @@
     <button class="userOptionButton" onclick="location.href = '/doctors/sign_in';">Zdravnik</button>
     <button class="userOptionButton" onclick="location.href = '/nurses/sign_in';">Medicinska sestra</button>
     <button class="userOptionButton" onclick="location.href = '/admins/sign_in';">Administrator</button>
+    <%=link_to 'Sign_out', destroy_admin_session_path, :method => :delete%>
   </div>
 
 </div>

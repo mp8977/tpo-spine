@@ -26,12 +26,7 @@ class Admins::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
-    sign_in_url = '/users/new'
-    if request.referer == sign_in_url
-      super
-    else
-      stored_location_for(resource) || request.referer || root_path
-    end
+    stored_location_for(resource) || request.referer || root_path
   end
 
 

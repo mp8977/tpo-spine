@@ -1,4 +1,22 @@
 Rails.application.routes.draw do
+
+  get 'static/home'
+
+  # --> Must be ABOVE 'resources' !!!
+  devise_for :users,
+             controllers: { sessions: "users/sessions", registrations: "users/registrations",
+                            confirmations: "users/confirmations", passwords: "users/passwords", unlocks: "users/unlocks"}
+  devise_for :admins,
+             controllers: { sessions: "admins/sessions", registrations: "admins/registrations",
+                            confirmations: "admins/confirmations", passwords: "admins/passwords", unlocks: "admins/unlocks"}
+  devise_for :doctors,
+             controllers: { sessions: "doctors/sessions", registrations: "doctors/registrations",
+                            confirmations: "doctors/confirmations", passwords: "doctors/passwords", unlocks: "doctors/unlocks"}
+  devise_for :nurses,
+             controllers: { sessions: "nurses/sessions", registrations: "nurses/registrations",
+                            confirmations: "nurses/confirmations", passwords: "nurses/passwords", unlocks: "nurses/unlocks"}
+
+  # -->Must be BELOW 'devise_for' and devise related !!!
   resources :appointments
   resources :illnesses
   resources :doctor_has_nurses
@@ -29,12 +47,15 @@ Rails.application.routes.draw do
   resources :check_ups
   resources :check_ups
   resources :addresses
-  resources :admins
+  #resources :admins
+
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'static#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

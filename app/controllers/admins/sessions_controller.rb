@@ -10,7 +10,7 @@ class Admins::SessionsController < Devise::SessionsController
   def create
     super
 
-    store_location_for(resource, '/users/new')
+    store_location_for(resource, '/static/admin_dashboard')
   end
 
 # DELETE /resource/sign_out

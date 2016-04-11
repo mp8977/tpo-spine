@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
 
   get 'static/home'
+  get 'static/admin_dashboard'
+  get 'static/user_dashboard'
+  get 'static/nurse_dashboard'
+  get 'static/doctor_dashboard'
 
   # --> Must be ABOVE 'resources' !!!
   devise_for :users,

@@ -11,31 +11,30 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :nurseNumber %><br>
-    <%= f.text_field :nurseNumber %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :lastName %><br>
-    <%= f.text_field :lastName %>
-  </div>
-  <div class="field">
-    <%= f.label :firstName %><br>
-    <%= f.text_field :firstName %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <table align="center">
+      <tr>
+        <td align="right">Sifra medicinkse sestre:</td>
+        <td><%= f.text_field :nurseNumber %></td>
+      </tr>
+      <tr>
+        <td align="right">Priimek:</td>
+        <td><%= f.text_field :lastName %></td>
+      </tr>
+      <tr>
+        <td align="right">Ime:</td>
+        <td><%= f.text_field :firstName %></td>
+      </tr>
+      <tr>
+        <td align="right">Telefon:</td>
+        <td><%= f.text_field :phone %></td>
+      </tr>
+      <tr>
+        <td align="right">Bolnisnica</td>
+        <td align="left"><%= f.collection_select(:hospital_id, Hospital.all.order(:hospitalNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+      </tr>
+    </table>
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-success", value: "Poslji" %>
+    </div>
 <% end %>

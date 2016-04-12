@@ -1,6 +1,10 @@
-<h1>Editing Doctor</h1>
+<div class="text-center">
+  <h1>Editing Doctor</h1>
 
-<%= render 'form' %>
+  <%= link_to("Preskoci", { controller: "doctors/registrations", action: "new" }) %>
 
-<%= link_to 'Show', @doctor %> |
-<%= link_to 'Back', doctors_path %>
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @doctor %> |
+  <%= link_to 'Back', doctors_path %>
+</div>

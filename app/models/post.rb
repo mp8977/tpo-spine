@@ -6,4 +6,8 @@ class Post < ActiveRecord::Base
 
   has_many :addresses
 
+  def full_name
+    "#{postNumber} #{postName}"
+  end
+
 end

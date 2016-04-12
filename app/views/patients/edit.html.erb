@@ -1,6 +1,16 @@
-<h1>Editing Patient</h1>
+<div class="text-center">
+  <h1>Urejanje profila pacienta</h1>
 
-<%= render 'form' %>
+  <% if  @current_user.nil? %>
+      <div>
+        <%= link_to("Preskoci", { controller: "patients", action: "confirmation" }) %><br>
+      </div>
+  <% end %>
 
-<%= link_to 'Show', @patient %> |
-<%= link_to 'Back', patients_path %>
+  <%= render 'form' %>
+
+  <!-- ce je user vpisan, potem naj bo cancel, ce pa ne (registracija) potem naj bo preskoci -->
+
+  <%= link_to 'Show', @patient %> |
+  <%= link_to 'Back', patients_path %>
+</div>

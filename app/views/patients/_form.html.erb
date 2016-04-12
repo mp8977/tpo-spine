@@ -1,41 +1,102 @@
-<%= form_for(@patient) do |f| %>
-  <% if @patient.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
+<%= form_for(@patient) do |p| %>
+    <% if @patient.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@patient.errors.count, "error") %> prohibited this patient from being saved:</h2>
 
-      <ul>
-      <% @patient.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+            <% @patient.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+
+    <table align="center">
+      <tr>
+        <td align="right">Sifra pacienta:</td>
+        <td align="left"><%= p.text_field :cardNumber %></td>
+      </tr>
+      <tr>
+        <td align="right">Priimek:</td>
+        <td align="left"><%= p.text_field :lastName %></td>
+      </tr>
+      <tr>
+        <td align="right">Ime:</td>
+        <td align="left"><%= p.text_field :firstName %></td>
+      </tr>
+      <tr>
+        <td align="right">Rojstni datum:</td>
+        <td align="left"><%= p.date_select :birthDate, include_blank: true %></td>
+      </tr>
+      <tr>
+        <td align="right">Spol</td>
+        <td align="left"><%= p.text_field :sex %></td>
+      </tr>
+      <tr>
+        <td align="right">Telefon:</td>
+        <td align="left"><%= p.text_field :phone %></td>
+      </tr>
+
+      <%= p.fields_for :address do |a| %>
+
+          <tr>
+            <td align="right">Ulica</td>
+            <td align="left"><%= a.text_field :streetName %></td>
+          </tr>
+          <tr>
+            <td align="right">Hišna številka</td>
+            <td align="left"><%= a.text_field :streetNumber %></td>
+          </tr>
+          <tr>
+            <td align="right">Pošta</td>
+            <td align="left"><%= a.collection_select(:post_id, Post.all.order(:postNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+          </tr>
+
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :cardNumber %><br>
-    <%= f.text_field :cardNumber %>
-  </div>
-  <div class="field">
-    <%= f.label :lastName %><br>
-    <%= f.text_field :lastName %>
-  </div>
-  <div class="field">
-    <%= f.label :firstName %><br>
-    <%= f.text_field :firstName %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :birthDate %><br>
-    <%= f.date_select :birthDate %>
-  </div>
-  <div class="field">
-    <%= f.label :sex %><br>
-    <%= f.text_field :sex %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+      <%= p.fields_for :contact_person do |c| %>
+
+          <tr>
+            <td align="right">Priimek kontaktne osebe</td>
+            <td align="left"><%= c.text_field :lastName %></td>
+          </tr>
+          <tr>
+            <td align="right">Ime kontaktne osebe</td>
+            <td align="left"><%= c.text_field :firstName %></td>
+          </tr>
+          <tr>
+            <td align="right">Telefon kontaktne osebe</td>
+            <td align="left"><%= c.text_field :phone %></td>
+          </tr>
+          <tr>
+            <td align="right">Razmerje kontaktne osebe s pacientom</td>
+            <td align="left"><%= c.text_field :relationship %></td>
+          </tr>
+
+          <%= c.fields_for :address do |ad| %>
+
+              <tr>
+                <td align="right">Ulica kontaktna</td>
+                <td align="left"><%= ad.text_field :streetName %></td>
+              </tr>
+              <tr>
+                <td align="right">Hišna številka kontaktna</td>
+                <td align="left"><%= ad.text_field :streetNumber %></td>
+              </tr>
+              <tr>
+                <td align="right">Pošta kontaktna</td>
+                <td align="left"><%= ad.collection_select(:post_id, Post.all.order(:postNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+              </tr>
+
+          <% end %>
+      <% end %>
+
+
+    </table>
+
+    <div class="actions">
+      <%= p.submit class: "btn btn-success", value: "Poslji" %>
+    </div>
+
 <% end %>

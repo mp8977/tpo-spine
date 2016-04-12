@@ -9,7 +9,16 @@ before_filter :configure_account_update_params, only: [:update]
 
   # POST /resource
   def create
-    super
+    @user = User.new(sign_up_params)
+    patient = @user.patients.build
+    patient.build_address
+    contact_person = patient.build_contact_person
+    contact_person.build_address
+    if @user.save
+      respond_with @user, location: after_sign_up_path_for(patient)
+    else
+      render 'new'
+    end
   end
 
   # GET /resource/edit
@@ -50,11 +59,16 @@ before_filter :configure_account_update_params, only: [:update]
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    super(resource)
+    edit_patient_path(id: resource.id)
+    #super(resource)
   end
 
   # The path used after sign up for inactive accounts.
   def after_inactive_sign_up_path_for(resource)
     super(resource)
+  end
+
+  def sign_up_params
+    devise_parameter_sanitizer.sanitize(:sign_up)
   end
 end

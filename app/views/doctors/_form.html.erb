@@ -1,49 +1,48 @@
 <%= form_for(@doctor) do |f| %>
-  <% if @doctor.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@doctor.errors.count, "error") %> prohibited this doctor from being saved:</h2>
+    <% if @doctor.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@doctor.errors.count, "error") %> prohibited this doctor from being saved:</h2>
 
-      <ul>
-      <% @doctor.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @doctor.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <table align="center">
+        <td align="right">Sifra zdravnika:</td>
+        <td><%= f.text_field :doctorNumber %></td>
+      </tr>
+      <tr>
+        <td align="right">Tip zdravnika:</td>
+        <td><%= f.text_field :category %></td>
+      </tr>
+      <tr>
+        <td align="right">Priimek:</td>
+        <td><%= f.text_field :lastName %></td>
+      </tr>
+      <tr>
+        <td align="right">Ime:</td>
+        <td><%= f.text_field :firstName %></td>
+      </tr>
+      <tr>
+        <td align="right">Telefon:</td>
+        <td><%= f.text_field :phone %></td>
+      </tr>
+      <tr>
+        <td align="right">Najvecje stevilo pacientov:</td>
+        <td><%= f.text_field :limitPatient %></td>
+      </tr>
+      <tr>
+        <td align="right">Bolnisnica</td>
+        <td align="left"><%= f.collection_select(:hospital_id, Hospital.all.order(:hospitalNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+      </tr>
+    </table>
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-success", value: "Poslji" %>
     </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :doctorNumber %><br>
-    <%= f.text_field :doctorNumber %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br>
-    <%= f.text_field :type %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br>
-    <%= f.text_field :password %>
-  </div>
-  <div class="field">
-    <%= f.label :lastName %><br>
-    <%= f.text_field :lastName %>
-  </div>
-  <div class="field">
-    <%= f.label :firstName %><br>
-    <%= f.text_field :firstName %>
-  </div>
-  <div class="field">
-    <%= f.label :phone %><br>
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :limitPatient %><br>
-    <%= f.number_field :limitPatient %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

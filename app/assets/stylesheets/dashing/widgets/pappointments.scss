@@ -3,24 +3,26 @@
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-// Widget-medicine styles
+// Widget-pappointments styles
 // ----------------------------------------------------------------------------
-.widget-medicine {
-  background-color: #405c84;
+.widget-pappointments {
+  background-color: #ba8b56;
   vertical-align: baseline !important;
+
   .title{
     font-size: 35px;
-    margin-top: 20%;
+    margin-top: 10%;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.9);
   }
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+  }
 
-  #info-medicine{
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 20px;
+  table, th, td {
+    border: 1px solid #ffffff;
   }
-  #info-medicine a:hover{
-    text-decoration: underline;
-    color: #ffffff;
-  }
+
 }

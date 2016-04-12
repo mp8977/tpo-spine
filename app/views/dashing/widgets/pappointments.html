@@ -1,0 +1,12 @@
+<div class="container">
+    <div data-bind="title" class="title"></div>
+    <br>
+    <table id="info-pappointments"><tr><td>Datum</td><td>Zdravnik</td><td>Ime</td></tr>
+    </table>
+</div>
+
+<script>
+    var pastAppointments=$("#pastAppointment").data("info");
+    pastAppointments=pastAppointments.join();
+    $("#info-pappointments").append( pastAppointments);
+</script>

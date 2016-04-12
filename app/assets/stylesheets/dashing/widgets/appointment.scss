@@ -24,5 +24,25 @@
   #info-appointment b{
     color: rgba(255, 255, 255, 0.9);
   }
+  .page {
+    text-align:center;
+    display:inline-block;
+  }
 
+  .pageHolder{
+    overflow: auto;
+    width: 100%;
+
+  }
+  #left-arrow,#right-arrow{
+    font-size: 40px;
+    margin: 10px;
+    vertical-align: 10%;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  #left-arrow:hover,#right-arrow:hover{
+    color:white;
+    text-shadow:white;
+    cursor: pointer;
+  }
 }

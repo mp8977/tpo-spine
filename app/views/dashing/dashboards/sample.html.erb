@@ -43,14 +43,28 @@
 
 
     #naslednji pregled
-    nextAppointment=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc')[0]
-    nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
-    nextDate=nextAppointment.date
-    nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
-    if nextDoctor.nil?||nextAppointment.nil?
-      nextAppointmentString=''
-    else
-      nextAppointmentString='Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>'
+    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc').limit(10)
+    nextAppointmentString=[]
+    nextAppointments.each do |nextAppointment|
+      nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
+      nextDate=nextAppointment.date
+      nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+      if nextDoctor.nil?||nextAppointments.count==0
+      else
+        nextAppointmentString.push('Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>')
+      end
+    end
+    #pretekli pregledi
+    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC').limit(5)
+    pastAppointmentString=[]
+    pastAppointments.each do |pastAppointment|
+      pastDoctor=Doctor.where("id=?",pastAppointment.doctor_id).first
+      pastDate=pastAppointment.date
+      pastDateS=pastDate.hour.to_s+":"+pastDate.min.to_s+" "+pastDate.day.to_s+"/"+pastDate.month.to_s+"/"+pastDate.year.to_s
+      if pastDoctor.nil?||pastAppointment.nil?
+      else
+        pastAppointmentString.push('<tr><td>'+pastDateS+'</td><td>'+pastDoctor.category+'</td><td>'+pastDoctor.firstName+' '+pastDoctor.lastName+'</td></tr>')
+      end
     end
 
     #zdravila
@@ -72,7 +86,7 @@
 
     medicineString=''
     for i in 0..medicineUrl.count
-      medicineString+=("<a href='"+medicineUrl[i].to_s+"'>"+medicineNames[i].to_s+"</a><br />")
+      medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
     end
 %>
 
@@ -97,11 +111,16 @@
         <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
       </li>
     <%end%>
-    <%if nextAppointmentString.length>0%>
+    <%if nextAppointmentString.count>0%>
       <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
         <div id="nextAppointment"  data-view="Appointment"  data-title="Termini" data-info="<%= nextAppointmentString %>"></div>
       </li>
     <% end %>
+    <%if pastAppointmentString.count>0%>
+        <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+          <div id="pastAppointment"  data-view="Pappointments"  data-title="Pretekli pregledi" data-info="<%= pastAppointmentString %>"></div>
+        </li>
+    <%end%>
     <%if medicineNames.count>0%>
         <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
           <div id="medicine"  data-view="Medicine"  data-title="Zdravila" data-info="<%= medicineString %>"></div>

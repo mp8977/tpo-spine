@@ -15,7 +15,6 @@
       dietIds.push(dietCheck.diet_id)
     end
     dietN=''
-
     for el in dietIds
       dietN+='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
       dietUrls=DietInstruction.where("diet_id=?",el)
@@ -26,7 +25,6 @@
       end
       dietN+='</td></tr>'
     end
-
 
 
     #alergije in bolezni
@@ -63,6 +61,7 @@
         nextAppointmentString.push('Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>')
       end
     end
+
     #pretekli pregledi
     pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC').limit(5)
     pastAppointmentString=[]
@@ -97,6 +96,38 @@
     for i in 0..medicineUrl.count
       medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
     end
+
+    #zdravniki & medicinska sestra
+    doctorsIds=DoctorHasPatient.where("patient_id=?",patId)
+    doctorsInfo=[]
+    nursesInfo=[];
+    doctorTitles=[]
+    doctorsIds.each do |dId|
+      #zdravnik
+      doctorId=dId.doctor_id
+      doctor=Doctor.where("id=?",doctorId).first
+      doctorTitles.push(doctor.category.slice(0,1).capitalize+doctor.category.slice(1..-1))
+      hospitalDoc=Hospital.where("id=?",doctor.hospital_id).first
+      hospitalName=''
+      if hospitalDoc!=nil
+        hospitalName=hospitalDoc.hospitalName
+      end
+      doctorString=doctor.firstName+' '+doctor.lastName+'<br />'+doctor.email+'<br />'+doctor.phone+'<br />'+hospitalName
+      doctorsInfo.push(doctorString)
+
+      #medicinska sestra
+      nurseId=DoctorHasNurse.where("doctor_id=?",doctorId).first.nurse_id
+      nurse=Nurse.where("id=?",nurseId).first;
+      hospitalNurse=Hospital.where("id=?",nurse.hospital_id).first
+      hospitalName=''
+      if hospitalNurse!=nil
+        hospitalName=hospitalNurse.hospitalName
+      end
+      nurseString=nurse.firstName+' '+nurse.lastName+'<br />'+nurse.email+'<br />'+nurse.phone+'<br />'+hospitalName
+      nursesInfo.push(nurseString)
+    end
+
+
 %>
 
 <div class="gridster">
@@ -135,6 +166,17 @@
           <div id="medicine"  data-view="Medicine"  data-title="Zdravila" data-info="<%= medicineString %>"></div>
         </li>
     <% end %>
+    <%for i in 0..doctorsInfo.count-1
+        id="staff"+i.to_s %>
+        <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+          <div id="<%=id%>" data-view="Staff"  data-title="<%= doctorTitles[i]%>"  data-nurse="<%= nursesInfo[i]%>" data-doctor="<%= doctorsInfo[i]%>"> </div>
+        </li>
+    <%end%>
   </ul>
 </div>
+
+<script>
+    var staffNumber=0;
+
+</script>
 

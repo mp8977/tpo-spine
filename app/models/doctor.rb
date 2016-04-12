@@ -12,7 +12,7 @@ class Doctor < ActiveRecord::Base
 
   validates_format_of :firstName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
   validates_format_of :lastName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
-  validates_format_of :phone,with:/\A[0-9]{7,9}\z/
+  validates_format_of :phone,with:/\A[\/\-0-9]{11,12}\z/
 
   has_many :check_ups
   has_many :patients, through: :check_ups

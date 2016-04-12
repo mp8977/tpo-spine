@@ -5,9 +5,9 @@ class Nurse < ActiveRecord::Base
   validates :email, presence: true,uniqueness: true,
             :format => {:with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: "E-mail nima veljavne oblike."}
 
-  validates :firstName, presence: true,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
-  validates :lastName, presence: true,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
-  validates :phone, presence: true,with:/\A[0-9]{7,9}\z/
+  validates_format_of :firstName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
+  validates_format_of :lastName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
+  validates_format_of :phone,with:/\A[\/\-0-9]{11,12}\z/
 
 
   has_and_belongs_to_many :doctors

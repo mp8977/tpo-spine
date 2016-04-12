@@ -23,8 +23,8 @@
     $("#right-arrow").hide();
   }
 
-  console.log(appointments);
-  $("#left-arrow").click(function () {console.log(appointments);
+
+  $("#left-arrow").click(function () {
     if (index == appointments.length - 1)
       rightArrow.style.visibility = "visible";
     index -= 1;
@@ -33,7 +33,7 @@
     if (index == 0)
       leftArrow.style.visibility = "hidden";
   });
-  $("#right-arrow").click(function () {console.log(appointments);
+  $("#right-arrow").click(function () {
     if (index == 0)
       leftArrow.style.visibility = "visible";
     index += 1;

@@ -3,24 +3,32 @@
 // ----------------------------------------------------------------------------
 
 // ----------------------------------------------------------------------------
-// Widget-medicine styles
+// Widget-staff styles
 // ----------------------------------------------------------------------------
-.widget-medicine {
-  background-color: #844a6c;
+.widget-staff {
+  background-color: #27841b;
   vertical-align: baseline !important;
+
   .title{
     font-size: 35px;
-    margin-top: 20%;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.9);
   }
 
-  #info-medicine{
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 20px;
+
+
+  table{
+    height:100%;
+    background: linear-gradient(
+                    to right,
+                    #ff9e2c 0px,
+                    #ff9e2c 305px,
+                    #b6701e 305px,
+                    #b6701e 310px
+    );
   }
-  #info-medicine a:hover{
-    text-decoration: underline;
-    color: #ffffff;
+  .doctor>div,.nurse>div{
+    margin-bottom: 5px;
   }
+
 }

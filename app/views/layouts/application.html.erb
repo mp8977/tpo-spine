@@ -50,6 +50,114 @@
     <% end %>
     <!--END ADMIN SideBar -->
 
+    <!-- NURSE SideBar -->
+    <% if nurse_signed_in? %>
+        <div class="col-md-3">
+          <div class="profile-sidebar">
+            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+              <div class="profile-usertitle-name">
+                <%= current_nurse.email %>
+                <br>
+                <%= current_nurse.last_sign_in_at %>
+              </div>
+            </div>
+            <!-- END SIDEBAR USER TITLE -->
+            <!-- SIDEBAR BUTTONS -->
+            <div class="profile-userbuttons">
+              <%=link_to 'Sign_out', destroy_nurse_session_path, :method => :delete%>
+            </div>
+            <!-- END SIDEBAR BUTTONS -->
+            <!-- SIDEBAR MENU -->
+            <div class="profile-usermenu">
+              <ul class="nav">
+                <li class="active">
+                  <a href="">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Nastavitve profila</a>
+                </li>
+
+              </ul>
+            </div>
+            <!-- END MENU -->
+          </div>
+        </div>
+    <% end %>
+    <!--END NURSE SideBar -->
+
+    <!-- DOCTOR SideBar -->
+    <% if doctor_signed_in? %>
+        <div class="col-md-3">
+          <div class="profile-sidebar">
+            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+              <div class="profile-usertitle-name">
+                <%= current_doctor.email %>
+                <br>
+                <%= current_doctor.last_sign_in_at %>
+              </div>
+            </div>
+            <!-- END SIDEBAR USER TITLE -->
+            <!-- SIDEBAR BUTTONS -->
+            <div class="profile-userbuttons">
+              <%=link_to 'Sign_out', destroy_doctor_session_path, :method => :delete%>
+            </div>
+            <!-- END SIDEBAR BUTTONS -->
+            <!-- SIDEBAR MENU -->
+            <div class="profile-usermenu">
+              <ul class="nav">
+                <li class="active">
+                  <a href="">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Nastavitve profila</a>
+                </li>
+
+              </ul>
+            </div>
+            <!-- END MENU -->
+          </div>
+        </div>
+    <% end %>
+    <!--END DOCTOR SideBar -->
+
+    <!-- USER SideBar -->
+    <% if user_signed_in? %>
+        <div class="col-md-3">
+          <div class="profile-sidebar">
+            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <!-- SIDEBAR USER TITLE -->
+            <div class="profile-usertitle">
+              <div class="profile-usertitle-name">
+                <%= current_user.email %>
+                <br>
+                <%= current_user.last_sign_in_at %>
+              </div>
+            </div>
+            <!-- END SIDEBAR USER TITLE -->
+            <!-- SIDEBAR BUTTONS -->
+            <div class="profile-userbuttons">
+              <%=link_to 'Sign_out', destroy_user_session_path, :method => :delete%>
+            </div>
+            <!-- END SIDEBAR BUTTONS -->
+            <!-- SIDEBAR MENU -->
+            <div class="profile-usermenu">
+              <ul class="nav">
+                <li class="active">
+                  <a href="">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Nastavitve profila</a>
+                </li>
+
+              </ul>
+            </div>
+            <!-- END MENU -->
+          </div>
+        </div>
+    <% end %>
+    <!--END USER SideBar -->
+
     <% if admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?%>
         <div class="col-md-9">
           <div class="profile-content">

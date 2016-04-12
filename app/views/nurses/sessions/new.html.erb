@@ -1,26 +1,46 @@
-<h2>Log in</h2>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %>
-  </div>
-
-  <% if devise_mapping.rememberable? -%>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
-    </div>
-  <% end -%>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
-  </div>
+    <form class="form-signin">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <form class="form-signin">
+                  <h3 class="text-center">
+                    Vpis med. sestre</h3>
+                  <div class="form-group">
+                    <div class="input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                            </span>
+                      <div class="field">
+                        <%= f.email_field :email, autofocus: true, placeholder: 'Email naslov', class: "form-control"%>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="input-group">
+                      <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                      <div class="field">
+                        <%= f.password_field :password, autocomplete: "off", placeholder: 'Geslo', class: "form-control"%>
+                      </div>
+                    </div>
+                  </div>
+                  <% if devise_mapping.rememberable? -%>
+                      <div class="field">
+                        <%= f.check_box :remember_me %>
+                        <%= f.label :remember_me %>
+                      </div>
+                  <% end -%>
+                  <div class="actions">
+                    <%= f.submit "Vpis", class: "btn btn-lg btn-primary btn-block"%>
+                  </div>
+                  <%= render "nurses/shared/links" %>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </form>
 <% end %>
-
-<%= render "nurses/shared/links" %>

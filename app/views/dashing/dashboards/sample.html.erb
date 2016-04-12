@@ -9,16 +9,25 @@
     #diete
     dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
     dietIds=[];
+    dietIds=dietIds.take(5)
+
     dietChecks.each do |dietCheck|
       dietIds.push(dietCheck.diet_id)
     end
-    dietNames=[]
+    dietN=''
 
     for el in dietIds
-      dietNames.push(Diet.where("id=?",el).first.name)
+      dietN+='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
+      dietUrls=DietInstruction.where("diet_id=?",el)
+      urlCounter=1;
+      dietUrls.each do |dietUrl|
+        dietN+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
+        urlCounter+=1
+      end
+      dietN+='</td></tr>'
     end
-    dietNames=dietNames.take(5)
-    dietN=dietNames.join(tag(:br))
+
+
 
     #alergije in bolezni
     illnessChecks=IllnessCheck.where("check_up_id = ?",checkUp.id)
@@ -106,8 +115,8 @@
         <div id="allergy"  data-view="Allergy"  data-title="Alergije" data-info="<%= allergyN %>"></div>
       </li>
     <% end %>
-    <%if dietNames.count>0%>
-      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+    <%if dietN.length>0%>
+      <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
         <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
       </li>
     <%end%>

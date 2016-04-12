@@ -12,7 +12,7 @@
 
   .title{
     font-size: 35px;
-    margin-top: 20%;
+    margin-top: 10%;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.9);
   }
@@ -21,5 +21,20 @@
     font-size: 20px;
     color: #cccccc;
     color: rgba(255, 255, 255, 0.8);
+  }
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  table, th, td {
+    border: 1px solid #ffffff;
+  }
+
+  table a:hover{
+    text-decoration: underline;
+    color: #ffffff;
+
   }
 }

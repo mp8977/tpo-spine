@@ -1,3 +1,4 @@
+
 <div class="container">
     <div data-bind="title" class="title"></div>
     <br>
@@ -6,7 +7,16 @@
         <div class='page' id='info-appointment'></div>
         <div class='page' id='right-arrow'>&#10095</div>
     </div>
-
+    <br />
+    <button class="button" type="button">Nov pregled</button>
+    <div id="datetimepicker2" class="input-append">
+      <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
+      <span class="add-on">
+        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
+        </i>
+      </span>
+    </div>
+    <br /><br />
 </div>
 <script>
   var index=0;
@@ -18,12 +28,8 @@
   var rightArrow=document.getElementById("right-arrow");
   if(appointments.length<2)
     rightArrow.style.visibility = "hidden";
-  if(appointments.length==0){
-    $("#left-arrow").hide();
-    $("#right-arrow").hide();
-  }
-
-
+  $(function() {
+  //premik levo
   $("#left-arrow").click(function () {
     if (index == appointments.length - 1)
       rightArrow.style.visibility = "visible";
@@ -33,6 +39,8 @@
     if (index == 0)
       leftArrow.style.visibility = "hidden";
   });
+
+  //premik desno
   $("#right-arrow").click(function () {
     if (index == 0)
       leftArrow.style.visibility = "visible";
@@ -42,6 +50,11 @@
       rightArrow.style.visibility = "hidden";
   });
 
+    $('#datetimepicker2').datetimepicker({
+      language: 'en',
+      pick12HourFormat: true
+    });
+  });
 
 </script>
 

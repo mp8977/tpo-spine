@@ -6,13 +6,13 @@
 // Widget-appointment styles
 // ----------------------------------------------------------------------------
 
-
+$bcolor: rgba(47, 106, 67, 1);
 .widget-appointment {
   background-color: #51846a;
   vertical-align: baseline !important;
   .title{
     font-size: 35px;
-    margin-top: 20%;
+    margin-top: 10%;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.9);
   }
@@ -44,5 +44,17 @@
     color:white;
     text-shadow:white;
     cursor: pointer;
+  }
+  .button{
+    border:	2px solid #ffffff;
+    padding:		10px 20px !important;
+    font-size:		18px !important;
+    background-color: transparent ;
+    color:white;
+
+  }
+
+  .button:hover{
+    background-color:$bcolor
   }
 }

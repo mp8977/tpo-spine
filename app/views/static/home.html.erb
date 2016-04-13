@@ -1,16 +1,62 @@
-<div id="userCases">
 
-  <div>
-    <h3>
+<% if !(admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?)%>
+<div class="container">
+  <div class="row">
+    <h1 class="text-center">
       Izberi svoj tip uporabnika!
-    </h3>
-    <br>
-    <button class="userOptionButton" onclick="location.href = '/users/sign_in';">Pacient</button>
-    <button class="userOptionButton" onclick="location.href = '/doctors/sign_in';">Zdravnik</button>
-    <button class="userOptionButton" onclick="location.href = '/nurses/sign_in';">Medicinska sestra</button>
-    <button class="userOptionButton" onclick="location.href = '/admins/sign_in';">Administrator</button>
-    <%=link_to 'Sign_out', destroy_admin_session_path, :method => :delete%>
+    </h1>
   </div>
-
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <%= image_tag('/assets/user-icon.png')%>
+        </div>
+        <div class="content">
+          <p><button type="button" class="btn btn-default" onclick="location.href = '/users/sign_in';">Uporabnik</button></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <%= image_tag('/assets/user-icon.png')%>
+        </div>
+        <div class="content">
+          <p><button type="button" class="btn btn-default" onclick="location.href = '/doctors/sign_in';">Zdravnik</button></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <%= image_tag('/assets/user-icon.png')%>
+        </div>
+        <div class="content">
+          <p><button type="button" class="btn btn-default" onclick="location.href = '/nurses/sign_in';">Medicinska sestra</button></p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card">
+        <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
+        <div class="avatar">
+          <%= image_tag('/assets/user-icon.png')%>
+        </div>
+        <div class="content">
+          <p><button type="button" class="btn btn-default" onclick="location.href = '/admins/sign_in';">Administrator</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+<% else %>
+  <h1>
+    Ce zelite na zacetno stran se izpisite!
+  </h1>
+
+<% end %>
 

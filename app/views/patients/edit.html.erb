@@ -1,9 +1,9 @@
 <div class="text-center">
   <h1>Urejanje profila pacienta</h1>
 
-  <% if  @current_user.nil? %>
+  <% if  !(user_signed_in?) %>
       <div>
-        <%= link_to("Preskoci", { controller: "patients", action: "confirmation" }) %><br>
+        <%= link_to("Preskoci", { controller: "static", action: "confirmation" }) %><br>
       </div>
   <% end %>
 

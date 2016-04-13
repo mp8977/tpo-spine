@@ -1,6 +1,7 @@
 class PatientsController < ApplicationController
   before_action :set_patient, only: [:show, :edit, :update, :destroy]
 
+
   # GET /patients
   # GET /patients.json
   def index
@@ -45,7 +46,7 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.update(patient_params)
         if  @current_user.nil?
-          format.html { redirect_to controller: "patients", action: "confirmation" }
+          format.html { redirect_to controller: "static", action: "confirmation" }
         else
           format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
           format.json { render :show, status: :ok, location: @patient }

@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
   get 'static/home'
+  get 'static/admin_dashboard'
+  get 'static/user_dashboard'
+  get 'static/nurse_dashboard'
+  get 'static/doctor_dashboard'
+  get 'static/confirmation'
 
   # --> Must be ABOVE 'resources' !!!
   devise_for :users,
@@ -51,7 +56,7 @@ Rails.application.routes.draw do
 
 
 
-  get 'patients/:id/confirmation' => 'patients#confirmation'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

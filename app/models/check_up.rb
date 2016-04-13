@@ -1,5 +1,5 @@
 class CheckUp < ActiveRecord::Base
-  validates :date, presence: true
+  #validates :date, presence: true
 
   belongs_to :doctor
   belongs_to :patient

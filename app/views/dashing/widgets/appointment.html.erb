@@ -7,28 +7,50 @@
         <div class='page' id='info-appointment'></div>
         <div class='page' id='right-arrow'>&#10095</div>
     </div>
-    <br />
-    <button class="button" type="button">Nov pregled</button>
-    <div id="datetimepicker2" class="input-append">
-      <input data-format="MM/dd/yyyy HH:mm:ss PP" type="text"></input>
-      <span class="add-on">
-        <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-        </i>
-      </span>
+
+    <div id="rezerviraj">
+      <select id="selector">
+      </select>
+      <input id="datepicker" type="text" />
+      <input id="timepicker" type="text" />
+      <br />
+      <br />
+      <button id="rezervirajB" class="button" type="button">Rezerviraj</button>
     </div>
-    <br /><br />
+
+    <div id="pregled">
+      <br />
+      <br />
+      <button id="pregledB" class="button" type="button">Nov pregled</button>
+    </div>
+
+
+
 </div>
 <script>
+  var options=$("#nextAppointment").data("options");
+  var OptionsString="";
+  for(j=0;j<options.length;j++)
+    OptionsString+= "<option value='"+options[j]+"'>"+options[j]+"</option>";
+  document.getElementById("selector").innerHTML=OptionsString;
+
   var index=0;
   var appointments=$("#nextAppointment").data("info");
-  var cent=document.getElementById("info-appointment");
-  cent.innerHTML=appointments[index];
-  var leftArrow=document.getElementById("left-arrow");
+  var rightArrow = document.getElementById("right-arrow");
+  var leftArrow = document.getElementById("left-arrow");
+  if(appointments.length==0) {
+    appointments[0]="Trenutno nimate nobenih načrtovanih pregledov."
+  }
+  var cent = document.getElementById("info-appointment");
+  cent.innerHTML = appointments[index];
   leftArrow.style.visibility = "hidden";
-  var rightArrow=document.getElementById("right-arrow");
-  if(appointments.length<2)
+  if (appointments.length < 2)
     rightArrow.style.visibility = "hidden";
+
+
   $(function() {
+   $("#rezerviraj").hide();
+
   //premik levo
   $("#left-arrow").click(function () {
     if (index == appointments.length - 1)
@@ -50,11 +72,36 @@
       rightArrow.style.visibility = "hidden";
   });
 
-    $('#datetimepicker2').datetimepicker({
-      language: 'en',
-      pick12HourFormat: true
+    $('#timepicker').pickatime({
+      clear: 'izbriši'
     });
+    $('#datepicker').pickadate({
+        monthsFull: ['januar', 'februar', 'marec', 'april', 'maj', 'junij', 'julij', 'avgust', 'september', 'oktober', 'november', 'december'],
+        monthsShort: ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'avg', 'sep', 'okt', 'nov', 'dec'],
+        weekdaysFull: ['nedelja', 'ponedeljek', 'torek', 'sreda', 'četrtek', 'petek', 'sobota'],
+        weekdaysShort: ['ned', 'pon', 'tor', 'sre', 'čet', 'pet', 'sob'],
+        today: 'danes',
+        clear: 'izbriši',
+        close: 'zapri',
+        firstDay: 1,
+        format: 'd. mmmm yyyy',
+        formatSubmit: 'yyyy/mm/dd',
+        min: true
+    });
+
+
+    $("#pregledB").click(function(){
+      $("#rezerviraj").show();
+      $("#pregled").hide();
+    });
+    $("#rezervirajB").click(function(){
+      $("#pregled").show();
+      $("#rezerviraj").hide();
+    });
+
   });
+
+
 
 </script>
 

@@ -57,4 +57,18 @@ $bcolor: rgba(47, 106, 67, 1);
   .button:hover{
     background-color:$bcolor
   }
+
+  #timepicker{
+    width: 80px;
+  }
+  #datepicker{
+    width: 120px
+  }
+  #selector, #timepicker, #datepicker{
+    border:	2px solid #ffffff;
+    background-color: #51846a ;
+    color:white;
+    text-align: center;
+  }
+
 }

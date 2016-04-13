@@ -151,9 +151,9 @@
         <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
       </li>
     <%end%>
-    <%if nextAppointmentString.count>0%>
-      <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-        <div id="nextAppointment"  data-view="Appointment"  data-title="Termini" data-info="<%= nextAppointmentString %>"></div>
+    <%if doctorTitles.count>0%>
+      <li id="appointment" data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+        <div id="nextAppointment"  data-view="Appointment"  data-title="Termini"  data-options="<%= doctorTitles%>" data-info="<%= nextAppointmentString %>"></div>
       </li>
     <% end %>
     <%if pastAppointmentString.count>0%>

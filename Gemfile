@@ -51,3 +51,6 @@ gem 'puma'
 
 gem 'nokogiri'
 gem 'htmlentities'
+
+gem 'pickadate-rails'
+gem 'bootstrap-datepicker-rails'

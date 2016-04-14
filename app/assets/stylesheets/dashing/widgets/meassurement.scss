@@ -1,0 +1,30 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Widget-meassurement styles
+// ----------------------------------------------------------------------------
+.widget-meassurement {
+  background-color: #005e84;
+  vertical-align: baseline !important;
+
+  .title{
+    font-size: 35px;
+    margin-top: 20%;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #measurement-select{
+      border:	2px solid #ffffff;
+      background-color: #005e84 ;
+      color:white;
+  }
+  #measurement-table{
+    border:	2px solid #ffffff;
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+  }
+}

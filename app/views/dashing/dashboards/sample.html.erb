@@ -1,7 +1,7 @@
 
 
 <%  require 'json'
-    userId=current_user.id
+       userId=1;#current_user.id
     patientIndex=0
     patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]
@@ -13,7 +13,40 @@
       k+=1
     end
     patId=patientIds[patientIndex]
-    checkUp=CheckUp.where("patient_id = ?",patId).last
+    allCheckUps=CheckUp.where("patient_id = ?",patId)
+    checkUp=allCheckUps.last
+
+    checkUpIds=[]
+    allCheckUps.each do |check|
+      checkUpIds.push(check.id)
+    end
+
+    #meritve
+    allMeassurementsDoc=[]
+    allPartMeassurementsIds=[]
+    if checkUpIds.count>0
+      allMeassurementsDoc=MeasurementDoc.where(" check_up_id IN (?)",checkUpIds.join(","))
+      if allMeassurementsDoc.count>0
+        allMeassurementsDoc.each do |meassurementDoc|
+          allPartMeassurementsIds.push(meassurementDoc.part_measurement_id)
+        end
+      end
+    end
+    allMeassuremetsHome=MeasurementHome.where("patient_id=?",patId)
+    allMeassuremetsHome.each do |meassurementHome|
+      allPartMeassurementsIds.push(meassurementHome.part_measurement_id)
+    end
+    allPartMeassurements=[]
+    if allPartMeassurementsIds.count>0
+      allPartMeassurementsIds.each do |allPartMeassurementsId|
+        allPartMeassurements.push(PartMeasurement.where("id = ?",allPartMeassurementsId).first)
+      end
+      measurementWeight=[]
+      measurementTemperature=[]
+      measurementGlucose=[]
+    end
+
+
 
     if checkUp!=nil
       #diete
@@ -76,7 +109,7 @@
       end
 
       medicineString=''
-      for i in 0..medicineUrl.count
+      for i in 0..medicineUrl.count-1
         medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
       end
     end
@@ -111,7 +144,7 @@
     #zdravniki & medicinska sestra
     doctorsIds=DoctorHasPatient.where("patient_id=?",patId)
     doctorsInfo=[]
-    nursesInfo=[];
+    nursesInfo=[]
     doctorTitles=[]
     doctorsIds.each do |dId|
       #zdravnik
@@ -157,6 +190,11 @@
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div data-id="pat" data-view="Patient"  data-title="Pacient" ></div>
     </li>
+    <% if false %>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="meassurement"  data-view="Meassurement"  data-title="Meritve"  data-info=""></div>
+      </li>
+    <%end%>
     <%if illnessNames!=nil && illnessNames.count>0%>
       <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
         <div id="illness" data-view="Illness"  data-title="Bolezni" data-info="<%= illnessN %>"></div>

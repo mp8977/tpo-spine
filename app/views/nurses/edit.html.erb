@@ -1,7 +1,9 @@
 <div class="text-center">
   <h1>Editing Nurse</h1>
 
-  <%= link_to("Preskoci", { controller: "nurses/registrations", action: "new" }) %>
+  <% if  !(nurse_signed_in?) %>
+      <%= link_to("Preskoci", { controller: "nurses/registrations", action: "new" }) %>
+  <% end %>
 
   <%= render 'form' %>
 

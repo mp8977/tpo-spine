@@ -9,6 +9,7 @@ class Nurse < ActiveRecord::Base
 
   validates :firstName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
   validates :lastName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
+  validates_format_of :phone,with:/\A[0-9]{7,9}\z/, allow_blank: true
 
 
   has_and_belongs_to_many :doctors

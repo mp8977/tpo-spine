@@ -13,6 +13,8 @@ class Doctor < ActiveRecord::Base
 
   #validates_format_of :firstName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
   #validates_format_of :lastName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
+  validates :firstName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
+  validates :lastName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
   validates_format_of :phone,with:/\A[0-9]{7,9}\z/, allow_blank: true
 
 

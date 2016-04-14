@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: root
-  password:
+  username: spineadmin
+  password: spinebaza
   host: localhost
 
 development:
   <<: *default
-  database: TPO_spine_development
+  database: spine_db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

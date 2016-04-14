@@ -45,7 +45,7 @@ class PatientsController < ApplicationController
   def update
     respond_to do |format|
       if @patient.update(patient_params)
-        if  @current_user.nil?
+        if  !user_signed_in?
           format.html { redirect_to controller: "static", action: "confirmation" }
         else
           format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }

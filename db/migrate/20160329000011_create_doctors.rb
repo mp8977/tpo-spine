@@ -9,6 +9,7 @@ class CreateDoctors < ActiveRecord::Migration
       t.string :firstName
       t.string :phone
       t.string :limitPatient
+      t.references :hospital, foreign_key: true
 
       t.timestamps null: false
     end

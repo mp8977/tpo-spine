@@ -36,4 +36,6 @@ class Doctor < ActiveRecord::Base
   has_and_belongs_to_many :nurses
   belongs_to :hospital
   has_many :appointments
+
+  accepts_nested_attributes_for :hospital
 end

@@ -11,6 +11,7 @@ before_filter :configure_account_update_params, only: [:update]
   def create
     puts sign_up_params
     @doctor = Doctor.new(sign_up_params)
+    @doctor.build_hospital
     if @doctor.save
       respond_with @doctor, location: after_sign_up_path_for(@doctor)
     else

@@ -10,7 +10,15 @@ class Nurse < ActiveRecord::Base
   validates :firstName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
   validates :lastName, format: { with: /\A[a-zA-Z]+\z/, message: "only allows letters" }, allow_blank: true
   validates_format_of :phone,with:/\A[0-9]{7,9}\z/, allow_blank: true
+  validates_format_of :nurseNumber,with:/\A[0-9a-zA-Z]{4}\z/, allow_blank: true
 
+  validate :password_complexity
+
+  def password_complexity
+    if password.present? and not password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
+      errors.add :password, "must include at least one letter and one digit"
+    end
+  end
 
   has_and_belongs_to_many :doctors
   belongs_to :hospital

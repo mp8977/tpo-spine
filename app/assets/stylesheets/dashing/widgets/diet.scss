@@ -1,0 +1,41 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Widget-diet styles
+// ----------------------------------------------------------------------------
+
+.widget-diet {
+  background-color: #27841b;
+  vertical-align: baseline !important;
+
+  .title{
+    font-size: 35px;
+    margin-top: 10%;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #info-diet{
+    font-size: 20px;
+    color: #cccccc;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  table {
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  table, th, td {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+  }
+
+  table a:hover{
+    text-decoration: underline;
+    color: #ffffff;
+
+  }
+}

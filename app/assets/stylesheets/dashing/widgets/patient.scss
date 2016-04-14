@@ -1,0 +1,32 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+$background-color: #304384;
+$value-color:       #fff;
+
+$title-color:       rgba(255, 255, 255, 0.7);;
+
+
+// ----------------------------------------------------------------------------
+// Widget-weather styles
+// ----------------------------------------------------------------------------
+.widget-patient {
+
+  background-color: $background-color;
+  vertical-align: baseline !important;
+
+  .title{
+    font-size: 35px;
+    margin-top: 20%;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .info{
+    color: #cccccc;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+
+}

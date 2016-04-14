@@ -1,0 +1,205 @@
+
+
+<%  require 'json'
+    userId=current_user.id
+    patientIndex=0
+    patientsAll=Patient.where("user_id=?",userId)
+    patientIds=[]
+    patientNames=""
+    k=0;
+    patientsAll.each do |patientId|
+      patientIds.push(patientId.id)
+      patientNames+=("<li>"+patientId.firstName+' '+patientId.lastName+"</li>")
+      k+=1
+    end
+    patId=patientIds[patientIndex]
+    checkUp=CheckUp.where("patient_id = ?",patId).last
+
+    if checkUp!=nil
+      #diete
+      dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
+      dietIds=[];
+      dietIds=dietIds.take(5)
+
+      dietChecks.each do |dietCheck|
+        dietIds.push(dietCheck.diet_id)
+      end
+      dietN=''
+      for el in dietIds
+        dietN+='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
+        dietUrls=DietInstruction.where("diet_id=?",el)
+        urlCounter=1;
+        dietUrls.each do |dietUrl|
+          dietN+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
+          urlCounter+=1
+        end
+        dietN+='</td></tr>'
+      end
+
+
+      #alergije in bolezni
+      illnessChecks=IllnessCheck.where("check_up_id = ?",checkUp.id)
+      illnessIds=[];
+      illnessChecks.each do |illnessCheck|
+        illnessIds.push(illnessCheck.illness_id)
+      end
+      allergyNames=[]
+      illnessNames=[]
+      illnessIds.each do |el|
+        diagnose=Illness.where("id=?",el).first
+        if diagnose.isAllergy
+          allergyNames.push(diagnose.name)
+        else
+          illnessNames.push(diagnose.name)
+        end
+      end
+      allergyNames=allergyNames.take(5)
+      illnessNames=illnessNames.take(5)
+      allergyN=allergyNames.join(tag(:br))
+      illnessN=illnessNames.join(tag(:br))
+
+      #zdravila
+      medicineChecks=MedicineCheck.where("check_up_id = ?",checkUp.id)
+      medicineIds=[];
+
+      medicineChecks.each do |medicineCheck|
+        medicineIds.push(medicineCheck.medicine_id)
+      end
+      medicineIds=medicineIds.take(5)
+
+      medicineNames=[]
+      medicineUrl=[]
+      for el in medicineIds
+        med=Medicine.where("id=?",el).first
+        medicineNames.push(med.name)
+        medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
+      end
+
+      medicineString=''
+      for i in 0..medicineUrl.count
+        medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
+      end
+    end
+    #naslednji pregled
+    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc').limit(10)
+    nextAppointmentString=[]
+    nextAppointments.each do |nextAppointment|
+      nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
+      nextDate=nextAppointment.date
+      nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+      if nextDoctor.nil?||nextAppointments.count==0
+      else
+        nextAppointmentString.push('Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>')
+      end
+    end
+
+    #pretekli pregledi
+    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC').limit(5)
+    pastAppointmentString=[]
+    pastAppointments.each do |pastAppointment|
+      pastDoctor=Doctor.where("id=?",pastAppointment.doctor_id).first
+      pastDate=pastAppointment.date
+      pastDateS=pastDate.hour.to_s+":"+pastDate.min.to_s+" "+pastDate.day.to_s+"/"+pastDate.month.to_s+"/"+pastDate.year.to_s
+      if pastDoctor.nil?||pastAppointment.nil?
+      else
+        pastAppointmentString.push('<tr><td>'+pastDateS+'</td><td>'+pastDoctor.category+'</td><td>'+pastDoctor.firstName+' '+pastDoctor.lastName+'</td></tr>')
+      end
+    end
+
+
+
+    #zdravniki & medicinska sestra
+    doctorsIds=DoctorHasPatient.where("patient_id=?",patId)
+    doctorsInfo=[]
+    nursesInfo=[];
+    doctorTitles=[]
+    doctorsIds.each do |dId|
+      #zdravnik
+      doctorId=dId.doctor_id
+      doctor=Doctor.where("id=?",doctorId).first
+      doctorTitles.push(doctor.category.slice(0,1).capitalize+doctor.category.slice(1..-1))
+      hospitalDoc=Hospital.where("id=?",doctor.hospital_id).first
+      hospitalName=''
+      if hospitalDoc!=nil
+        hospitalName=hospitalDoc.hospitalName
+      end
+      doctorString=doctor.firstName+' '+doctor.lastName+'<br />'+doctor.email+'<br />'+doctor.phone+'<br />'+hospitalName
+      doctorsInfo.push(doctorString)
+
+      #medicinska sestra
+      nurseId=DoctorHasNurse.where("doctor_id=?",doctorId).first.nurse_id
+      nurse=Nurse.where("id=?",nurseId).first;
+      hospitalNurse=Hospital.where("id=?",nurse.hospital_id).first
+      hospitalName=''
+      if hospitalNurse!=nil
+        hospitalName=hospitalNurse.hospitalName
+      end
+      nurseString=nurse.firstName+' '+nurse.lastName+'<br />'+nurse.email+'<br />'+nurse.phone+'<br />'+hospitalName
+      nursesInfo.push(nurseString)
+    end
+
+
+%>
+<% if false%>
+<div id="side-menu">
+  <ul>
+    <li >Pacienti<br>
+      <ul id="pacientList">
+          <%= patientNames.html_safe %>
+      </ul>
+    </li>
+  </ul>
+</div>
+<%end%>
+<div class="gridster">
+
+  <ul>
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="pat" data-view="Patient"  data-title="Pacient" ></div>
+    </li>
+    <%if illnessNames!=nil && illnessNames.count>0%>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="illness" data-view="Illness"  data-title="Bolezni" data-info="<%= illnessN %>"></div>
+      </li>
+    <% end %>
+    <%if allergyNames!=nil &&allergyNames.count>0%>
+      <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+        <div id="allergy"  data-view="Allergy"  data-title="Alergije" data-info="<%= allergyN %>"></div>
+      </li>
+    <% end %>
+    <%if dietN!=nil&&dietN.length>0%>
+      <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+        <div id="diet"  data-view="Diet"  data-title="Diete" data-info="<%= dietN %>"></div>
+      </li>
+    <%end%>
+    <%if doctorTitles!=nil &&doctorTitles.count>0%>
+      <li id="appointment" data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+        <div id="nextAppointment"  data-view="Appointment"  data-title="Termini"  data-options="<%= doctorTitles%>" data-info="<%= nextAppointmentString %>"></div>
+      </li>
+    <% end %>
+    <%if pastAppointmentString!=nil &&pastAppointmentString.count>0%>
+        <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+          <div id="pastAppointment"  data-view="Pappointments"  data-title="Pretekli pregledi" data-info="<%= pastAppointmentString %>"></div>
+        </li>
+    <%end%>
+    <%if medicineNames!=nil &&medicineNames.count>0%>
+        <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+          <div id="medicine"  data-view="Medicine"  data-title="Zdravila" data-info="<%= medicineString %>"></div>
+        </li>
+    <% end %>
+    <%if doctorsInfo!=nil %>
+      <%for i in 0..doctorsInfo.count-1
+          id="staff"+i.to_s %>
+          <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+            <div id="<%=id%>" data-view="Staff"  data-title="<%= doctorTitles[i]%>"  data-nurse="<%= nursesInfo[i]%>" data-doctor="<%= doctorsInfo[i]%>"> </div>
+          </li>
+      <%end%>
+    <%end%>
+  </ul>
+</div>
+
+<script>
+    var staffNumber=0;
+
+</script>
+<script>console.log("<%= checkUp %>");</script>

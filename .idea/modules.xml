@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/TPO_spine.iml" filepath="$PROJECT_DIR$/.idea/TPO_spine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../.idea/TPO_spine.iml" filepath="$PROJECT_DIR$/../.idea/TPO_spine.iml" />
     </modules>
   </component>
 </project>

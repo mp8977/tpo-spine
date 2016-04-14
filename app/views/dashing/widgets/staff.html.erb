@@ -1,0 +1,18 @@
+ <table class="fixed"><col width="240px" /><col width="240px" />
+   <tr>
+      <td height="358" class="doctor"><div data-bind="title" class="title" style="height: 94px;"></div></td>
+      <td height="358" class="nurse"> <div class="title">Medicinska sestra</div></td>
+    </tr>
+ </table>
+
+<script>
+  $( document ).ready(function() {
+
+      var nurse = $("#staff" + staffNumber).data("nurse");
+      var doctor = $("#staff" + staffNumber).data("doctor");
+      $('#staff' + staffNumber).find('.nurse').append("<br />"+nurse);
+      $('#staff' + staffNumber).find('.doctor').append("<br />"+doctor);
+      staffNumber++;
+  });
+
+</script>

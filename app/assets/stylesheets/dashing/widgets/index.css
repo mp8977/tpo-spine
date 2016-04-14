@@ -1,0 +1,37 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require pickadate/default
+ *= require pickadate/default.date
+ *= require pickadate/default.time
+ *= require bootstrap-datepicker3
+ */
+
+.gridster{
+    padding-left: 250px;
+}
+#side-menu{
+    height: 110%;
+    background-color: #1a6665;
+    float:left;
+    position: fixed;
+    /*width: 250px;*/
+}
+
+#side-menu>ul{
+    text-align: left;
+    margin: 80px 20px 80px 20px;
+    list-style-type: none;
+}
+#side-menu>ul>li>ul{
+    list-style-type: none;
+    text-align: center
+}

@@ -1,0 +1,10 @@
+<div class="container">
+    <div data-bind="title" class="title"></div>
+    <br>
+    <table id="info-diet"><tr><td>Ime</td><td>Navodila</td></tr></table>
+</div>
+
+<script>
+  var diets=$("#diet").data("info");
+  $("#info-diet").append(diets);
+</script>

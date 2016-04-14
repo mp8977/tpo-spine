@@ -14,3 +14,5 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require pickadate/translations/bg_BG
+//= require bootstrap-datepicker

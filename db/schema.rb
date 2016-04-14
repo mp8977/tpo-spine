@@ -136,6 +136,7 @@ ActiveRecord::Schema.define(version: 20160411094121) do
 
   create_table "doctors", force: :cascade do |t|
     t.string   "doctorNumber",           limit: 255
+    t.string   "category",               limit: 255
     t.string   "lastName",               limit: 255
     t.string   "firstName",              limit: 255
     t.string   "phone",                  limit: 255
@@ -154,7 +155,6 @@ ActiveRecord::Schema.define(version: 20160411094121) do
     t.string   "last_sign_in_ip",        limit: 255
     t.integer  "failed_attempts",        limit: 4,   default: 0
     t.datetime "locked_at"
-    t.string   "category",               limit: 255
     t.boolean  "deleted",                            default: false, null: false
   end
 

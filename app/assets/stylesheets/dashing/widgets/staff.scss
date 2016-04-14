@@ -1,0 +1,37 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Widget-staff styles
+// ----------------------------------------------------------------------------
+.widget-staff {
+  background-color: #27841b;
+  vertical-align: baseline !important;
+
+  .title{
+    font-size: 35px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+
+
+  table{
+    height:100%;
+    background: linear-gradient(
+                    to right,
+                    #ff9e2c 0px,
+                    #ff9e2c 305px,
+                    #b6701e 305px,
+                    #b6701e 310px
+    );
+  }
+  .doctor>div,.nurse>div{
+    margin-bottom: 5px;
+
+  }
+  .doctor,.nurse {
+    color: rgba(255, 255, 255, 0.8)
+  }
+}

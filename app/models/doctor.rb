@@ -1,5 +1,6 @@
 class Doctor < ActiveRecord::Base
 
+
   #validates :password, presence: true,
   #          :format => {:with => /\A(?=.*[a-zA-Z])(?=.*[0-9]).{6,40}\z/, message: "Geslo mora biti dolgo vsaj 6 znakov in vsebovati vsaj eno črko in številko."}
   #validates :email, presence: true,uniqueness: true,
@@ -26,6 +27,8 @@ class Doctor < ActiveRecord::Base
       errors.add :password, "must include at least one letter and one digit"
     end
   end
+
+  #validates :category,presence: true
 
   has_many :check_ups
   has_many :patients, through: :check_ups

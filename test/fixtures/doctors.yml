@@ -2,20 +2,20 @@
 
 one:
   doctorNumber: MyString
-  type: 
+  category: MyString
   email: MyString
   password: MyString
   lastName: MyString
   firstName: MyString
   phone: MyString
-  limitPatient: 1
+  limitPatient: MyString
 
 two:
   doctorNumber: MyString
-  type: 
+  category: MyString
   email: MyString
   password: MyString
   lastName: MyString
   firstName: MyString
   phone: MyString
-  limitPatient: 1
+  limitPatient: MyString

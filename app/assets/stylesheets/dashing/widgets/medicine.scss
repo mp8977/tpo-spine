@@ -1,0 +1,30 @@
+// ----------------------------------------------------------------------------
+// Sass declarations
+// ----------------------------------------------------------------------------
+
+// ----------------------------------------------------------------------------
+// Widget-medicine styles
+// ----------------------------------------------------------------------------
+.widget-medicine {
+  background-color: #844a6c;
+  vertical-align: baseline !important;
+  .title{
+    font-size: 35px;
+    margin-top: 20%;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  #info-medicine{
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+  }
+  #info-medicine>a{
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+  }
+  #info-medicine a:hover{
+    text-decoration: underline;
+    color: #ffffff;
+  }
+}

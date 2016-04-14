@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   get 'static/home'
   get 'static/admin_dashboard'
   get 'static/user_dashboard'
@@ -22,6 +23,10 @@ Rails.application.routes.draw do
                             confirmations: "nurses/confirmations", passwords: "nurses/passwords", unlocks: "nurses/unlocks"}
 
   # -->Must be BELOW 'devise_for' and devise related !!!
+
+  resources :doctors
+  mount Dashing::Engine, at: Dashing.config.engine_path
+
   resources :appointments
   resources :illnesses
   resources :doctor_has_nurses

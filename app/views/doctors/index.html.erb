@@ -6,7 +6,7 @@
   <thead>
     <tr>
       <th>Doctornumber</th>
-      <th>Type</th>
+      <th>Category</th>
       <th>Email</th>
       <th>Password</th>
       <th>Lastname</th>
@@ -21,7 +21,7 @@
     <% @doctors.each do |doctor| %>
       <tr>
         <td><%= doctor.doctorNumber %></td>
-        <td><%= doctor.type %></td>
+        <td><%= doctor.category %></td>
         <td><%= doctor.email %></td>
         <td><%= doctor.password %></td>
         <td><%= doctor.lastName %></td>

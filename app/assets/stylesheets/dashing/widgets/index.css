@@ -15,4 +15,23 @@
  *= require bootstrap-datepicker3
  */
 
+.gridster{
+    padding-left: 250px;
+}
+#side-menu{
+    height: 110%;
+    background-color: #1a6665;
+    float:left;
+    position: fixed;
+    width: 250px;
+}
 
+#side-menu>ul{
+    text-align: left;
+    margin: 80px 20px 80px 20px;
+    list-style-type: none;
+}
+#side-menu>ul>li>ul{
+    list-style-type: none;
+    text-align: center
+}

@@ -3,7 +3,18 @@
 <% end %>
 
 <%  require 'json'
-    patId=1
+    userId=1
+    patientIndex=0
+    patientsAll=Patient.where("user_id=?",userId)
+    patientIds=[]
+    patientNames=""
+    k=0;
+    patientsAll.each do |patientId|
+      patientIds.push(patientId.id)
+      patientNames+=("<li>"+patientId.firstName+' '+patientId.lastName+"</li>")
+      k+=1
+    end
+    patId=patientIds[patientIndex]
     checkUp=CheckUp.where("patient_id = ?",patId).last
 
     #diete
@@ -130,6 +141,16 @@
 
 %>
 
+<div id="side-menu">
+  <ul>
+    <li >Pacienti<br>
+      <ul id="pacientList">
+          <%= patientNames.html_safe %>
+      </ul>
+    </li>
+  </ul>
+
+</div>
 <div class="gridster">
 
   <ul>

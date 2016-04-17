@@ -1,0 +1,961 @@
+
+---
+addresses:
+  columns:
+  - id
+  - streetName
+  - streetNumber
+  - post_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Hrib nad Ribcami
+    - '3'
+    - 1
+    - 2016-04-05 15:47:39.000000000 Z
+    - 2016-04-05 15:49:29.000000000 Z
+  - - 2
+    - Hrib nad Ribcami
+    - '3'
+    - 1
+    - 2016-04-14 11:59:16.000000000 Z
+    - 2016-04-14 12:18:45.000000000 Z
+  - - 3
+    - ''
+    - ''
+    - 
+    - 2016-04-14 11:59:16.000000000 Z
+    - 2016-04-14 12:12:36.000000000 Z
+  - - 4
+    - Sestova ulica
+    - '10'
+    - 1
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 5
+    - Ulica Staneta Bokala
+    - '4'
+    - 2
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 6
+    - Ostrovrharjeva ulica
+    - '6'
+    - 3
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 7
+    - Polje
+    - '40'
+    - 4
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 8
+    - Notranjska cesta
+    - '2'
+    - 5
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 9
+    - Licarjeva
+    - '5'
+    - 6
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 10
+    - Roska cesta
+    - '18'
+    - 7
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 11
+    - Potrceva cesta
+    - '23'
+    - 8
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 12
+    - Vodnikova cesta
+    - '1'
+    - 9
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 13
+    - Tovarniska cesta
+    - '3'
+    - 10
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+
+---
+admins:
+  columns:
+  - id
+  - created_at
+  - updated_at
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - failed_attempts
+  - locked_at
+  records: 
+  - - 1
+    - 2016-04-14 11:56:34.000000000 Z
+    - 2016-04-14 11:56:34.000000000 Z
+    - dom0308@gmail.com
+    - "$2a$10$p2DSQgQ4tQ2QDInPKyC13uKyYgyRKspjc2sNuECqrIrFkSkwyf3Li"
+    - 
+    - 
+    - 1
+    - 2016-04-14 11:56:34.000000000 Z
+    - 2016-04-14 11:56:34.000000000 Z
+    - "::1"
+    - "::1"
+    - 0
+    - 
+  - - 2
+    - 2016-04-16 21:59:37.000000000 Z
+    - 2016-04-16 21:59:37.000000000 Z
+    - plut.car@gmail.com
+    - "$2a$10$dorwQns/Qt59u5.P/22tUupt9ZRaYuMwWwbgekJdGKMEG.X76b6Ji"
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+
+---
+appointments:
+  columns:
+  - id
+  - date
+  - check_up_id
+  - doctor_id
+  - patient_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 2016-12-10 18:28:00.000000000 Z
+    - 
+    - 1
+    - 1
+    - 2016-04-10 18:28:55.000000000 Z
+    - 2016-04-10 20:04:36.000000000 Z
+  - - 2
+    - 2016-05-11 23:29:00.000000000 Z
+    - 
+    - 1
+    - 1
+    - 2016-04-10 18:29:18.000000000 Z
+    - 2016-04-11 23:31:23.000000000 Z
+  - - 3
+    - 2011-04-10 18:39:00.000000000 Z
+    - 
+    - 1
+    - 1
+    - 2016-04-10 18:39:32.000000000 Z
+    - 2016-04-11 22:48:17.000000000 Z
+
+---
+check_ups:
+  columns:
+  - id
+  - date
+  - doctor_id
+  - patient_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 2016-04-06
+    - 
+    - 1
+    - 2016-04-06 16:56:38.000000000 Z
+    - 2016-04-06 21:01:30.000000000 Z
+  - - 2
+    - 2011-04-06
+    - 
+    - 
+    - 2016-04-06 21:02:10.000000000 Z
+    - 2016-04-06 21:02:18.000000000 Z
+  - - 3
+    - 2016-04-14
+    - 1
+    - 2
+    - 2016-04-14 19:23:21.000000000 Z
+    - 2016-04-14 22:05:58.000000000 Z
+
+---
+contact_people:
+  columns:
+  - id
+  - lastName
+  - firstName
+  - phone
+  - relationship
+  - patient_id
+  - address_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - ''
+    - ''
+    - ''
+    - ''
+    - 2
+    - 3
+    - 2016-04-14 11:59:16.000000000 Z
+    - 2016-04-14 12:12:36.000000000 Z
+
+---
+diet_checks:
+  columns:
+  - id
+  - diet_id
+  - check_up_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 3
+    - 1
+    - 2016-04-06 21:49:13.000000000 Z
+    - 2016-04-06 21:49:13.000000000 Z
+
+---
+diet_instructions:
+  columns:
+  - id
+  - url
+  - diet_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - http://www.drustvo-celiakija.si/celiakija
+    - 1
+    - 2016-04-06 21:37:21.000000000 Z
+    - 2016-04-06 21:44:06.000000000 Z
+  - - 2
+    - http://www.kclj.si/dokumenti/000203-0002f9.pdf
+    - 2
+    - 2016-04-06 21:37:31.000000000 Z
+    - 2016-04-06 21:44:01.000000000 Z
+  - - 3
+    - http://www.diabetes-zveza.si/uploads/SB95_julij12clanki1.pdf
+    - 3
+    - 2016-04-06 21:40:23.000000000 Z
+    - 2016-04-06 21:43:49.000000000 Z
+  - - 4
+    - http://www.ezdravje.com/srce-in-zilje/druge-bolezni-srca-in-zilja/sladkorna-bolezen/?s=9
+    - 3
+    - 2016-04-06 21:40:35.000000000 Z
+    - 2016-04-06 21:43:53.000000000 Z
+  - - 5
+    - http://www.sladkorcki.si/media/docs/Prehrana_pri_SB.pdf
+    - 3
+    - 2016-04-06 21:40:46.000000000 Z
+    - 2016-04-06 21:43:56.000000000 Z
+
+---
+diets:
+  columns:
+  - id
+  - dietNumber
+  - name
+  - created_at
+  - updated_at
+  - deleted
+  records: 
+  - - 1
+    - D001
+    - Dieta pri celiakiji
+    - 2016-04-06 21:35:03.000000000 Z
+    - 2016-04-06 21:35:03.000000000 Z
+    - false
+  - - 2
+    - D003
+    - Dieta pri refluksni bolezni
+    - 2016-04-06 21:36:47.000000000 Z
+    - 2016-04-06 21:36:47.000000000 Z
+    - false
+  - - 3
+    - D004
+    - Dieta za sladkorne bolnike
+    - 2016-04-06 21:41:12.000000000 Z
+    - 2016-04-06 21:41:12.000000000 Z
+    - false
+
+---
+doctor_has_nurses:
+  columns:
+  - id
+  - doctor_id
+  - nurse_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 1
+    - 1
+    - 2016-04-12 13:48:38.000000000 Z
+    - 2016-04-12 13:48:38.000000000 Z
+  - - 2
+    - 2
+    - 1
+    - 2016-04-12 13:50:19.000000000 Z
+    - 2016-04-12 13:50:19.000000000 Z
+
+---
+doctor_has_patients:
+  columns:
+  - id
+  - doctor_id
+  - patient_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 1
+    - 1
+    - 2016-04-12 12:09:19.000000000 Z
+    - 2016-04-12 12:09:19.000000000 Z
+  - - 2
+    - 2
+    - 1
+    - 2016-04-12 12:12:21.000000000 Z
+    - 2016-04-12 12:12:21.000000000 Z
+
+---
+doctors:
+  columns:
+  - id
+  - doctorNumber
+  - category
+  - lastName
+  - firstName
+  - phone
+  - limitPatient
+  - hospital_id
+  - created_at
+  - updated_at
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - failed_attempts
+  - locked_at
+  - deleted
+  records: 
+  - - 1
+    - e12348
+    - zobozdravnik
+    - Novak
+    - Janez
+    - 041-111-111
+    - 40
+    - 
+    - 2016-04-10 19:29:55.000000000 Z
+    - 2016-04-12 12:34:57.000000000 Z
+    - ''
+    - ''
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - false
+  - - 2
+    - e10789
+    - ortodont
+    - MIha
+    - Kovac
+    - 041-222-222
+    - 30
+    - 
+    - 2016-04-12 12:11:54.000000000 Z
+    - 2016-04-12 12:35:08.000000000 Z
+    - ''
+    - ''
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - false
+  - - 3
+    - e123
+    - zobozdravnik
+    - Novak
+    - Janez
+    - '041222222'
+    - 40
+    - 
+    - 2016-04-14 11:57:06.000000000 Z
+    - 2016-04-14 11:58:31.000000000 Z
+    - doct@gmail.com
+    - "$2a$10$WMeNUJmlHjbxAjw.Y1nkZu7Pw0DnRRXzXKhsbO.U8S99afYBwajqa"
+    - 
+    - 
+    - 1
+    - 2016-04-14 11:57:54.000000000 Z
+    - 2016-04-14 11:57:54.000000000 Z
+    - "::1"
+    - "::1"
+    - 0
+    - 
+    - false
+  - - 4
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 2
+    - 2016-04-17 21:59:35.000000000 Z
+    - 2016-04-17 21:59:35.000000000 Z
+    - dom0308@gmail.co
+    - "$2a$10$SxlYn7bh4x30PLrVC5jcEe4JUNT/3QaIi3bMyyIOh0/hknxkA2tSK"
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - false
+
+---
+hospitals:
+  columns:
+  - id
+  - hospitalNumber
+  - hospitalName
+  - address_id
+  - created_at
+  - updated_at
+  - deleted
+  records: 
+  - - 1
+    - '50078'
+    - UKC LJUBLJANA  PEDIATRICNA  KLINIKA
+    - 
+    - 2016-04-12 12:37:32.000000000 Z
+    - 2016-04-12 12:37:32.000000000 Z
+    - false
+  - - 2
+    - 
+    - 
+    - 
+    - 2016-04-17 21:59:35.000000000 Z
+    - 2016-04-17 21:59:35.000000000 Z
+    - false
+
+---
+illness_checks:
+  columns:
+  - id
+  - illness_id
+  - check_up_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 1
+    - 1
+    - 2016-04-10 10:58:54.000000000 Z
+    - 2016-04-10 10:58:54.000000000 Z
+
+---
+illnesses:
+  columns:
+  - id
+  - illnessNumber
+  - name
+  - isAllergy
+  - created_at
+  - updated_at
+  - deleted
+  records: 
+  - - 1
+    - E11
+    - Diabetes tip 2
+    - false
+    - 2016-04-07 09:59:27.000000000 Z
+    - 2016-04-07 10:02:02.000000000 Z
+    - false
+  - - 2
+    - A01
+    - Alergija na cvetni prah
+    - true
+    - 2016-04-10 11:12:02.000000000 Z
+    - 2016-04-10 11:12:02.000000000 Z
+    - false
+
+---
+measurement_homes:
+  columns:
+  - id
+  - patient_id
+  - part_measurement_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 1
+    - 1
+    - 2016-04-14 22:31:35.000000000 Z
+    - 2016-04-14 22:31:35.000000000 Z
+  - - 2
+    - 1
+    - 2
+    - 2016-04-14 22:31:37.000000000 Z
+    - 2016-04-14 22:31:37.000000000 Z
+  - - 3
+    - 1
+    - 3
+    - 2016-04-14 22:31:38.000000000 Z
+    - 2016-04-14 22:31:38.000000000 Z
+  - - 4
+    - 1
+    - 4
+    - 2016-04-14 22:31:40.000000000 Z
+    - 2016-04-14 22:31:40.000000000 Z
+  - - 5
+    - 1
+    - 5
+    - 2016-04-14 22:31:41.000000000 Z
+    - 2016-04-14 22:31:41.000000000 Z
+  - - 6
+    - 1
+    - 6
+    - 2016-04-14 22:31:43.000000000 Z
+    - 2016-04-14 22:31:43.000000000 Z
+  - - 7
+    - 1
+    - 7
+    - 2016-04-14 22:31:44.000000000 Z
+    - 2016-04-14 22:31:44.000000000 Z
+  - - 8
+    - 1
+    - 8
+    - 2016-04-14 22:31:50.000000000 Z
+    - 2016-04-14 22:31:50.000000000 Z
+  - - 9
+    - 1
+    - 9
+    - 2016-04-14 22:32:07.000000000 Z
+    - 2016-04-14 22:32:07.000000000 Z
+  - - 10
+    - 1
+    - 10
+    - 2016-04-16 23:19:40.000000000 Z
+    - 2016-04-16 23:21:12.000000000 Z
+
+---
+measurements:
+  columns:
+  - id
+  - date
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 2016-04-06 00:00:00.000000000 Z
+    - 2016-04-14 21:03:26.000000000 Z
+    - 2016-04-17 20:15:31.000000000 Z
+  - - 2
+    - 2016-04-03 00:00:00.000000000 Z
+    - 2016-04-14 22:36:03.000000000 Z
+    - 2016-04-14 22:36:03.000000000 Z
+
+---
+medicine_checks:
+  columns:
+  - id
+  - medicine_id
+  - check_up_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 1
+    - 1
+    - 2016-04-10 22:19:01.000000000 Z
+    - 2016-04-10 22:19:01.000000000 Z
+
+---
+medicine_instructions:
+  columns:
+  - id
+  - url
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - http://www.vitabalans.com/index.php?id=zopitin0004
+    - 2016-04-10 22:09:51.000000000 Z
+    - 2016-04-10 22:09:51.000000000 Z
+
+---
+medicines:
+  columns:
+  - id
+  - medicineNumber
+  - name
+  - inUse
+  - medicine_instruction_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - 082392
+    - Enalapril Vitabalans 10 mg tbl
+    - true
+    - 1
+    - 2016-04-10 22:09:28.000000000 Z
+    - 2016-04-10 22:16:59.000000000 Z
+
+---
+nurses:
+  columns:
+  - id
+  - nurseNumber
+  - lastName
+  - firstName
+  - phone
+  - hospital_id
+  - created_at
+  - updated_at
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - failed_attempts
+  - locked_at
+  - deleted
+  records: 
+  - - 1
+    - n1205
+    - Spela
+    - Pregelj
+    - 041-333-333
+    - 
+    - 2016-04-12 13:47:52.000000000 Z
+    - 2016-04-12 13:47:52.000000000 Z
+    - ''
+    - ''
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - false
+  - - 2
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 2016-04-14 11:57:34.000000000 Z
+    - 2016-04-14 11:57:34.000000000 Z
+    - medicinska@gmail.com
+    - "$2a$10$knx3Tmnkf.2SheWt4IzG3.KoNF7DJSk0/ulddYXhoz4ZRoNVhwkwa"
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+    - false
+
+---
+part_measurements:
+  columns:
+  - id
+  - name
+  - unit
+  - value
+  - measurement_id
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - glucose
+    - mmol/l
+    - 5
+    - 1
+    - 2016-04-14 21:09:27.000000000 Z
+    - 2016-04-17 00:19:05.000000000 Z
+  - - 2
+    - glucose
+    - mmol/l
+    - 5
+    - 2
+    - 2016-04-14 21:09:41.000000000 Z
+    - 2016-04-17 00:19:11.000000000 Z
+  - - 3
+    - diastolic
+    - mmHg
+    - 70
+    - 1
+    - 2016-04-14 21:11:19.000000000 Z
+    - 2016-04-17 00:19:28.000000000 Z
+  - - 4
+    - diastolic
+    - mmHg
+    - 75
+    - 2
+    - 2016-04-14 21:11:44.000000000 Z
+    - 2016-04-17 00:19:46.000000000 Z
+  - - 5
+    - systolic
+    - mmHg
+    - 120
+    - 1
+    - 2016-04-14 21:12:31.000000000 Z
+    - 2016-04-17 20:05:28.000000000 Z
+  - - 6
+    - systolic
+    - mmHg
+    - 125
+    - 2
+    - 2016-04-14 21:13:25.000000000 Z
+    - 2016-04-17 20:05:34.000000000 Z
+  - - 7
+    - HB
+    - BPM
+    - 80
+    - 1
+    - 2016-04-14 21:14:00.000000000 Z
+    - 2016-04-17 17:22:58.000000000 Z
+  - - 8
+    - HB
+    - BPM
+    - 83
+    - 2
+    - 2016-04-14 21:14:27.000000000 Z
+    - 2016-04-17 17:23:07.000000000 Z
+  - - 9
+    - temperature
+    - "°C"
+    - 37
+    - 1
+    - 2016-04-14 21:16:11.000000000 Z
+    - 2016-04-17 00:20:14.000000000 Z
+  - - 10
+    - weight
+    - kg
+    - 30
+    - 1
+    - 2016-04-16 23:18:33.000000000 Z
+    - 2016-04-17 00:19:56.000000000 Z
+
+---
+patients:
+  columns:
+  - id
+  - cardNumber
+  - lastName
+  - firstName
+  - phone
+  - birthDate
+  - sex
+  - user_id
+  - address_id
+  - created_at
+  - updated_at
+  - deleted
+  records: 
+  - - 1
+    - 01245951
+    - Lusina
+    - Domen
+    - '123456789'
+    - 2011-08-03
+    - M
+    - 1
+    - 1
+    - 2016-04-05 15:55:16.000000000 Z
+    - 2016-04-05 15:59:53.000000000 Z
+    - false
+  - - 2
+    - '21325446'
+    - Lusina
+    - Domen
+    - 041 238 983
+    - 2011-04-04
+    - M
+    - 2
+    - 2
+    - 2016-04-14 11:59:16.000000000 Z
+    - 2016-04-14 12:18:45.000000000 Z
+    - false
+
+---
+posts:
+  columns:
+  - id
+  - postName
+  - postNumber
+  - created_at
+  - updated_at
+  records: 
+  - - 1
+    - Kresnice
+    - '1281'
+    - 2016-04-05 15:44:29.000000000 Z
+    - 2016-04-06 10:18:37.000000000 Z
+  - - 2
+    - Ljubljana
+    - '1000'
+    - 2016-04-16 21:59:37.000000000 Z
+    - 2016-04-16 21:59:37.000000000 Z
+  - - 3
+    - Jesenice
+    - '4270'
+    - 2016-04-16 21:59:37.000000000 Z
+    - 2016-04-16 21:59:37.000000000 Z
+  - - 4
+    - Medvode
+    - '1215'
+    - 2016-04-16 21:59:37.000000000 Z
+    - 2016-04-16 21:59:37.000000000 Z
+  - - 5
+    - Izola - Isola
+    - '6310'
+    - 2016-04-16 21:59:37.000000000 Z
+    - 2016-04-16 21:59:37.000000000 Z
+  - - 6
+    - Logatec
+    - '1370'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 7
+    - Cerkno 404
+    - '5282'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 8
+    - Kocevje
+    - '1330'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 9
+    - Ptuj 127"
+    - '2250'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 10
+    - Velenje
+    - '3320'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+  - - 11
+    - Ajdovscina
+    - '5270'
+    - 2016-04-16 21:59:38.000000000 Z
+    - 2016-04-16 21:59:38.000000000 Z
+
+---
+users:
+  columns:
+  - id
+  - validated
+  - created_at
+  - updated_at
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - confirmation_token
+  - confirmed_at
+  - confirmation_sent_at
+  - unconfirmed_email
+  - failed_attempts
+  - locked_at
+  records: 
+  - - 1
+    - false
+    - 2016-04-03 13:48:24.000000000 Z
+    - 2016-04-03 13:48:24.000000000 Z
+    - ''
+    - ''
+    - 
+    - 
+    - 0
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 0
+    - 
+  - - 2
+    - false
+    - 2016-04-14 11:59:15.000000000 Z
+    - 2016-04-16 13:29:22.000000000 Z
+    - dom0308@gmail.com
+    - "$2a$10$EscKDU622RQHrC4W7LSSX.DuZC4WtUYPzsPjToeNAxzFRH.fkvKBy"
+    - 
+    - 
+    - 7
+    - 2016-04-16 13:29:22.000000000 Z
+    - 2016-04-14 18:44:54.000000000 Z
+    - "::1"
+    - "::1"
+    - 2xwCxKrHNKg-CFDxyQMo
+    - 2016-04-14 12:01:07.000000000 Z
+    - 2016-04-14 11:59:15.000000000 Z
+    - 
+    - 0
+    - 

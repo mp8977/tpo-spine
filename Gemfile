@@ -57,3 +57,9 @@ gem 'htmlentities'
 
 gem 'pickadate-rails'
 gem 'bootstrap-datepicker-rails'
+gem 'json'
+gem 'sinatra'
+gem 'sinatra-sse'
+
+#https://github.com/yamldb/yaml_db
+gem 'yaml_db'

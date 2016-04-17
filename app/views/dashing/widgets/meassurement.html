@@ -1,13 +1,55 @@
 <div class="container">
     <div data-bind="title" class="title"></div>
-    <br>
+    <br />
     <select id="measurement-select">
+        <option disabled selected value> -- izberite meritev -- </option>
         <option value="glukoza">Glukoza</option>
         <option value="srce">Srce</option>
         <option value="temperatura">Telesna temperatura</option>
         <option value="teža">Teža</option>
     </select>
+    <br />
     <table id="measurement-table">
 
     </table>
 </div>
+
+<script>
+    var glucose=$("#measurement").data("glucose");
+    var heart=$("#measurement").data("heart");
+    var temperature=$("#measurement").data("temperature");
+    var weight=$("#measurement").data("weight");
+    var content="";
+    var limit=8;
+    $("#measurement-select").change(function() {
+        content="";
+        switch($("#measurement-select  option:selected").val()){
+            case "glukoza":
+                content+='<tr><th>Datum</th><th>Čas</th><th>[mmol/l]</th></tr>';
+                for(i=0;i<Math.min(limit,glucose.length);i++)
+                    content+='<tr><td>'+glucose[i]["date"].substring(0,10)+'</td><td>'+glucose[i]["date"].substring(11,16)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
+                $("#measurement-table").html(content)
+                break;
+            case "srce":
+                content+='<tr><th>Datum</th><th>Čas</th><th>Krvni pritisk</th><th>BPM</th></tr>';
+                for(i=0;i<Math.min(limit,heart.length);i++)
+                    content+='<tr><td>'+heart[i]["date"].substring(0,10)+'</td><td>'+heart[i]["date"].substring(11,16)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+heart[i]["BPM"]+'</td></tr>';
+                $("#measurement-table").html(content)
+                break;
+            case "temperatura":
+                content+='<tr><th>Datum</th><th>Čas</th><th>[°C]</th></tr>';
+                for(i=0;i<Math.min(limit,temperature.length);i++)
+                    content+='<tr><td>'+temperature[i]["date"].substring(0,10)+'</td><td>'+temperature[i]["date"].substring(11,16)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
+                $("#measurement-table").html(content)
+                break;
+            case "teža":
+                content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
+                for(i=0;i<Math.min(limit,weight.length);i++)
+                    content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
+                $("#measurement-table").html(content)
+                break;
+        }
+
+    });
+
+</script>

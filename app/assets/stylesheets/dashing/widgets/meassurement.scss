@@ -22,9 +22,17 @@
       color:white;
   }
   #measurement-table{
+    margin-top:20px;
+    table-layout: fixed;
+  }
+
+  #measurement-table,td,th{
     border:	2px solid #ffffff;
     border-collapse: collapse;
     width: 90%;
     margin-left: 5%;
   }
+
+
+
 }

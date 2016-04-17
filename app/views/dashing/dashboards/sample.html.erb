@@ -1,5 +1,6 @@
 
 
+
 <%  require 'json'
     userId=current_user.id
     patientIndex=0
@@ -182,11 +183,14 @@
     doctorsInfo=[]
     nursesInfo=[]
     doctorTitles=[]
-    doctorsIds.each do |dId|
+
+  if doctorsIds.count>0
+   dId=doctorsIds[0]
+    #doctorsIds.each do |dId|
       #zdravnik
       doctorId=dId.doctor_id
       doctor=Doctor.where("id=?",doctorId).first
-      doctorTitles.push(doctor.category.slice(0,1).capitalize+doctor.category.slice(1..-1))
+      doctorTitles.push("Zdravnik")
       hospitalDoc=Hospital.where("id=?",doctor.hospital_id).first
       hospitalName=''
       if hospitalDoc!=nil

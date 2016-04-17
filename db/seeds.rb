@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-admin = Admin.create! :email => 'plut.car@gmail.com', :password => 'bizjak12', :password_confirmation => 'bizjak12'
+#admin = Admin.create! :email => 'plut.car@gmail.com', :password => 'bizjak12', :password_confirmation => 'bizjak12'
 
 post1 = Post.create! :postNumber => '1000', :postName => 'Ljubljana'
 post2 = Post.create! :postNumber => '4270', :postName => 'Jesenice'

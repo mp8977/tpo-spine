@@ -2,7 +2,7 @@
 
 
 <%  require 'json'
-    userId=current_user.id
+    userId=1#current_user.id
     patientIndex=0
     patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]
@@ -183,14 +183,11 @@
     doctorsInfo=[]
     nursesInfo=[]
     doctorTitles=[]
-
-  if doctorsIds.count>0
-   dId=doctorsIds[0]
-    #doctorsIds.each do |dId|
+    doctorsIds.each do |dId|
       #zdravnik
       doctorId=dId.doctor_id
       doctor=Doctor.where("id=?",doctorId).first
-      doctorTitles.push("Zdravnik")
+      doctorTitles.push(doctor.category.slice(0,1).capitalize+doctor.category.slice(1..-1))
       hospitalDoc=Hospital.where("id=?",doctor.hospital_id).first
       hospitalName=''
       if hospitalDoc!=nil
@@ -198,7 +195,6 @@
       end
       doctorString=doctor.firstName+' '+doctor.lastName+'<br />'+doctor.email+'<br />'+doctor.phone+'<br />'+hospitalName
       doctorsInfo.push(doctorString)
-
       #medicinska sestra
       nurseId=DoctorHasNurse.where("doctor_id=?",doctorId).first.nurse_id
       nurse=Nurse.where("id=?",nurseId).first;
@@ -210,6 +206,7 @@
       nurseString=nurse.firstName+' '+nurse.lastName+'<br />'+nurse.email+'<br />'+nurse.phone+'<br />'+hospitalName
       nursesInfo.push(nurseString)
     end
+
 
 
 %>
@@ -228,7 +225,7 @@
 
   <ul>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="pat" data-view="Patient"  data-title="Pacient" ></div>
+      <div data-id="pat" data-view="Patient"  data-title="Pacient"></div>
     </li>
     <% if allPartMeasurements.count>0 %>
       <li id="measurement-li" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
@@ -278,5 +275,6 @@
 
 <script>
     var staffNumber=0;
+
 </script>
 

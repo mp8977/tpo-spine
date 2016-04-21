@@ -13,6 +13,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def active_for_authentication?
+    super && !(self.deleted)
+  end
+
+  def inactive_message
+    "Uporabniski racun je bil izbrisan"
+  end
+
   has_many :patients
   accepts_nested_attributes_for :patients
 end

@@ -1,6 +1,29 @@
-<h1>Editing User</h1>
+<h1>Urejanje uporabniskega racuna</h1>
 
-<%= render 'form' %>
+<!-- <%= render 'form' %> -->
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+<div class="panel panel-info">
+  <!-- <div class="panel-heading">PACIENTI</div> -->
+  <table class="table">
+    <tr>
+      <td class="column-name">#</td>
+      <td class="column-name">Ime</td>
+      <td class="column-name">Priimek</td>
+    </tr>
+    <% current_user.patients.each do |p| %>
+      <tr>
+        <td> <%= p.cardNumber %> </td>
+        <td> <%= p.firstName %> </td>
+        <td> <%= p.lastName %> </td>
+        <td align="right">
+          <%= link_to 'Izbrisi profil', p, method: :delete,
+                      class: "btn btn-danger btn-xs", style: 'color:#FFFFFF;' %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<div><br>
+  <h5> <strong>Brisanje uporabniskega racuna</strong> </h5>
+    <%= button_to 'Izbrisi racun', @user, method: :delete,  class: "btn btn-danger btn-xs", style: 'color:#FFFFFF;'%>
+</div>

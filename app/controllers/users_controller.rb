@@ -54,10 +54,16 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    puts 'user destroyed'
+    current_user.deleted = true
+    if current_user.save
+      # deleted so vsi pacienti in vse kar gre zraven
+      current_user.patients.each do |p|
+        p.deleted = true
+      end
+      sign_out_and_redirect(current_user) # to naj se uporabi tudi za spremenjeno geslo
+    else
+      puts 'ERROR in users#destroy'
     end
   end
 
@@ -70,5 +76,10 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:email, :password)
+    end
+
+    # Overwriting the sign_out redirect path method
+    def after_sign_out_path_for(resource_or_scope)
+      root_path
     end
 end

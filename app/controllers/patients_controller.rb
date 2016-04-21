@@ -61,11 +61,9 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    @patient.destroy
-    respond_to do |format|
-      format.html { redirect_to patients_url, notice: 'Patient was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    puts 'zbrisi pacienta'
+    #@patient
+    redirect_to edit_user_path
   end
 
   def confirmation

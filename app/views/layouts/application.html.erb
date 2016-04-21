@@ -10,6 +10,8 @@
   <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
 
   <%= csrf_meta_tags %>
 
@@ -48,6 +50,11 @@
                   <a href="/nurses/sign_up">
                     <i class="glyphicon glyphicon-user"></i>
                     Registriraj med. sestro </a>
+                </li>
+                <li>
+                  <a href="/admins/sifranti">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Urejanje sifrantov </a>
                 </li>
               </ul>
             </div>
@@ -161,7 +168,11 @@
                     <i class="glyphicon glyphicon-user"></i>
                     Dashboard</a>
                 </li>
-
+                <li class="active">
+                  <a href="/users/<%=current_user.id %>/edit">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Urejanje uporabniskega racuna</a>
+                </li>
               </ul>
             </div>
             <!-- END MENU -->
@@ -169,6 +180,11 @@
         </div>
     <% end %>
     <!--END USER SideBar -->
+
+    <!-- za prikazovanje sporocil o napakah -->
+    <% flash.each do |name, msg| %>
+        <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
+    <% end %>
 
     <% if admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?%>
         <div class="col-md-9">

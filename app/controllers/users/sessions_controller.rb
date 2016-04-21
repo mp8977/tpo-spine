@@ -8,9 +8,9 @@ before_filter :configure_sign_in_params, only: [:create]
 
   # POST /resource/sign_in
   def create
+    # to se klice, ko se hoces prijavit kot user
     super
-
-    store_location_for(resource, '/static/user_dashboard')
+    #store_location_for(resource, '/static/user_dashboard')
   end
 
   # DELETE /resource/sign_out
@@ -26,6 +26,18 @@ before_filter :configure_sign_in_params, only: [:create]
   end
 
   def after_sign_in_path_for(resource)
-    stored_location_for(resource) || request.referer || root_path
+    if prazen_profil(resource) # prazen profil
+      edit_patient_path(id: resource.id)
+    else
+      '/static/user_dashboard'
+    end
   end
+
+  def prazen_profil(user)
+    user.patients.first.cardNumber.nil?
+  end
+
+#  def after_sign_in_path_for(resource)
+ #   stored_location_for(resource) || request.referer || root_path
+  #end
 end

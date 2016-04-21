@@ -25,9 +25,9 @@ before_filter :configure_sign_in_params, only: [:create]
     devise_parameter_sanitizer.for(:sign_in)# << :attribute
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(resource) # resource je user
     if prazen_profil(resource) # prazen profil
-      edit_patient_path(id: resource.id)
+      edit_patient_path(id: resource.patients.first.id) #vsaj od prvega profil mora biti kreairan
     else
       '/static/user_dashboard'
     end

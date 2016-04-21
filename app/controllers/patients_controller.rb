@@ -52,8 +52,8 @@ class PatientsController < ApplicationController
         if  !user_signed_in?
           format.html { redirect_to controller: "static", action: "confirmation" }
         else
-          format.html { redirect_to @patient, notice: 'Patient was successfully updated.' }
-          format.json { render :show, status: :ok, location: @patient }
+          flash[:notice] = 'Patient was successfully updated.'
+          format.html { redirect_to controller: :users, action: :edit, id: @patient.user_id }
         end
       else
         format.html { render :edit }
@@ -66,8 +66,15 @@ class PatientsController < ApplicationController
   # DELETE /patients/1.json
   def destroy
     puts 'zbrisi pacienta'
-    #@patient
-    redirect_to edit_user_path
+    puts @patient.id
+    @patient.deleted = true
+    if @patient.save
+      flash[:notice] = "Pacient je bil uspesno izbrisan"
+      redirect_to controller: :users, action: :edit, id: current_user.id
+    else
+      flash[:notice] = "Tezave pri brisanju pacienta"
+      puts "Tezave pri brisanju pacienta"
+    end
   end
 
   def confirmation

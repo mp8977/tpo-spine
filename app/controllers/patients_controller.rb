@@ -5,7 +5,8 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    @patients = Patient.all
+    #@patients = Patient.all
+    @patients = current_user.patients
   end
 
   # GET /patients/1
@@ -16,6 +17,9 @@ class PatientsController < ApplicationController
   # GET /patients/new
   def new
     @patient = Patient.new
+    @patient.build_address
+    @contact_person=@patient.build_contact_person
+    @contact_person.build_address
   end
 
   # GET /patients/1/edit
@@ -26,7 +30,7 @@ class PatientsController < ApplicationController
   # POST /patients.json
   def create
     @patient = Patient.new(patient_params)
-
+    @patient.user_id=current_user.id
 
     respond_to do |format|
       if @patient.save

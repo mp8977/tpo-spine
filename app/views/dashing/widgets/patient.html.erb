@@ -2,7 +2,7 @@
   <div data-bind="title" class="title"></div>
   <br>
   <%
-    userId=1#current_user.id
+    userId=current_user.id
     patientIndex=0
     patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]

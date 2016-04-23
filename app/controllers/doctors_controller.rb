@@ -42,7 +42,12 @@ class DoctorsController < ApplicationController
   def update
     respond_to do |format|
       if @doctor.update(doctor_params)
-        format.html { redirect_to controller: "doctors/registrations", action: "new", notice: 'Doctor was successfully updated.' }
+        flash[:notice] = 'Profil doktorja je bil posodobljen'
+        if admin_signed_in?
+          format.html { redirect_to controller: "doctors/registrations", action: "new"}
+        else
+          format.html { redirect_to controller: "doctors", action: "edit", id: @doctor.id}
+        end
         format.json { render :show, status: :ok, location: @doctor }
       else
         format.html { render :edit }

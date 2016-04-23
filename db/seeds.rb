@@ -15,7 +15,7 @@ post4 = Post.create! :postNumber => '6310', :postName => 'Izola - Isola'
 post5 = Post.create! :postNumber => '1370', :postName => 'Logatec'
 post6 = Post.create! :postNumber => '5282', :postName => 'Cerkno 404'
 post7 = Post.create! :postNumber => '1330', :postName => 'Kocevje'
-post8 = Post.create! :postNumber => '2250', :postName => 'Ptuj 127"'
+post8 = Post.create! :postNumber => '2250', :postName => 'Ptuj 127'
 post9 = Post.create! :postNumber => '3320', :postName => 'Velenje'
 post10 = Post.create! :postNumber => '5270', :postName => 'Ajdovscina'
 

@@ -21,4 +21,7 @@ class Patient < ActiveRecord::Base
 
   accepts_nested_attributes_for :contact_person
   accepts_nested_attributes_for :address
+
+
+
 end

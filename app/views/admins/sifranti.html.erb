@@ -1,0 +1,124 @@
+<% if admin_signed_in? %>
+  <h2>Sifranti</h2>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $(".js-example-basic-single").select2();
+    });
+  </script>
+
+  <div class="izberi-sifrante">
+    <select class="js-example-basic-single">
+      <option value="Admins">Administrator</option>
+      <option value="Users">Uporabnik</option>
+      <option value="Doctors">Zdravnik</option>
+      <option value="Patients">Pacient</option>
+      <option value="Nurses">Medicinska sestra</option>
+
+      <!--
+      <% ActiveRecord::Base.connection.tables.each do |t| %>
+        <option><%= t %></option>
+      <% end %>
+      -->
+    </select>
+  </div>
+
+  <script type="text/javascript">
+    $("document").ready( function(){
+
+      $( ".js-example-basic-single" ).change( pokaziIzbiro);
+
+    });
+
+    function pokaziIzbiro() {
+      $('#show-data').html("");
+      if ($( ".js-example-basic-single option:selected" ).val() == "Users") {
+        $('#show-data').append('<thead><tr><td class="column-name">Uporabnikov ID</td><td class="column-name">Email</td><td class="column-name">Izbrisan</td></tr></thead>');
+
+        $.ajax({
+          url: "/users.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            //console.log(JSON.stringify(json));
+            var trHTML = '';
+            $.each(json, function (index, user) {
+              trHTML += '<tbody><tr>';
+              trHTML += '<td>' + user.id + '</td>';
+              trHTML += '<td>' + user.email + '</td>';
+              trHTML += '<td>' + user.deleted + '</td>';
+              trHTML += "<td align='right'><a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/users/" + user.id + "'>Izbrisi uporabnika</a>";
+              trHTML += '</tr></tbody>';
+            });
+            $('#show-data').append(trHTML);
+        }});
+      }
+      else if ($( ".js-example-basic-single option:selected" ).val() == "Doctors") {
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Kategorija</td><td class="column-name">Telefon</td><td class="column-name">Izbrisan</td></tr></thead>');
+
+        $.ajax({
+          url: "/doctors.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            //console.log(JSON.stringify(json));
+            var trHTML = '';
+            $.each(json, function (index, doctor) {
+              trHTML += '<tbody><tr>';
+              trHTML += '<td>' + doctor.id + '</td>';
+              trHTML += '<td>' + doctor.email + '</td>';
+              trHTML += '<td>' + doctor.firstName + '</td>';
+              trHTML += '<td>' + doctor.lastName + '</td>';
+              trHTML += '<td>' + doctor.doctorNumber + '</td>';
+              trHTML += '<td>' + doctor.category + '</td>';
+              trHTML += '<td>' + doctor.phone + '</td>';
+              trHTML += '<td>' + doctor.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/doctors/" + doctor.id + "/edit'>Uredi profil zdravnika</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/doctors/" + doctor.id + "'>Izbrisi zdravnika</a>";
+              trHTML += '</tr></tbody>';
+            });
+            $('#show-data').append(trHTML);
+          }});
+      }
+      else if ($( ".js-example-basic-single option:selected" ).val() == "Nurses") {
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Telefon</td><td class="column-name">Izbrisan</td></tr></thead>');
+
+        $.ajax({
+          url: "/nurses.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            //console.log(JSON.stringify(json));
+            var trHTML = '';
+            $.each(json, function (index, nurse) {
+              trHTML += '<tbody><tr>';
+              trHTML += '<td>' + nurse.id + '</td>';
+              trHTML += '<td>' + nurse.email + '</td>';
+              trHTML += '<td>' + nurse.firstName + '</td>';
+              trHTML += '<td>' + nurse.lastName + '</td>';
+              trHTML += '<td>' + nurse.nurseNumber + '</td>';
+              trHTML += '<td>' + nurse.phone + '</td>';
+              trHTML += '<td>' + nurse.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/nurses/" + nurse.id + "/edit'>Uredi profil sestre</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/nurses/" + nurse.id + "'>Izbrisi sestro</a>";
+              trHTML += '</tr></tbody>';
+            });
+            $('#show-data').append(trHTML);
+          }});
+      }
+    }
+
+  </script>
+
+<div class="panel panel-info">
+  <table class="table" id="show-data">
+  </table>
+</div>
+
+
+    <!--  ActiveRecord::Base.connection.tables,  -->
+
+<% end %>

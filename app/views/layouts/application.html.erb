@@ -17,27 +17,28 @@
 
 </head>
 <body>
-<div class="container">
+<header>
+  <h1 align="center"><%= image_tag "health-icon.png", style: "vertical-align:middle", height: "64", width: "64"%> Zdravstveni informacijski sistem</h1>
+</header>
+<div class="container-fluid">
   <div class="row profile">
     <!-- ADMIN SideBar -->
     <% if admin_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <%= image_tag('/assets/admin-icon.png' , class: "profile-userpic")%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
                 <%= current_admin.email %>
                 <br>
-                <%= current_admin.last_sign_in_at %>
+                <h5>Zadnji vpis:
+                  <%= current_admin.last_sign_in_at_format %>
+                </h5>
               </div>
             </div>
             <!-- END SIDEBAR USER TITLE -->
-            <!-- SIDEBAR BUTTONS -->
-            <div class="profile-userbuttons">
-              <%=link_to 'Izpis', destroy_admin_session_path, :method => :delete%>
-            </div>
-            <!-- END SIDEBAR BUTTONS -->
+
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
@@ -51,6 +52,17 @@
                     <i class="glyphicon glyphicon-user"></i>
                     Registriraj med. sestro </a>
                 </li>
+                <li>
+                  <a href="/admins/sifranti">
+                    <i class="glyphicon glyphicon-pencil"></i>
+                    Urejanje sifrantov </a>
+                </li>
+                <li>
+                  <a href="<%= destroy_admin_session_path %>" data-method="delete">
+                    <i class="glyphicon glyphicon-remove"></i>
+                    Izpis
+                  </a>
+                </li>
               </ul>
             </div>
             <!-- END MENU -->
@@ -63,30 +75,33 @@
     <% if nurse_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <%= image_tag('/assets/nurse-icon.png' , class: "profile-userpic")%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
                 <%= current_nurse.email %>
                 <br>
-                <%= current_nurse.last_sign_in_at %>
+                <h5>Zadnji vpis:
+                  <%= current_nurse.last_sign_in_at_format %>
+                </h5>
               </div>
             </div>
             <!-- END SIDEBAR USER TITLE -->
-            <!-- SIDEBAR BUTTONS -->
-            <div class="profile-userbuttons">
-              <%=link_to 'Izpis', destroy_nurse_session_path, :method => :delete%>
-            </div>
-            <!-- END SIDEBAR BUTTONS -->
+
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
                 <li class="active">
                   <a href="/nurses/<%= current_nurse.id%>/edit">
-                    <i class="glyphicon glyphicon-user"></i>
+                    <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
                 </li>
-
+                <li>
+                  <a href="<%= destroy_nurse_session_path %>" data-method="delete">
+                    <i class="glyphicon glyphicon-remove"></i>
+                    Izpis
+                  </a>
+                </li>
               </ul>
             </div>
             <!-- END MENU -->
@@ -99,30 +114,33 @@
     <% if doctor_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic")%>
+            <%= image_tag('/assets/images/doctor-icon.png' , class: "profile-userpic")%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
                 <%= current_doctor.email %>
                 <br>
-                <%= current_doctor.last_sign_in_at %>
+                <h5>Zadnji vpis:
+                  <%= current_doctor.last_sign_in_at_format %>
+                </h5>
               </div>
             </div>
             <!-- END SIDEBAR USER TITLE -->
-            <!-- SIDEBAR BUTTONS -->
-            <div class="profile-userbuttons">
-              <%=link_to 'Izpis', destroy_doctor_session_path, :method => :delete%>
-            </div>
-            <!-- END SIDEBAR BUTTONS -->
+
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
                 <li class="active">
                   <a href="/doctors/<%= current_doctor.id%>/edit">
-                    <i class="glyphicon glyphicon-user"></i>
+                    <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
                 </li>
-
+                <li>
+                  <a href="<%= destroy_doctor_session_path %>" data-method="delete">
+                    <i class="glyphicon glyphicon-remove"></i>
+                    Izpis
+                  </a>
+                </li>
               </ul>
             </div>
             <!-- END MENU -->
@@ -141,33 +159,30 @@
               <div class="profile-usertitle-name">
                 <%= current_user.email %>
                 <br>
-                <%= current_user.last_sign_in_at %>
+                <h5>Zadnji vpis:
+                <%= current_user.last_sign_in_at_format %>
+                </h5>
               </div>
             </div>
             <!-- END SIDEBAR USER TITLE -->
-            <!-- SIDEBAR BUTTONS -->
-            <div class="profile-userbuttons">
-              <%=link_to 'izpis', destroy_user_session_path, :method => :delete%>
-            </div>
-            <!-- END SIDEBAR BUTTONS -->
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
                 <li class="active">
                   <a href="/dashing">
-                    <i class="glyphicon glyphicon-user"></i>
+                    <i class="glyphicon glyphicon-dashboard"></i>
                     Dashboard</a>
                 </li>
-                <% if  current_user.patients.count == 1 %>
+                <% if  current_user.count_patients == 1 %>
                     <li class="active">
                       <a href="/patients/<%=current_user.patients.first.id %>/edit">
-                        <i class="glyphicon glyphicon-user"></i>
+                        <i class="glyphicon glyphicon-pencil"></i>
                         Urejanje profila</a>
                     </li>
                 <% else%>
                     <li class="active">
                       <a href="/patients/">
-                        <i class="glyphicon glyphicon-user"></i>
+                        <i class="glyphicon glyphicon-pencil"></i>
                         Profili pacientov</a>
                     </li>
                 <% end %>
@@ -178,8 +193,14 @@
                 </li>
                 <li class="active">
                   <a href="/users/<%=current_user.id %>/edit">
-                    <i class="glyphicon glyphicon-user"></i>
+                    <i class="glyphicon glyphicon-wrench"></i>
                     Urejanje uporabniskega racuna</a>
+                </li>
+                <li>
+                  <a href="<%= destroy_user_session_path %>" data-method="delete">
+                    <i class="glyphicon glyphicon-remove"></i>
+                    Izpis
+                  </a>
                 </li>
               </ul>
             </div>

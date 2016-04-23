@@ -1,32 +1,5 @@
 <h1>Urejanje uporabniskega racuna</h1><br>
 
-<div class="panel panel-info">
-  <!-- <div class="panel-heading">PACIENTI</div> -->
-  <table class="table">
-    <tr>
-      <td class="column-name">#</td>
-      <td class="column-name">Ime</td>
-      <td class="column-name">Priimek</td>
-    </tr>
-    <% current_user.patients.each do |p| %>
-      <% if !p.deleted %>
-        <tr>
-          <td> <%= p.cardNumber %> </td>
-          <td> <%= p.firstName %> </td>
-          <td> <%= p.lastName %> </td>
-          <td align="right">
-            <%= link_to 'Uredi profil', edit_patient_path(id: p.id),
-                        class: "btn btn-info btn-xs", style: 'color:#FFFFFF;' %>
-          </td>
-          <td align="right">
-            <%= link_to 'Izbrisi profil', p, method: :delete,
-                        class: "btn btn-danger btn-xs", style: 'color:#FFFFFF;', data: { confirm: 'Ali ste prepricani?' } %>
-          </td>
-        </tr>
-      <% end %>
-    <% end %>
-  </table>
-</div>
 <div><br>
   <h5> <strong>Brisanje uporabniskega racuna</strong> </h5>
     <%= button_to 'Izbrisi racun', @user, method: :delete,  class: "btn btn-danger btn-xs",

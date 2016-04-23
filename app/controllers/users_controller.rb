@@ -55,13 +55,17 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     puts 'user destroyed'
-    current_user.deleted = true
-    if current_user.save
+    @user.deleted = true
+    if @user.save
       # deleted so vsi pacienti in vse kar gre zraven
-      current_user.patients.each do |p|
+      @user.patients.each do |p|
         p.deleted = true
       end
-      sign_out_and_redirect(current_user) # to naj se uporabi tudi za spremenjeno geslo
+      if !admin_signed_in?
+        sign_out_and_redirect(@user) # to naj se uporabi tudi za spremenjeno geslo
+      else
+        redirect_to '/admins/sifranti'
+      end
     else
       puts 'ERROR in users#destroy'
     end

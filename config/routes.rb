@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'static/doctor_dashboard'
   get 'static/confirmation'
 
+  get 'admins/sifranti'
+
   # --> Must be ABOVE 'resources' !!!
   devise_for :users,
              controllers: { sessions: "users/sessions", registrations: "users/registrations",

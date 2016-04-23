@@ -12,6 +12,7 @@ before_filter :configure_account_update_params, only: [:update]
     puts sign_up_params
     @nurse = Nurse.new(sign_up_params)
     if @nurse.save
+      flash[:notice] = 'Medicinska sestra je bila uspesno registrirana'
       respond_with @nurse, location: after_sign_up_path_for(@nurse)
     else
       render 'new'

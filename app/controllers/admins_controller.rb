@@ -21,6 +21,7 @@ class AdminsController < ApplicationController
   def edit
   end
 
+  # GET /admins/sifranti
   def sifranti
 
   end

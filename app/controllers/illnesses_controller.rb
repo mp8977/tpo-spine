@@ -28,8 +28,8 @@ class IllnessesController < ApplicationController
 
     respond_to do |format|
       if @illness.save
-        format.html { redirect_to @illness, notice: 'Illness was successfully created.' }
-        format.json { render :show, status: :created, location: @illness }
+        flash[:notice] = 'Bolezen je bila uspesno kreirana'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @illness.errors, status: :unprocessable_entity }
@@ -42,8 +42,9 @@ class IllnessesController < ApplicationController
   def update
     respond_to do |format|
       if @illness.update(illness_params)
-        format.html { redirect_to @illness, notice: 'Illness was successfully updated.' }
-        format.json { render :show, status: :ok, location: @illness }
+        flash[:notice] = 'Bolezen je bila posodobljena'
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        #format.json { render :show, status: :ok, location: @illness }
       else
         format.html { render :edit }
         format.json { render json: @illness.errors, status: :unprocessable_entity }
@@ -54,10 +55,15 @@ class IllnessesController < ApplicationController
   # DELETE /illnesses/1
   # DELETE /illnesses/1.json
   def destroy
-    @illness.destroy
-    respond_to do |format|
-      format.html { redirect_to illnesses_url, notice: 'Illness was successfully destroyed.' }
-      format.json { head :no_content }
+    @illness.deleted = true
+    if @illness.save
+      flash[:notice] = 'Bolezen je bila uspesno izbrisana'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju bolezni'
     end
   end
 

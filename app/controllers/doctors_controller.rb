@@ -23,28 +23,18 @@ class DoctorsController < ApplicationController
 
   # POST /doctors
   # POST /doctors.json
-  def create
-    @doctor = Doctor.new(doctor_params)
-
-    respond_to do |format|
-      if @doctor.save
-        format.html { redirect_to @doctor, notice: 'Doctor was successfully created.' }
-        format.json { render :show, status: :created, location: @doctor }
-      else
-        format.html { render :new }
-        format.json { render json: @doctor.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+#  def create
+#    puts 'devise skrbi za kreiranje'
+#  end
 
   # PATCH/PUT /doctors/1
   # PATCH/PUT /doctors/1.json
   def update
     respond_to do |format|
       if @doctor.update(doctor_params)
-        flash[:notice] = 'Profil doktorja je bil posodobljen'
+        flash[:notice] = 'Profil zdravnika je bil posodobljen'
         if admin_signed_in?
-          format.html { redirect_to controller: "doctors/registrations", action: "new"}
+          format.html { redirect_to controller: "admins", action: "sifranti"}
         else
           format.html { redirect_to controller: "doctors", action: "edit", id: @doctor.id}
         end
@@ -59,10 +49,20 @@ class DoctorsController < ApplicationController
   # DELETE /doctors/1
   # DELETE /doctors/1.json
   def destroy
-    @doctor.destroy
-    respond_to do |format|
-      format.html { redirect_to doctors_url, notice: 'Doctor was successfully destroyed.' }
-      format.json { head :no_content }
+    @doctor.deleted = true
+    if @doctor.save
+      flash[:notice] = 'Zdravnik je bil uspesno izbrisan'
+      respond_to do |format|
+        if admin_signed_in?
+          format.html { redirect_to controller: :admins, action: :sifranti }
+          format.json { head :no_content }
+        else # zbrise se zdravnik sam
+          puts 'ce ne dela, dodaj spodaj private metodo iz user_controller: after_sign_out_path_for'
+          sign_out_and_redirect(@doctor)
+        end
+      end
+    else
+      flash[:notice] = 'Tezava pri brisanju zdravnika'
     end
   end
 

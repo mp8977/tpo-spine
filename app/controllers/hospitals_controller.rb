@@ -28,8 +28,9 @@ class HospitalsController < ApplicationController
 
     respond_to do |format|
       if @hospital.save
-        format.html { redirect_to @hospital, notice: 'Hospital was successfully created.' }
-        format.json { render :show, status: :created, location: @hospital }
+        flash[:notice] = 'Izvajalec je bil uspesno kreiran'
+        # bolnisnice lahko kreira samo admin, zato ves kam redirectat
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @hospital.errors, status: :unprocessable_entity }
@@ -42,8 +43,9 @@ class HospitalsController < ApplicationController
   def update
     respond_to do |format|
       if @hospital.update(hospital_params)
-        format.html { redirect_to @hospital, notice: 'Hospital was successfully updated.' }
-        format.json { render :show, status: :ok, location: @hospital }
+        flash[:notice] = 'Izvajalec je bil posodobljen'
+        format.html { redirect_to controller: :admins, action: :sifranti }
+       # format.json { render :show, status: :ok, location: @hospital }
       else
         format.html { render :edit }
         format.json { render json: @hospital.errors, status: :unprocessable_entity }
@@ -54,10 +56,15 @@ class HospitalsController < ApplicationController
   # DELETE /hospitals/1
   # DELETE /hospitals/1.json
   def destroy
-    @hospital.destroy
-    respond_to do |format|
-      format.html { redirect_to hospitals_url, notice: 'Hospital was successfully destroyed.' }
-      format.json { head :no_content }
+    @hospital.deleted = true
+    if @hospital.save
+      flash[:notice] = 'Izvajalec je bil uspesno izbrisan'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju izvajalca'
     end
   end
 

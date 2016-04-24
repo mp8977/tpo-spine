@@ -11,19 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :medicineNumber %><br>
-    <%= f.text_field :medicineNumber %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :inUse %><br>
-    <%= f.check_box :inUse %>
-  </div>
+
+  <table align="center">
+    <tr>
+      <td align="right">Sifra</td>
+      <td align="left"><%= f.text_field :medicineNumber %></td>
+    </tr>
+    <tr>
+      <td align="right">Ime</td>
+      <td align="left"><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td align="right">V uporabi</td>
+      <td align="left"><%= f.check_box :inUse, :checked => true %></td>
+    </tr>
+  </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
+
 <% end %>

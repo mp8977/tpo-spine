@@ -81,6 +81,13 @@ div.content {
     padding: 10px;
 }
 
+div.panel {
+    margin-bottom: 0px;
+}
+.show-table {
+    margin-bottom: 20px;
+}
+
 .column-name {
     font-style: oblique;
     font-weight: bold;

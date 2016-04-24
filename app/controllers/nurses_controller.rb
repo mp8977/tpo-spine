@@ -23,19 +23,9 @@ class NursesController < ApplicationController
 
   # POST /nurses
   # POST /nurses.json
-  def create
-    @nurse = Nurse.new(nurse_params)
-
-    respond_to do |format|
-      if @nurse.save
-        format.html { redirect_to @nurse, notice: 'Nurse was successfully created.' }
-        format.json { render :show, status: :created, location: @nurse }
-      else
-        format.html { render :new }
-        format.json { render json: @nurse.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+ # def create
+ #   puts 'devise skrbi za kreiranje'
+ # end
 
   # PATCH/PUT /nurses/1
   # PATCH/PUT /nurses/1.json
@@ -44,7 +34,7 @@ class NursesController < ApplicationController
       if @nurse.update(nurse_params)
         flash[:notice] = 'Profil medicinske sestre je bil posodobljen'
         if admin_signed_in?
-          format.html { redirect_to controller: "nurses/registrations", action: "new"}
+          format.html { redirect_to controller: "admins", action: "sifranti"}
         else
           format.html { redirect_to controller: "nurses", action: "edit", id: nurse.id}
         end
@@ -59,10 +49,19 @@ class NursesController < ApplicationController
   # DELETE /nurses/1
   # DELETE /nurses/1.json
   def destroy
-    @nurse.destroy
-    respond_to do |format|
-      format.html { redirect_to nurses_url, notice: 'Nurse was successfully destroyed.' }
-      format.json { head :no_content }
+    @nurse.deleted = true
+    if @nurse.save
+      flash[:notice] = 'Medicinska sestra je bila uspesno izbrisana'
+      respond_to do |format|
+        if admin_signed_in?
+          format.html { redirect_to controller: :admins, action: :sifranti }
+          format.json { head :no_content }
+        else # zbrise se sestra sama
+          puts 'ce ne dela, dodaj spodaj private metodo iz user_controller: after_sign_out_path_for'
+          sign_out_and_redirect(@nurse)
+        end
+      end
+    else
     end
   end
 

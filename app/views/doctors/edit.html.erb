@@ -1,7 +1,7 @@
 <div class="text-center">
   <h1>Osebni profil</h1>
 
-  <% if  !(doctor_signed_in?) %>
+  <% if  !(doctor_signed_in? or admin_signed_in?) %>
       <%= link_to("Preskoci", { controller: "doctors/registrations", action: "new" }) %>
   <% end %>
 

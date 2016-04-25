@@ -221,7 +221,7 @@
         });
       }
       else if (izbira == "Measurements") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Deleted</td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Datum</td><td class="column-name">Deleted</td></tr></thead>');
 
         $.ajax({
           url: "/measurements.json",
@@ -230,19 +230,19 @@
           success: function(json) {
             console.log(JSON.stringify(json));
             var trHTML = '';
-            $.each(json, function (index, hospital) {
+            $.each(json, function (index, measurement) {
               trHTML += '<tbody><tr>';
-              trHTML += '<td>' + hospital.id + '</td>';
-              trHTML += '<td>' + hospital.hospitalNumber + '</td>';
-              trHTML += '<td>' + hospital.hospitalName + '</td>';
-              trHTML += '<td>' + hospital.deleted + '</td>';
+              trHTML += '<td>' + measurement.id + '</td>';
+              <!-- TODO spremeni format datuma, tako kot pri vpisu vlog -->
+              trHTML += '<td>' + measurement.date + '</td>';
+              trHTML += '<td>' + measurement.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/hospitals/" + hospital.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/hospitals/" + hospital.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurements/" + measurement.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurements/" + measurement.id + "'>Izbrisi</a>";
               trHTML += '</tr></tbody>';
             });
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/hospitals/new'>Dodaj izvajalca</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='/measurements/new'>Dodaj meritev</a>");
             $('.profile-content').append(new_button);
           }
         });

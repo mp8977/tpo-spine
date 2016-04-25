@@ -15,6 +15,9 @@ class MeasurementsController < ApplicationController
   # GET /measurements/new
   def new
     @measurement = Measurement.new
+    @part_measurement = @measurement.part_measurements.build
+    @part_measurement.build_measurement_home
+    @part_measurement.build_measurement_doc
   end
 
   # GET /measurements/1/edit
@@ -24,15 +27,21 @@ class MeasurementsController < ApplicationController
   # POST /measurements
   # POST /measurements.json
   def create
-    @measurement = Measurement.new(measurement_params)
+    if doctor_signed_in? or user_signed_in? or admin_signed_in?
+      @measurement = Measurement.new(measurement_params)
 
-    respond_to do |format|
-      if @measurement.save
-        format.html { redirect_to @measurement, notice: 'Measurement was successfully created.' }
-        format.json { render :show, status: :created, location: @measurement }
-      else
-        format.html { render :new }
-        format.json { render json: @measurement.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @measurement.save
+          flash[:notice] = 'Meritev je bila kreirana'
+          if admin_signed_in?
+            format.html { redirect_to controller: :admins, action: :sifranti }
+          else
+            format.html { redirect_to controller: :measurements, action: :new }
+          end
+        else
+          format.html { render :new }
+          format.json { render json: @measurement.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -42,7 +51,14 @@ class MeasurementsController < ApplicationController
   def update
     respond_to do |format|
       if @measurement.update(measurement_params)
-        format.html { redirect_to @measurement, notice: 'Measurement was successfully updated.' }
+        flash[:notice] = 'Meritev je bila uspesno posodobljena'
+        if admin_signed_in?
+          format.html { redirect_to controller: :admins, action: :sifranti }
+        elsif doctor_signed_in?
+          format.html { redirect_to controller: :measurements, action: :new }
+        elsif user_signed_in?
+          format.html { redirect_to controller: :measurements, action: :new }
+        end
         format.json { render :show, status: :ok, location: @measurement }
       else
         format.html { render :edit }
@@ -54,10 +70,19 @@ class MeasurementsController < ApplicationController
   # DELETE /measurements/1
   # DELETE /measurements/1.json
   def destroy
-    @measurement.destroy
-    respond_to do |format|
-      format.html { redirect_to measurements_url, notice: 'Measurement was successfully destroyed.' }
-      format.json { head :no_content }
+    if admin_signed_in?
+      @measurement.deleted = true
+      if @measurement.save
+        flash[:notice] = 'Meritev je bila izbrisana'
+        respond_to do |format|
+          if admin_signed_in?
+            format.html { redirect_to controller: :admins, action: :sifranti }
+            format.json { head :no_content }
+          end
+        end
+      end
+    else
+      puts 'admin ni vpisan..measurements_controller'
     end
   end
 
@@ -69,6 +94,8 @@ class MeasurementsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def measurement_params
-      params.require(:measurement).permit(:date)
+      params.require(:measurement).permit(:date, part_measurements_attributes: [:name, :unit, :value,
+                                                                    measurement_doc_attributes: [:check_up_id],
+                                                                    measurement_home_attributes: [:patient_id]])
     end
 end

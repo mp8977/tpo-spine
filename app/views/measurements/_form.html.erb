@@ -11,11 +11,46 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
-  </div>
+  <table align="center">
+    <tr>
+      <td align="right">Datum:</td>
+      <td align="left"><%= f.date_select :date, include_blank: true %></td>
+    </tr>
+    <!-- TODO mnozina??? probi unit narest select -->
+    <%= f.fields_for :part_measurements do |p| %>
+        <tr>
+          <td align="right">Ime</td>
+          <td align="left"><%= p.text_field :name %></td>
+        </tr>
+        <tr>
+          <td align="right">Enota</td>
+          <td align="left"><%= p.collection_select(:unit, %w(kg m), :to_s, :to_s,{include_blank: true},{:multiple => false}) %></td>
+        </tr>
+        <tr>
+          <td align="right">Kolicina</td>
+          <!-- TODO javascript, da je ta input decimal-->
+          <td align="left"><%= p.text_field :value %></td>
+        </tr>
+        <% if user_signed_in? %>
+          <%= p.fields_for :measurement_home do |h| %>
+            <tr>
+              <td align="right">Pacient:</td>
+              <td align="left"><%= h.collection_select(:patient_id, Patient.where(user_id: current_user.id, deleted: false), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+            </tr>
+          <% end %>
+        <% elsif doctor_signed_in? %>
+            <%= p.fields_for :measurement_doc do |d| %>
+                <tr>
+                  <td align="right">Pregled:</td>
+                  <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+                </tr>
+            <% end %>
+
+        <% end %>
+    <% end %>
+  </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
 <% end %>

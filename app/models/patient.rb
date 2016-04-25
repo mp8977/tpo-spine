@@ -22,6 +22,8 @@ class Patient < ActiveRecord::Base
   accepts_nested_attributes_for :contact_person
   accepts_nested_attributes_for :address
 
-
+  def full_name
+    "#{firstName} #{lastName}"
+  end
 
 end

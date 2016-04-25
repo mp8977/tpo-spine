@@ -8,4 +8,9 @@ class CheckUp < ActiveRecord::Base
   has_and_belongs_to_many :medicine
   has_and_belongs_to_many :illnesses
   has_one :appointment
+
+  def full_name
+    "#{date} #{Patient.find(patient_id).full_name}"
+  end
+
 end

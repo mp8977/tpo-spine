@@ -39,6 +39,10 @@ class Doctor < ActiveRecord::Base
 
   accepts_nested_attributes_for :hospital
 
+  def full_name
+    "#{firstName} #{lastName}"
+  end
+
   def last_sign_in_at_format
     sign_in_string = last_sign_in_at.to_formatted_s(:rfc822)
     sign_in_string[17..18] = ((sign_in_string[17..18].to_i + 2) % 24).to_s

@@ -69,6 +69,6 @@ class CheckUpsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def check_up_params
-      params.require(:check_up).permit(:date)
+      params.require(:check_up).permit(:date, :patient_id, :doctor_id)
     end
 end

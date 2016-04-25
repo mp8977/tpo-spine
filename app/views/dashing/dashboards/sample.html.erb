@@ -2,7 +2,7 @@
 
 
 <%  require 'json'
-    userId=1#current_user.id
+    userId=current_user.id
     patientIndex=0
     patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]
@@ -277,4 +277,6 @@
     var staffNumber=0;
 
 </script>
-
+<%
+  Redis.new.client.call(["client", "kill", "type", "pubsub"])
+%>

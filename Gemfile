@@ -63,3 +63,5 @@ gem 'sinatra-sse'
 
 #https://github.com/yamldb/yaml_db
 gem 'yaml_db'
+
+gem 'redis'

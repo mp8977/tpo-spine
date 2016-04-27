@@ -4,6 +4,9 @@
 
     <%= render 'form' %>
 
-    <%= link_to 'Back', measurements_path %>
+      <% if admin_signed_in? %>
+          <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+      <% end %>
+
   <% end %>
 </div>

@@ -20,6 +20,7 @@
 <header>
   <h1 align="center"><%= image_tag "health-icon.png", style: "vertical-align:middle", height: "64", width: "64"%> Zdravstveni informacijski sistem</h1>
 </header>
+<!-- TODO highlight nared cez kater nav element je :hover-->
 <div class="container-fluid">
   <div class="row profile">
     <!-- ADMIN SideBar -->
@@ -153,7 +154,7 @@
     <% if user_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic" )%>
+            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic" , height: '256', width: '256')%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">

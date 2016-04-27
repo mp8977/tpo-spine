@@ -24,6 +24,12 @@
       <td align="right">Alergija</td>
       <td align="left"><%= f.check_box :isAllergy %></td>
     </tr>
+    <% if admin_signed_in? %>
+      <tr>
+        <td align="right">Izbrisana</td>
+        <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false}) %></td>
+      </tr>
+    <% end %>
   </table>
 
   <div class="actions">

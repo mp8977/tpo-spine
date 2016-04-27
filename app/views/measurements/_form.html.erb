@@ -16,7 +16,6 @@
       <td align="right">Datum:</td>
       <td align="left"><%= f.date_select :date, include_blank: true %></td>
     </tr>
-    <!-- TODO mnozina??? probi unit narest select -->
     <%= f.fields_for :part_measurements do |p| %>
         <tr>
           <td align="right">Ime</td>
@@ -28,8 +27,7 @@
         </tr>
         <tr>
           <td align="right">Kolicina</td>
-          <!-- TODO javascript, da je ta input decimal-->
-          <td align="left"><%= p.text_field :value %></td>
+          <td align="left"><%= p.text_field :value, type: 'number', step: '0.01' %></td>
         </tr>
         <% if user_signed_in? %>
           <%= p.fields_for :measurement_home do |h| %>

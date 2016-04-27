@@ -9,10 +9,10 @@
       <option value="Nurses">Medicinske sestre</option>
       <option value="Illnesses">Bolezni</option>
       <option value="Medicines">Zdravila</option>
-      <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
+      <option value="Diets">Diete</option>
+      <!-- TODO za meritve poglej kaj prikazat in redirectaj -->
+      <option value="Hospitals">Izvajalci zdravstvenih storitev (TODO)</option>
       <option value="Measurements">Meritve</option>
-
-
     </select>
   </div>
 
@@ -51,8 +51,9 @@
         });
       }
       else if (izbira == "Doctors") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Kategorija</td><td class="column-name">Telefon</td><td class="column-name">Izbrisan</td></tr></thead>');
-
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td>' +
+            '<td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Kategorija</td><td class="column-name">Telefon</td>' +
+            '<td class="column-name">Max stevilo pacientov</td><td class="column-name">Izvajalec ID</td><td class="column-name">Izbrisan</td></tr></thead>');
         $.ajax({
           url: "/doctors.json",
           dataType: "json",
@@ -69,6 +70,8 @@
               trHTML += '<td>' + doctor.doctorNumber + '</td>';
               trHTML += '<td>' + doctor.category + '</td>';
               trHTML += '<td>' + doctor.phone + '</td>';
+              trHTML += '<td>' + doctor.limitPatient + '</td>';
+              trHTML += '<td>' + doctor.hospital_id + '</td>';
               trHTML += '<td>' + doctor.deleted + '</td>';
               trHTML += "<td align='right'>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/doctors/" + doctor.id + "/edit'>Uredi profil</a>" +
@@ -82,7 +85,7 @@
         });
       }
       else if (izbira == "Nurses") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Telefon</td><td class="column-name">Izbrisan</td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Telefon</td><td class="column-name">Izbrisana</td></tr></thead>');
 
         $.ajax({
           url: "/nurses.json",
@@ -140,7 +143,7 @@
         });
       }
       else if (izbira == "Medicines") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">V uporabi</td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">V uporabi</td><td class="column-name">Navodila ID</td></tr></thead>');
 
         $.ajax({
           url: "/medicines.json",
@@ -155,6 +158,7 @@
               trHTML += '<td>' + medicine.medicineNumber + '</td>';
               trHTML += '<td>' + medicine.name + '</td>';
               trHTML += '<td>' + medicine.inUse + '</td>';
+              trHTML += '<td>' + medicine.medicine_instruction_id + '</td>';
               trHTML += "<td align='right'>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/medicines/" + medicine.id + "/edit'>Uredi</a>" +
                   "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/medicines/" + medicine.id + "'>Izbrisi</a>";
@@ -167,7 +171,7 @@
         });
       }
       else if (izbira == "Diets") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Deleted</td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Izbrisana</td></tr></thead>');
 
         $.ajax({
           url: "/diets.json",
@@ -194,7 +198,7 @@
         });
       }
       else if (izbira == "Hospitals") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Deleted</td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Naslov ID</td><td class="column-name">Izbrisana</td></tr></thead>');
 
         $.ajax({
           url: "/hospitals.json",
@@ -208,6 +212,7 @@
               trHTML += '<td>' + hospital.id + '</td>';
               trHTML += '<td>' + hospital.hospitalNumber + '</td>';
               trHTML += '<td>' + hospital.hospitalName + '</td>';
+              trHTML += '<td>' + hospital.address_id + '</td>';
               trHTML += '<td>' + hospital.deleted + '</td>';
               trHTML += "<td align='right'>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/hospitals/" + hospital.id + "/edit'>Uredi</a>" +

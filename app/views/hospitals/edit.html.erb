@@ -1,8 +1,11 @@
-<div class="text-center">
-  <h1>Uredi izvajalca zdravstvenih storitev</h1>
+<% if admin_signed_in? %>
+    <div class="text-center">
 
-  <%= render 'form' %>
+    <h1>Uredi izvajalca zdravstvenih storitev</h1>
 
-  <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+    <%= render 'form' %>
 
-</div>
+    <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+
+  </div>
+<% end %>

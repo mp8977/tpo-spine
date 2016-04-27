@@ -73,6 +73,10 @@ class NursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nurse_params
-      params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id)
+      if admin_signed_in?
+        params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id, :deleted)
+      else
+        params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id)
+      end
     end
 end

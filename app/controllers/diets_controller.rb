@@ -28,8 +28,8 @@ class DietsController < ApplicationController
 
     respond_to do |format|
       if @diet.save
-        format.html { redirect_to @diet, notice: 'Diet was successfully created.' }
-        format.json { render :show, status: :created, location: @diet }
+        flash[:notice] = 'Dieta je bila uspesno kreirana'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @diet.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class DietsController < ApplicationController
   def update
     respond_to do |format|
       if @diet.update(diet_params)
-        format.html { redirect_to @diet, notice: 'Diet was successfully updated.' }
-        format.json { render :show, status: :ok, location: @diet }
+        flash[:notice] = 'Dieta je bila posodobljena'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :edit }
         format.json { render json: @diet.errors, status: :unprocessable_entity }
@@ -54,10 +54,15 @@ class DietsController < ApplicationController
   # DELETE /diets/1
   # DELETE /diets/1.json
   def destroy
-    @diet.destroy
-    respond_to do |format|
-      format.html { redirect_to diets_url, notice: 'Diet was successfully destroyed.' }
-      format.json { head :no_content }
+    @diet.deleted = true
+    if @diet.save
+      flash[:notice] = 'Dieta je bila uspesno izbrisana'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju diete'
     end
   end
 
@@ -69,6 +74,10 @@ class DietsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def diet_params
-      params.require(:diet).permit(:dietNumber, :name)
+      if admin_signed_in?
+        params.require(:diet).permit(:dietNumber, :name, :deleted)
+      else
+        params.require(:diet).permit(:dietNumber, :name)
+      end
     end
 end

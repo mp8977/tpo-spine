@@ -75,6 +75,10 @@ class IllnessesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def illness_params
-      params.require(:illness).permit(:illnessNumber, :name, :isAllergy)
+      if admin_signed_in?
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy, :deleted)
+      else
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy)
+      end
     end
 end

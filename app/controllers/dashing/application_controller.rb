@@ -1,7 +1,7 @@
 module Dashing
   class ApplicationController < ActionController::Base
 
-    before_filter :authentication_with_devise,:initialize_patient_index
+    before_filter :authentication_with_devise
 
     private
 

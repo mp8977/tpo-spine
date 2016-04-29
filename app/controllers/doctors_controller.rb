@@ -7,9 +7,19 @@ class DoctorsController < ApplicationController
     @doctors = Doctor.all
   end
 
-  # GET /doctors/1
-  # GET /doctors/1.json
+  # GET /doctors/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = DoctorPdf.new(@doctor, view_context)
+          send_data pdf.render, filename:
+              "doctor_#{@doctor.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /doctors/new

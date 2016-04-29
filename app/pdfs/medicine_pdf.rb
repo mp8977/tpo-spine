@@ -1,6 +1,7 @@
 class MedicinePdf < Prawn::Document
   def initialize(medicine, view)
     super()
+    font "#{Prawn::DATADIR}/fonts/DejaVuSans.ttf"
     header
     text 'Podatki o zdravilu', align: :center, size: 28
     move_down 30

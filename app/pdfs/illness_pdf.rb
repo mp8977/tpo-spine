@@ -1,23 +1,23 @@
-class DietPdf < Prawn::Document
-
+class IllnessPdf < Prawn::Document
   def initialize(resource, view)
     super()
     font "#{Prawn::DATADIR}/fonts/DejaVuSans.ttf"
     header
-    text 'Podatki o dieti', align: :center, size: 28
+    text 'Podatki o bolezni', align: :center, size: 28
     move_down 30
-    @diet = resource
+    @illness = resource
     @view = view
     font_size 20
     default_leading 5 #prostor med vrsticami
     #text "ID: #{@medicine.id}"
-    text "Sifra: #{@diet.dietNumber}"
-    text "Ime: #{@diet.name}"
-    text "Navodila: "
-    @diet.diet_instructions.each do |d|
-      text d.url_string
+    text "Sifra: #{@illness.illnessNumber}"
+    text "Ime: #{@illness.name}"
+    if @illness.isAllergy
+      text "Alergija: DA"
+    else
+      text "Alergija: NE"
     end
-    if @diet.deleted
+    if @illness.deleted
       text "Izbrisana: DA"
     else
       text "Izbrisana: NE"
@@ -37,5 +37,4 @@ class DietPdf < Prawn::Document
     text 'Zdravstveni informacijski sistem', align: :right, size: 33
     move_down 40
   end
-
 end

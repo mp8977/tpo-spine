@@ -7,9 +7,19 @@ class IllnessesController < ApplicationController
     @illnesses = Illness.all
   end
 
-  # GET /illnesses/1
-  # GET /illnesses/1.json
+  # GET /illnesses/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = IllnessPdf.new(@illness, view_context)
+          send_data pdf.render, filename:
+              "illness_#{@illness.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /illnesses/new

@@ -1,22 +1,19 @@
-class DoctorPdf < Prawn::Document
+class NursePdf < Prawn::Document
   def initialize(resource, view)
     super()
     font "#{Prawn::DATADIR}/fonts/DejaVuSans.ttf"
     header
-    text 'Podatki o zdravniku', align: :center, size: 28
+    text 'Podatki o medicinski sestri', align: :center, size: 28
     move_down 30
-    @doctor = resource
+    @nurse = resource
     @view = view
     font_size 20
     default_leading 5 #prostor med vrsticami
-    text "Sifra: #{@doctor.doctorNumber}"
-    text "Ime in priimek: #{@doctor.firstName} #{@doctor.lastName}"
-    text "Email: #{@doctor.email}"
-    text "Specializacija: #{@doctor.category}"
-    text "Telefon: #{@doctor.phone}"
-    text "Max stevilo pacientov: #{@doctor.limitPatient}"
-    @hospital = Hospital.find(@doctor.hospital_id)
-    puts @hospital.hospitalName
+    text "Sifra: #{@nurse.nurseNumber}"
+    text "Ime in priimek: #{@nurse.firstName} #{@nurse.lastName}"
+    text "Email: #{@nurse.email}"
+    text "Telefon: #{@nurse.phone}"
+    @hospital = Hospital.find(@nurse.hospital_id)
     text "Izvajalec zdravstvenih storitev:"
     indent(20) do
       text "Naziv: #{@hospital.hospitalName}"
@@ -27,10 +24,10 @@ class DoctorPdf < Prawn::Document
     indent(20) do
       text "Naslov: #{@address.streetName} #{@address.streetNumber}, #{@post.postName} #{@post.postNumber}"
     end
-    if @doctor.deleted
-      text "Izbrisan: DA"
+    if @nurse.deleted
+      text "Izbrisana: DA"
     else
-      text "Izbrisan: NE"
+      text "Izbrisana: NE"
     end
   end
 

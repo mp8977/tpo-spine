@@ -7,9 +7,19 @@ class HospitalsController < ApplicationController
     @hospitals = Hospital.all
   end
 
-  # GET /hospitals/1
-  # GET /hospitals/1.json
+  # GET /hospitals/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = HospitalPdf.new(@hospital, view_context)
+          send_data pdf.render, filename:
+              "nurse_#{@hospital.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /hospitals/new

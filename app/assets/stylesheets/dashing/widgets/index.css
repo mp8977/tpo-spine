@@ -23,7 +23,7 @@
     background-color: #1a6665;
     float:left;
     position: fixed;
-    /*width: 250px;*/
+    width: 250px;
 }
 
 #side-menu>ul{
@@ -31,7 +31,14 @@
     margin: 80px 20px 80px 20px;
     list-style-type: none;
 }
-#side-menu>ul>li>ul{
+#side-menu>ul>li>ul {
     list-style-type: none;
-    text-align: center
+    text-align: left;
+    padding-left: 15px;
+}
+
+
+#side-menu>ul>li>ul>a>li:hover{
+    text-decoration: underline;
+    cursor:pointer;
 }

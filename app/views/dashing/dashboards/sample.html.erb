@@ -2,20 +2,41 @@
 
 
 <%  require 'json'
+    require 'uri'
+    require 'cgi'
+
     userId=current_user.id
-    patientIndex=0
     patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]
-    patientNames=""
+    patientNames=[]
+    patientIndex=params[:patientIndex].to_i
+    if patientIndex==nil
+      patientIndex=0
+    end
     k=0;
     patientsAll.each do |patientId|
       patientIds.push(patientId.id)
-      patientNames+=("<li>"+patientId.firstName+' '+patientId.lastName+"</li>")
+      patientNames.push(patientId.firstName+' '+patientId.lastName)
       k+=1
     end
+
     patId=patientIds[patientIndex]
     allCheckUps=CheckUp.where("patient_id = ?",patId)
     checkUp=allCheckUps.last
+
+
+    #patientInfo
+    patient=Patient.find(patId)
+    address=Address.find(patient.address_id)
+    post=Post.find(address.post_id)
+
+    patientInfo=patient.firstName+" "+patient.lastName+"<br />"
+    patientInfo+= address.streetName+" "+address.streetNumber+"<br />"
+    patientInfo+= post.postNumber+" "+post.postName+"<br />"
+    patientInfo+=patient.phone+"<br />"
+    patientInfo+=patient.birthDate.to_s+"<br />"
+    patientInfo+= patient.cardNumber+"<br />"
+
 
     checkUpIds=[]
     allCheckUps.each do |check|
@@ -210,22 +231,28 @@
 
 
 %>
-<% if false%>
+
 <div id="side-menu">
   <ul>
-    <li >Pacienti<br>
+    <li >Pacienti:<br>
       <ul id="pacientList">
-          <%= patientNames.html_safe %>
+        <% ind=0 %>
+        <%patientNames.each do |patientName|%>
+           <%=link_to( ("<li>"+patientName+"</li>").html_safe, patientIndex: ind.to_s) %>
+
+
+          <%ind+=1%>
+        <%end%>
       </ul>
     </li>
   </ul>
 </div>
-<%end%>
+
 <div class="gridster">
 
   <ul>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="pat" data-view="Patient"  data-title="Pacient"></div>
+      <div id="pat" data-view="Patient"  data-title="Pacient" data-info="<%=patientInfo %>"></div>
     </li>
     <% if allPartMeasurements.count>0 %>
       <li id="measurement-li" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
@@ -275,7 +302,6 @@
 
 <script>
     var staffNumber=0;
-
 </script>
 <%
   Redis.new.client.call(["client", "kill", "type", "pubsub"])

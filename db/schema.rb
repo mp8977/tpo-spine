@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160425134715) do
+ActiveRecord::Schema.define(version: 20160429104957) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -98,10 +98,11 @@ ActiveRecord::Schema.define(version: 20160425134715) do
   add_index "diet_checks", ["diet_id"], name: "fk_rails_72b2ed97d4", using: :btree
 
   create_table "diet_instructions", force: :cascade do |t|
-    t.string   "url",        limit: 255
     t.integer  "diet_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
+    t.string   "url_string", limit: 255
   end
 
   add_index "diet_instructions", ["diet_id"], name: "fk_rails_86f8c39ff5", using: :btree
@@ -228,9 +229,10 @@ ActiveRecord::Schema.define(version: 20160425134715) do
   add_index "medicine_checks", ["medicine_id"], name: "fk_rails_ecd3adc7bb", using: :btree
 
   create_table "medicine_instructions", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
+    t.string   "url_string", limit: 255
   end
 
   create_table "medicines", force: :cascade do |t|

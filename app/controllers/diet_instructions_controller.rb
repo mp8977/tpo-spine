@@ -28,8 +28,8 @@ class DietInstructionsController < ApplicationController
 
     respond_to do |format|
       if @diet_instruction.save
-        format.html { redirect_to @diet_instruction, notice: 'Diet instruction was successfully created.' }
-        format.json { render :show, status: :created, location: @diet_instruction }
+        flash[:notice] = 'Navodilo je bilo uspesno kreirano'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @diet_instruction.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class DietInstructionsController < ApplicationController
   def update
     respond_to do |format|
       if @diet_instruction.update(diet_instruction_params)
-        format.html { redirect_to @diet_instruction, notice: 'Diet instruction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @diet_instruction }
+        flash[:notice] = 'Navodilo je bilo posodobljeno'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :edit }
         format.json { render json: @diet_instruction.errors, status: :unprocessable_entity }
@@ -54,10 +54,15 @@ class DietInstructionsController < ApplicationController
   # DELETE /diet_instructions/1
   # DELETE /diet_instructions/1.json
   def destroy
-    @diet_instruction.destroy
-    respond_to do |format|
-      format.html { redirect_to diet_instructions_url, notice: 'Diet instruction was successfully destroyed.' }
-      format.json { head :no_content }
+    @diet_instruction.deleted = true
+    if @diet_instruction.save
+      flash[:notice] = 'Navodilo je bilo uspesno izbrisano'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju navodila za dieto'
     end
   end
 
@@ -69,6 +74,8 @@ class DietInstructionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def diet_instruction_params
-      params.require(:diet_instruction).permit(:url)
+      if admin_signed_in?
+        params.require(:diet_instruction).permit(:url_string, :diet_id, :deleted)
+      end
     end
 end

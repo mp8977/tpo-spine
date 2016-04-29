@@ -13,7 +13,7 @@
   <tbody>
     <% @medicine_instructions.each do |medicine_instruction| %>
       <tr>
-        <td><%= medicine_instruction.url %></td>
+        <td><%= medicine_instruction.url_string %></td>
         <td><%= link_to 'Show', medicine_instruction %></td>
         <td><%= link_to 'Edit', edit_medicine_instruction_path(medicine_instruction) %></td>
         <td><%= link_to 'Destroy', medicine_instruction, method: :delete, data: { confirm: 'Are you sure?' } %></td>

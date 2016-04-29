@@ -10,7 +10,7 @@ before_filter :configure_sign_in_params, only: [:create]
   def create
     super
 
-    store_location_for(resource, '/static/doctor_dashboard')
+   # store_location_for(resource, '/static/doctor_dashboard')
   end
 
   # DELETE /resource/sign_out
@@ -25,7 +25,15 @@ before_filter :configure_sign_in_params, only: [:create]
     devise_parameter_sanitizer.for(:sign_in)# << :attribute
   end
 
-  def after_sign_in_path_for(resource)
-    stored_location_for(resource) || request.referer || root_path
+  def after_sign_in_path_for(resource) # resource je user
+    if prazen_profil(resource) # prazen profil
+      edit_doctor_path(id: resource.id)
+    else
+      '/static/doctor_dashboard'
+    end
+  end
+
+  def prazen_profil(doctor)
+    doctor.doctorNumber.nil?
   end
 end

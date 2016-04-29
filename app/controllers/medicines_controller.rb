@@ -8,8 +8,19 @@ class MedicinesController < ApplicationController
   end
 
   # GET /medicines/1
-  # GET /medicines/1.json
+  # GET /medicines/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = MedicinePdf.new(@medicine, view_context)
+          send_data pdf.render, filename:
+              "medicine_#{@medicine.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /medicines/new
@@ -76,9 +87,9 @@ class MedicinesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def medicine_params
       if admin_signed_in?
-        params.require(:medicine).permit(:medicineNumber, :name, :inUse, :medicine_instruction_id)
+        params.require(:medicine).permit(:id, :medicineNumber, :name, :inUse, :medicine_instruction_id)
       else
-        params.require(:medicine).permit(:medicineNumber, :name, :inUse)
+        params.require(:medicine).permit(:id, :medicineNumber, :name, :inUse)
       end
     end
 end

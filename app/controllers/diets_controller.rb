@@ -10,6 +10,17 @@ class DietsController < ApplicationController
   # GET /diets/1
   # GET /diets/1.json
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = DietPdf.new(@diet, view_context)
+          send_data pdf.render, filename:
+              "diet_#{@diet.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /diets/new

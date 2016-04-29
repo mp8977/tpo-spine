@@ -9,7 +9,9 @@
       <option value="Nurses">Medicinske sestre</option>
       <option value="Illnesses">Bolezni</option>
       <option value="Medicines">Zdravila</option>
+      <option value="MedicineInstructions">Navodila za zdravila</option>
       <option value="Diets">Diete</option>
+      <option value="DietInstructions">Navodila za diete</option>
       <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
       <!-- TODO za meritve poglej kaj prikazat in redirectaj -->
       <option value="Measurements">Meritve</option>
@@ -160,12 +162,39 @@
               trHTML += '<td>' + medicine.inUse + '</td>';
               trHTML += '<td>' + medicine.medicine_instruction_id + '</td>';
               trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/medicines/" + medicine.id + ".pdf'>pdf</a>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/medicines/" + medicine.id + "/edit'>Uredi</a>" +
                   "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/medicines/" + medicine.id + "'>Izbrisi</a>";
               trHTML += '</tr></tbody>';
             });
             $('#show-data').append(trHTML);
             var new_button = $("<a class='btn btn-info add-new-button' href='/medicines/new'>Dodaj zdravilo</a>");
+            $('.profile-content').append(new_button);
+          }
+        });
+      }
+      else if (izbira == "MedicineInstructions") {
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">URL</td><td class="column-name">Izbrisano</td></tr></thead>');
+
+        $.ajax({
+          url: "/medicine_instructions.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '';
+            $.each(json, function (index, instr) {
+              trHTML += '<tbody><tr>';
+              trHTML += '<td>' + instr.id + '</td>';
+              trHTML += '<td>' + instr.url_string + '</td>';
+              trHTML += '<td>' + instr.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/medicine_instructions/" + instr.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/medicine_instructions/" + instr.id + "'>Izbrisi</a>";
+              trHTML += '</tr></tbody>';
+            });
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/medicine_instructions/new'>Dodaj navodilo</a>");
             $('.profile-content').append(new_button);
           }
         });
@@ -187,12 +216,40 @@
               trHTML += '<td>' + diet.name + '</td>';
               trHTML += '<td>' + diet.deleted + '</td>';
               trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/diets/" + diet.id + ".pdf'>pdf</a>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/diets/" + diet.id + "/edit'>Uredi</a>" +
                   "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/diets/" + diet.id + "'>Izbrisi</a>";
               trHTML += '</tr></tbody>';
             });
             $('#show-data').append(trHTML);
             var new_button = $("<a class='btn btn-info add-new-button' href='/diets/new'>Dodaj dieto</a>");
+            $('.profile-content').append(new_button);
+          }
+        });
+      }
+      else if (izbira == "DietInstructions") {
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">URL</td><td class="column-name">Dieta ID</td><td class="column-name">Izbrisano</td></tr></thead>');
+
+        $.ajax({
+          url: "/diet_instructions.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '';
+            $.each(json, function (index, instr) {
+              trHTML += '<tbody><tr>';
+              trHTML += '<td>' + instr.id + '</td>';
+              trHTML += '<td>' + instr.url_string + '</td>';
+              trHTML += '<td>' + instr.diet_id + '</td>';
+              trHTML += '<td>' + instr.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/diet_instructions/" + instr.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/diet_instructions/" + instr.id + "'>Izbrisi</a>";
+              trHTML += '</tr></tbody>';
+            });
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/diet_instructions/new'>Dodaj navodilo</a>");
             $('.profile-content').append(new_button);
           }
         });
@@ -252,16 +309,10 @@
           }
         });
       }
-
-
     }
 
   </script>
 <div class="show-table">
 
 </div>
-
-
-    <!--  ActiveRecord::Base.connection.tables,  -->
-
 <% end %>

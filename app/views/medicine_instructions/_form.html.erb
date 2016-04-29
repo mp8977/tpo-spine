@@ -11,11 +11,19 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
+  <table align="center">
+    <td align="right">URL:</td>
+    <td align="left"><%= f.text_field :url_string %></td>
+    </tr>
+    <% if admin_signed_in? %>
+        <tr>
+          <td align="right">Izbrisana</td>
+          <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false}) %></td>
+        </tr>
+    <% end %>
+  </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
 <% end %>

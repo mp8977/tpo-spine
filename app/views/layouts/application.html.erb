@@ -92,7 +92,7 @@
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
-                <li class="active">
+                <li>
                   <a href="/nurses/<%= current_nurse.id%>/edit">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
@@ -131,7 +131,7 @@
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
-                <li class="active">
+                <li> <!-- class="active" -->
                   <a href="/doctors/<%= current_doctor.id%>/edit">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
@@ -169,30 +169,30 @@
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
-                <li class="active">
+                <li>
                   <a href="/dashing">
                     <i class="glyphicon glyphicon-dashboard"></i>
                     Dashboard</a>
                 </li>
                 <% if  current_user.count_patients == 1 %>
-                    <li class="active">
+                    <li>
                       <a href="/patients/<%=current_user.patients.first.id %>/edit">
                         <i class="glyphicon glyphicon-pencil"></i>
                         Urejanje profila</a>
                     </li>
                 <% else%>
-                    <li class="active">
+                    <li>
                       <a href="/patients/">
                         <i class="glyphicon glyphicon-pencil"></i>
                         Profili pacientov</a>
                     </li>
                 <% end %>
-                <li class="active">
+                <li>
                   <a href="/patients/new">
                     <i class="glyphicon glyphicon-user"></i>
                     Dodaj pacienta</a>
                 </li>
-                <li class="active">
+                <li>
                   <a href="/users/<%=current_user.id %>/edit">
                     <i class="glyphicon glyphicon-wrench"></i>
                     Urejanje uporabniskega racuna</a>
@@ -215,7 +215,7 @@
     <% flash.each do |name, msg| %>
         <%= content_tag(:div, msg, class: "alert alert-#{name}") %>
     <% end %>
-
+    
     <% if admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?%>
         <div class="col-md-9">
           <div class="profile-content">

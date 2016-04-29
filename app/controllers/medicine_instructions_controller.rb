@@ -28,8 +28,8 @@ class MedicineInstructionsController < ApplicationController
 
     respond_to do |format|
       if @medicine_instruction.save
-        format.html { redirect_to @medicine_instruction, notice: 'Medicine instruction was successfully created.' }
-        format.json { render :show, status: :created, location: @medicine_instruction }
+        flash[:notice] = 'Navodilo je bilo uspesno kreirano'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @medicine_instruction.errors, status: :unprocessable_entity }
@@ -42,8 +42,9 @@ class MedicineInstructionsController < ApplicationController
   def update
     respond_to do |format|
       if @medicine_instruction.update(medicine_instruction_params)
-        format.html { redirect_to @medicine_instruction, notice: 'Medicine instruction was successfully updated.' }
-        format.json { render :show, status: :ok, location: @medicine_instruction }
+        flash[:notice] = 'Navodilo je bilo posodobljeno'
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        #format.json { render :show, status: :ok, location: @medicine_instruction }
       else
         format.html { render :edit }
         format.json { render json: @medicine_instruction.errors, status: :unprocessable_entity }
@@ -54,10 +55,13 @@ class MedicineInstructionsController < ApplicationController
   # DELETE /medicine_instructions/1
   # DELETE /medicine_instructions/1.json
   def destroy
-    @medicine_instruction.destroy
-    respond_to do |format|
-      format.html { redirect_to medicine_instructions_url, notice: 'Medicine instruction was successfully destroyed.' }
-      format.json { head :no_content }
+    @medicine_instruction.deleted = true
+    if @medicine_instruction.save
+      flash[:notice] = 'Navodilo je bilo uspesno izbrisano'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -69,6 +73,8 @@ class MedicineInstructionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def medicine_instruction_params
-      params.require(:medicine_instruction).permit(:url)
+      if admin_signed_in?
+        params.require(:medicine_instruction).permit(:url_string, :deleted)
+      end
     end
 end

@@ -1,9 +1,9 @@
 class StaticController < ApplicationController
+
   def home
   end
 
   def admin_dashboard
-    
   end
 
   def user_dashboard

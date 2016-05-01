@@ -29,10 +29,3 @@ series = [
 ]
 Dashing.send_event('convergence', series: series)
 =end
-
-data = [
-    { "x" => 1, "y" => 1323 },
-    { "x" => 2, "y" => 53234 },
-    { "x" => 3, "y" => 2344 }
-]
-Dashing.send_event(:market_value, points: data, displayedValue: data.first["y"])

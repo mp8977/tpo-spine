@@ -34,7 +34,7 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-        flash[:notice] = 'Pacient je bil uspesno kreiran'
+        flash[:notice] = 'Pacient je bil uspešno kreiran.'
         if current_user.count_patients == 1
           format.html { redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id }
         else
@@ -53,9 +53,9 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.update(patient_params)
         if  !user_signed_in?
-          format.html { redirect_to controller: "static", action: "confirmation" }
+          format.html { redirect_to root_path }
         else
-          flash[:notice] = 'Patient was successfully updated.'
+          flash[:notice] = 'Pacient je bil uspešno posodobljen.'
           if current_user.count_patients == 1
             format.html { redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id }
           else
@@ -72,11 +72,10 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    puts 'zbrisi pacienta'
     puts @patient.id
     @patient.deleted = true
     if @patient.save
-      flash[:notice] = "Pacient je bil uspesno izbrisan"
+      flash[:notice] = 'Pacient je bil uspešno izbrisan'
       if current_user.count_patients == 1
         redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id
       else

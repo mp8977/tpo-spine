@@ -27,11 +27,12 @@
       </tr>
       <tr>
         <td align="right">Rojstni datum:</td>
-        <td align="left"><%= p.date_select :birthDate, start_year: 1950,  include_blank: true %></td>
+        <td align="left"><%= p.date_select :birthDate, start_year: 1930,  include_blank: true, order: [:day, :month, :year],
+                             use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
       </tr>
       <tr>
         <td align="right">Spol</td>
-        <td align="left"><%= p.text_field :sex %></td>
+        <td align="left"><%= p.collection_select(:sex, %w(moški ženski), :to_s, :to_s, {include_blank: true},{:multiple => false}) %></td>
       </tr>
       <tr>
         <td align="right">Telefon:</td>

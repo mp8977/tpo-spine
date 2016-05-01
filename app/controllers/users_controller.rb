@@ -57,6 +57,7 @@ class UsersController < ApplicationController
     puts 'user destroyed'
     @user.deleted = true
     if @user.save
+      flash[:notice] = 'Uporabniški račun je bil uspešno izbrisan.'
       # deleted so vsi pacienti in vse kar gre zraven
       @user.patients.each do |p|
         p.deleted = true

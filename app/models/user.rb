@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   def password_complexity
     if password.present? and not password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
-      errors.add :password, "must include at least one letter and one digit"
+      errors.add :password, "mora vsebovati vsaj eno črko in eno števko."
     end
   end
 
@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
   end
 
   def inactive_message
-    "Uporabniski racun je bil izbrisan"
+    !deleted ? super : :deleted_account
   end
 
   def last_sign_in_at_format

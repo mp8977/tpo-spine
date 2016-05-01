@@ -7,7 +7,7 @@
     <table align="center">
       <tr>
         <td align="right">Email:</td>
-        <td><%= f.email_field :email, autofocus: true %></td>
+        <td><%= f.email_field :email, autofocus: true, size: '30' %></td>
       </tr>
       <tr>
         <td align="right">
@@ -16,11 +16,11 @@
               <em>(vsaj <%= @minimum_password_length %> znakov):</em>
           <% end %>
         </td>
-        <td><%= f.password_field :password, autocomplete: "off" %></td>
+        <td><%= f.password_field :password, autocomplete: "off", size: '30' %></td>
       </tr>
       <tr>
         <td align="right">Ponovitev gesla:</td>
-        <td><%= f.password_field :password_confirmation, autocomplete: "off" %></td>
+        <td><%= f.password_field :password_confirmation, autocomplete: "off", size: '30' %></td>
       </tr>
     </table>
 

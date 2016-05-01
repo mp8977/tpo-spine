@@ -42,7 +42,7 @@ class NursesController < ApplicationController
   def update
     respond_to do |format|
       if @nurse.update(nurse_params)
-        flash[:notice] = 'Profil medicinske sestre je bil posodobljen'
+        flash[:notice] = 'Profil medicinske sestre je bil uspešno posodobljen.'
         if admin_signed_in?
           format.html { redirect_to controller: "admins", action: "sifranti"}
         else
@@ -61,12 +61,12 @@ class NursesController < ApplicationController
   def destroy
     @nurse.deleted = true
     if @nurse.save
-      flash[:notice] = 'Medicinska sestra je bila uspesno izbrisana'
+      flash[:notice] = 'Medicinska sestra je bila uspešno izbrisana'
       respond_to do |format|
         if admin_signed_in?
           format.html { redirect_to controller: :admins, action: :sifranti }
           format.json { head :no_content }
-        else # zbrise se sestra sama
+        else # zbrise se sestra sama TODO
           puts 'ce ne dela, dodaj spodaj private metodo iz user_controller: after_sign_out_path_for'
           sign_out_and_redirect(@nurse)
         end

@@ -42,7 +42,7 @@ class DoctorsController < ApplicationController
   def update
     respond_to do |format|
       if @doctor.update(doctor_params)
-        flash[:notice] = 'Profil zdravnika je bil posodobljen'
+        flash[:notice] = 'Profil zdravnika je bil uspešno posodobljen'
         if admin_signed_in?
           format.html { redirect_to controller: "admins", action: "sifranti"}
         else
@@ -61,7 +61,7 @@ class DoctorsController < ApplicationController
   def destroy
     @doctor.deleted = true
     if @doctor.save
-      flash[:notice] = 'Zdravnik je bil uspesno izbrisan'
+      flash[:notice] = 'Zdravnik je bil uspešno izbrisan'
       respond_to do |format|
         if admin_signed_in?
           format.html { redirect_to controller: :admins, action: :sifranti }

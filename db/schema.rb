@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418102321) do
+ActiveRecord::Schema.define(version: 20160501160949) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -44,8 +44,9 @@ ActiveRecord::Schema.define(version: 20160418102321) do
     t.integer  "check_up_id", limit: 4
     t.integer  "doctor_id",   limit: 4
     t.integer  "patient_id",  limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "instruction", limit: 65535
   end
 
   add_index "appointments", ["check_up_id"], name: "fk_rails_3d1ece398e", using: :btree

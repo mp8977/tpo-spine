@@ -1,0 +1,113 @@
+<div id="appointmentDetailsShow">
+  <h1>Pregled</h1>
+  <br/>
+  <div id="appointment-header">
+    <% if @pastDate!=nil %>
+      <p>Datum: <%= @pastDate%></p>
+    <%end%>
+
+    <% if @pastDoctorType!=nil %>
+      <p><%= @pastDoctorType.slice(0,1).capitalize+@pastDoctorType.slice(1..-1)+': '+@pastDoctor%></p>
+    <%end%>
+
+    <% if @nextDate!=nil%>
+      <p>Naslednji pregled: <%= @nextDate%></p>
+    <%end%>
+  </div>
+  <br/>
+
+  <div id="appointment-instruciton">
+    <%if @instructions!= nil and @instructions.length>0%>
+     <p>Navodila:</p>
+     <p><%=@instructions%></p>
+     <br />
+    <%end%>
+  </div>
+
+  <div id="appointment-diets">
+    <%if @dietNames!=nil and @dietNames.count>0%>
+      <p>Diete:</p>
+      <ul style="list-style-type:none">
+      <%i=0%>
+      <% @dietNames.each do |dietName|%>
+
+         <li><%=dietName%></li>
+         <ul style="list-style-type:square">
+           <%k=1%>
+           <% (@dietUrls[i]).each do |dietUrl|%>
+               <li>
+                 <a href="<%=dietUrl %>" target="_blank" >Navodila <%=k%></a>
+               </li>
+           <%k+=1%>
+           <% end %>
+         </ul>
+         <%i+=1%>
+      <%end%>
+      </ul>
+      <br />
+    <%end%>
+  </div>
+
+  <div id="appointment-illness">
+    <%if @illnessNames!=nil%>
+      <p>Bolezni:</p>
+      <ul style="list-style-type:none">
+      <% @illnessNames.each do |illnessName|%>
+        <li><%=illnessName%></li>
+      <%end%>
+      </ul>
+      <br />
+    <%end%>
+
+  </div>
+  <div id="appointment-allergy">
+    <%if @allergyNames!=nil%>
+        <p>Alergije:</p>
+        <ul style="list-style-type:none">
+          <% @allergyNames.each do |allergyName|%>
+              <li><%=allergyName%></li>
+          <%end%>
+        </ul>
+        <br />
+    <%end%>
+  </div>
+
+
+  <div id="appointment-medicine">
+    <%if @medicineNames!=nil%>
+        <p>Zdravila:</p>
+        <ul style="list-style-type:none">
+          <% i=0%>
+          <% @medicineNames.each do |medicineName|%>
+              <li><a target="_blank" href="<%=@medicineUrl[i] %>" ><%=medicineName%></a></li>
+              <%i+=1%>
+          <%end%>
+        </ul>
+        <br />
+    <%end%>
+  </div>
+
+ <div id="appointment-measurement">
+  <% if @partMeasurementAll!=nil %>
+    <p>Meritve:</p>
+    <ul style="list-style-type:none">
+    <%@partMeasurementAll.each do |partMeasurement|%>
+        <%case partMeasurement[0]%>
+           <%when "weight"%>
+              <li>Teža: <%=partMeasurement[1]%> kg<li>
+           <%when "glucose"%>
+              <li>Glukoza: <%=partMeasurement[1]%> mmol/l<li>
+           <%when "diastolic"%>
+              <li>Diastolični tlak: <%=partMeasurement[1]%> mmHg<li>
+           <%when "systolic"%>
+              <li>Siastolični tlak: <%=partMeasurement[1]%> mmHg<li>
+           <%when "HB"%>
+              <li>Srčni utrip: <%=partMeasurement[1]%> BPM<li>
+           <%when "temperature"%>
+              <li>Temperatura: <%=partMeasurement[1]%> °C<li>
+        <%end%>
+    <%end%>
+    </ul>
+  <%end%>
+ </div>
+</div>

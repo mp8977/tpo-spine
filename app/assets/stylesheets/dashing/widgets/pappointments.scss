@@ -25,5 +25,18 @@
     border: 2px solid rgba(255, 255, 255, 0.8);
     color:rgba(255, 255, 255, 0.8)
   }
+  .past-detail{
+    display: block;
+    margin: auto;
+    width: 24px;
+    height: 24px;
+    color:white;
+    border: 0px;
+    outline: 0;
+
+  }
+  .past-detail:hover{
+    cursor: pointer;
+  }
 
 }

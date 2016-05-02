@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'static/nurse_dashboard'
   get 'static/doctor_dashboard'
   get 'static/confirmation'
+  get 'appointment_details/:id'=>'appointment_details#show'
 
   # --> Must be ABOVE 'resources' !!!
   devise_for :users,
@@ -57,11 +58,13 @@ Rails.application.routes.draw do
   resources :check_ups
   resources :check_ups
   resources :addresses
+  #resource :appointment_details
+
   #resources :admins
 
 
 
-  
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -7,6 +7,11 @@ class User < ActiveRecord::Base
 
   validate :password_complexity
 
+
+  has_many :patients
+  accepts_nested_attributes_for :patients
+
+
   def password_complexity
     if password.present? and not password.match(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/)
       errors.add :password, "mora vsebovati vsaj eno črko in eno števko."
@@ -31,24 +36,52 @@ class User < ActiveRecord::Base
 
   def last_sign_in_at_format
     sign_in_string = last_sign_in_at.to_formatted_s(:rfc822)
+    # ura utc+2 ljubljana
     sign_in_string[17..18] = ((sign_in_string[17..18].to_i + 2) % 24).to_s
-    if last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Mon'
-      return "Ponedeljek" + sign_in_string[3..24]
-    elsif last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Tue'
-      return "Torek" + sign_in_string[3..24]
-    elsif last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Wed'
-      return "Sreda" + sign_in_string[3..24]
-    elsif last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Thu'
-      return "Cetrtek" + sign_in_string[3..24]
-    elsif last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Fri'
-      return "Petek" + sign_in_string[3..24]
-    elsif last_sign_in_at.to_formatted_s(:rfc822)[0..2] == 'Sat'
-      return "Sobota" + sign_in_string[3..24]
+    # dan
+    dan = last_sign_in_at.to_formatted_s(:rfc822)[0..2]
+    if dan == 'Mon'
+      rez = "Ponedeljek"
+    elsif dan == 'Tue'
+      rez = "Torek"
+    elsif dan == 'Wed'
+      rez = "Sreda"
+    elsif dan == 'Thu'
+      rez = "Cetrtek"
+    elsif dan == 'Fri'
+      rez = "Petek"
+    elsif dan == 'Sat'
+      rez = "Sobota"
     else
-      return "Nedelja" + sign_in_string[3..24]
+      rez = "Nedelja"
     end
+    # mesec
+    mesec = last_sign_in_at.to_formatted_s(:rfc822)[8..10]
+    if mesec == 'Jan'
+      rez = rez + ', januar' + sign_in_string[11..24]
+    elsif mesec == 'Feb'
+      rez = rez + ', februar' + sign_in_string[11..24]
+    elsif mesec == 'Mar'
+      rez = rez + ', marec' + sign_in_string[11..24]
+    elsif mesec == 'Apr'
+      rez = rez + ', april' + sign_in_string[11..24]
+    elsif mesec == 'May'
+      rez = rez + ', maj' + sign_in_string[11..24]
+    elsif mesec == 'Jun'
+      rez = rez + ', junij' + sign_in_string[11..24]
+    elsif mesec == 'Jul'
+      rez = rez + ', julij' + sign_in_string[11..24]
+    elsif mesec == 'Aug'
+      rez = rez + ', avgust' + sign_in_string[11..24]
+    elsif mesec == 'Sep'
+      rez = rez + ', september' + sign_in_string[11..24]
+    elsif mesec == 'Oct'
+      rez = rez + ', oktober' + sign_in_string[11..24]
+    elsif mesec == 'Nov'
+      rez = rez + ', november' + sign_in_string[11..24]
+    else
+      rez = rez + ', december' + sign_in_string[11..24]
+    end
+    return rez
   end
-
-  has_many :patients
-  accepts_nested_attributes_for :patients
 end

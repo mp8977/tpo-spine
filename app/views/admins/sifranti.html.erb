@@ -305,7 +305,7 @@
         });
       }
       else if (izbira == "Measurements") {
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Datum</td><td class="column-name">Deleted</td><td></td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Datum</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
           url: "/measurements.json",
@@ -317,8 +317,7 @@
             $.each(json, function (index, measurement) {
               trHTML += '<tr>';
               trHTML += '<td>' + measurement.id + '</td>';
-              <!-- TODO spremeni format datuma, tako kot pri vpisu vlog -->
-              trHTML += '<td>' + measurement.date + '</td>';
+              trHTML += '<td>' + formatDate(measurement.date) + '</td>';
               trHTML += '<td>' + measurement.deleted + '</td>';
               trHTML += "<td align='right'>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/measurements/" + measurement.id + "/edit'>Uredi</a>" +
@@ -337,6 +336,11 @@
 
     function makeTable() {
       $("#show-data").DataTable({"info": false, "ordering": false});
+    }
+
+    function formatDate(date) {
+      rez = date.slice(0,10);
+      return rez.slice(8,10) + '.' + rez.slice(5,7) + '.' + rez.slice(0,4);
     }
 
   </script>

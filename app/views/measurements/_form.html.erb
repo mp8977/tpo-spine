@@ -14,7 +14,8 @@
   <table align="center">
     <tr>
       <td align="right">Datum:</td>
-      <td align="left"><%= f.date_select :date, include_blank: true %></td>
+      <td align="left"><%= f.date_select :date, include_blank: true, order: [:day, :month, :year],
+                                         use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
     </tr>
     <%= f.fields_for :part_measurements do |p| %>
         <tr>
@@ -26,21 +27,21 @@
           <td align="left"><%= p.collection_select(:unit, %w(kg m), :to_s, :to_s,{include_blank: true},{:multiple => false}) %></td>
         </tr>
         <tr>
-          <td align="right">Kolicina</td>
+          <td align="right">Kolicina:</td>
           <td align="left"><%= p.text_field :value, type: 'number', step: '0.01' %></td>
         </tr>
         <% if user_signed_in? %>
           <%= p.fields_for :measurement_home do |h| %>
             <tr>
               <td align="right">Pacient:</td>
-              <td align="left"><%= h.collection_select(:patient_id, Patient.where(user_id: current_user.id, deleted: false), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+              <td align="left"><%= h.collection_select(:patient_id, Patient.where(user_id: current_user.id, deleted: false), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
             </tr>
           <% end %>
         <% elsif doctor_signed_in? %>
             <%= p.fields_for :measurement_doc do |d| %>
                 <tr>
                   <td align="right">Pregled:</td>
-                  <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+                  <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
                 </tr>
             <% end %>
 

@@ -11,19 +11,36 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :unit %><br>
-    <%= f.text_field :unit %>
-  </div>
-  <div class="field">
-    <%= f.label :value %><br>
-    <%= f.text_field :value %>
-  </div>
+  <table align="center">
+    <% if user_signed_in? %>
+      <tr>
+        <td align="right">Meritev:</td>
+        <%= puts current_user.id %>
+        <td align="left"><%= f.collection_select(:measurement_id, Measurement.where(id: PartMeasurement.where(id: MeasurementHome.where(id: current_user.get_patients_ids).part_measurement_id).measurement_id), :id, :date ,{include_blank: false},{:multiple => false}) %></td>
+      </tr>
+    <% elsif doctor_signed_in? %>
+      <tr>
+        <td align="right">Meritev:</td>
+        <td align="left"><%= f.collection_select(:measurement_id, Measurements.find(PartMeasurement.find(MeasurementDocs.find(current_doctor.id).part_measurement_id).measurement_id).where(deleted: false), :id, :date ,{include_blank: false},{:multiple => false}) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td align="right">Ime:</td>
+      <td align="left"><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td align="right">Enota:</td>
+      <td align="left"><%= f.text_field :unit %></td>
+    </tr>
+    <tr>
+      <td align="right">Kolicina:</td>
+      <td align="left"><%= f.text_field :value %></td>
+    </tr>
+
+
+  </table>
+
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
 <% end %>

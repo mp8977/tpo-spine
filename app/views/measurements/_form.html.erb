@@ -14,21 +14,22 @@
   <table align="center">
     <tr>
       <td align="right">Datum:</td>
-      <td align="left"><%= f.date_select :date, include_blank: true, order: [:day, :month, :year],
+      <td align="left"><%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
                                          use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
     </tr>
     <%= f.fields_for :part_measurements do |p| %>
         <tr>
           <td align="right">Ime</td>
-          <td align="left"><%= p.text_field :name %></td>
+          <td align="left"><%= p.text_field :name, required: true %></td>
         </tr>
         <tr>
           <td align="right">Enota</td>
-          <td align="left"><%= p.collection_select(:unit, %w(kg m), :to_s, :to_s,{include_blank: true},{:multiple => false}) %></td>
+          <td align="left"><%= p.collection_select(:unit, %w(kg m), :to_s, :to_s,{include_blank: false},
+                                                   {:multiple => false, required: true}) %></td>
         </tr>
         <tr>
           <td align="right">Kolicina:</td>
-          <td align="left"><%= p.text_field :value, type: 'number', step: '0.01' %></td>
+          <td align="left"><%= p.text_field :value, type: 'number', step: '0.01', required: true %></td>
         </tr>
         <% if user_signed_in? %>
           <%= p.fields_for :measurement_home do |h| %>
@@ -44,7 +45,6 @@
                   <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
                 </tr>
             <% end %>
-
         <% end %>
     <% end %>
   </table>

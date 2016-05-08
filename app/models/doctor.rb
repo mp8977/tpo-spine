@@ -64,32 +64,36 @@ class Doctor < ActiveRecord::Base
     else
       rez = "Nedelja"
     end
+    stevilka_dneva = last_sign_in_at.to_formatted_s(:rfc822)[5..6]
+    if stevilka_dneva[0] == '0'
+      stevilka_dneva = stevilka_dneva[1]
+    end
     # mesec
     mesec = last_sign_in_at.to_formatted_s(:rfc822)[8..10]
     if mesec == 'Jan'
-      rez = rez + ', januar' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. januar' + sign_in_string[11..24]
     elsif mesec == 'Feb'
-      rez = rez + ', februar' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. februar' + sign_in_string[11..24]
     elsif mesec == 'Mar'
-      rez = rez + ', marec' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. marec' + sign_in_string[11..24]
     elsif mesec == 'Apr'
-      rez = rez + ', april' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. april' + sign_in_string[11..24]
     elsif mesec == 'May'
-      rez = rez + ', maj' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. maj' + sign_in_string[11..24]
     elsif mesec == 'Jun'
-      rez = rez + ', junij' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. junij' + sign_in_string[11..24]
     elsif mesec == 'Jul'
-      rez = rez + ', julij' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. julij' + sign_in_string[11..24]
     elsif mesec == 'Aug'
-      rez = rez + ', avgust' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. avgust' + sign_in_string[11..24]
     elsif mesec == 'Sep'
-      rez = rez + ', september' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. september' + sign_in_string[11..24]
     elsif mesec == 'Oct'
-      rez = rez + ', oktober' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. oktober' + sign_in_string[11..24]
     elsif mesec == 'Nov'
-      rez = rez + ', november' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. november' + sign_in_string[11..24]
     else
-      rez = rez + ', december' + sign_in_string[11..24]
+      rez = rez + ' ' + stevilka_dneva + '. december' + sign_in_string[11..24]
     end
     return rez
   end

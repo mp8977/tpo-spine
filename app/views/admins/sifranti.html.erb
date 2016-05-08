@@ -1,6 +1,9 @@
 <% if admin_signed_in? %>
   <h2>Sifranti</h2>
 
+
+    <!-- TODO povsod zamenjaj find z where stavkom -->
+
   <div class="izberi-sifrante">
     <select class="select">
       <option></option>
@@ -15,6 +18,9 @@
       <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
       <!-- TODO za meritve poglej kaj prikazat in redirectaj -->
       <option value="Measurements">Meritve</option>
+      <option value="PartMeasurements">Delne meritve</option>
+      <option value="MeasurementsHome">Domace meritve</option>
+      <option value="MeasurementsDocs">Zdravniske meritve</option>
     </select>
   </div>
 
@@ -305,6 +311,9 @@
         });
       }
       else if (izbira == "Measurements") {
+        // TODO dodaj ostale informacije glede na to katere ima -> join
+
+        //TODO poglej ce so vse stvari required, da se ne posiljajo prazne + v modelih
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Datum</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
@@ -320,6 +329,7 @@
               trHTML += '<td>' + formatDate(measurement.date) + '</td>';
               trHTML += '<td>' + measurement.deleted + '</td>';
               trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurements/" + measurement.id + ".pdf'>pdf</a>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/measurements/" + measurement.id + "/edit'>Uredi</a>" +
                   "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurements/" + measurement.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
@@ -332,6 +342,99 @@
           }
         });
       }
+      else if (izbira == "PartMeasurements") {
+
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Meritev ID</td><td class="column-name">Ime</td><td class="column-name">Enota</td><td class="column-name">Kolicina</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
+
+        $.ajax({
+          url: "/part_measurements.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '<tbody>';
+            $.each(json, function (index, part_measurement) {
+              trHTML += '<tr>';
+              trHTML += '<td>' + part_measurement.id + '</td>';
+              trHTML += '<td>' + part_measurement.measurement_id + '</td>';
+              trHTML += '<td>' + part_measurement.name + '</td>';
+              trHTML += '<td>' + part_measurement.unit + '</td>';
+              trHTML += '<td>' + part_measurement.value + '</td>';
+              trHTML += '<td>' + part_measurement.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/part_measurements/" + part_measurement.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/part_measurements/" + part_measurement.id + "'>Izbrisi</a>";
+              trHTML += '</tr>';
+            });
+            trHTML += '</tbody>';
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/part_measurements/new'>Dodaj meritev</a>");
+            $('.profile-content').append(new_button);
+            makeTable();
+          }
+        });
+      }
+      else if (izbira == "MeasurementsHome") {
+
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Delna meritev ID</td><td class="column-name">Pacient ID</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
+
+        $.ajax({
+          url: "/measurement_homes.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '<tbody>';
+            $.each(json, function (index, measurement_home) {
+              trHTML += '<tr>';
+              trHTML += '<td>' + measurement_home.id + '</td>';
+              trHTML += '<td>' + measurement_home.part_measurement_id + '</td>';
+              trHTML += '<td>' + measurement_home.patient_id + '</td>';
+              trHTML += '<td>' + measurement_home.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_homes/" + measurement_home.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurement_homes/" + measurement_home.id + "'>Izbrisi</a>";
+              trHTML += '</tr>';
+            });
+            trHTML += '</tbody>';
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/measurement_homes/new'>Dodaj meritev</a>");
+            $('.profile-content').append(new_button);
+            makeTable();
+          }
+        });
+      }
+      else if (izbira == "MeasurementsDocs") {
+
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Delna meritev ID</td><td class="column-name">Pregled ID</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
+
+        $.ajax({
+          url: "/measurement_docs.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '<tbody>';
+            $.each(json, function (index, measurement_doc) {
+              trHTML += '<tr>';
+              trHTML += '<td>' + measurement_doc.id + '</td>';
+              trHTML += '<td>' + measurement_doc.part_measurement_id + '</td>';
+              trHTML += '<td>' + measurement_doc.check_up_id + '</td>';
+              trHTML += '<td>' + measurement_doc.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_docs/" + measurement_doc.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurement_docs/" + measurement_doc.id + "'>Izbrisi</a>";
+              trHTML += '</tr>';
+            });
+            trHTML += '</tbody>';
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/measurement_docs/new'>Dodaj meritev</a>");
+            $('.profile-content').append(new_button);
+            makeTable();
+          }
+        });
+      }
+
     }
 
     function makeTable() {

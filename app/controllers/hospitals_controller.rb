@@ -15,7 +15,7 @@ class HospitalsController < ApplicationController
           # disposition: :inline namesto download ti odpre v browserju
           pdf = HospitalPdf.new(@hospital, view_context)
           send_data pdf.render, filename:
-              "nurse_#{@hospital.created_at.strftime('%d/%m/%Y')}.pdf",
+              "hospital_#{@hospital.created_at.strftime('%d/%m/%Y')}.pdf",
                     type: "application/pdf"
         end
       end

@@ -7,9 +7,19 @@ class MeasurementsController < ApplicationController
     @measurements = Measurement.all
   end
 
-  # GET /measurements/1
   # GET /measurements/1.json
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = MeasurementPdf.new(@measurement, view_context)
+          send_data pdf.render, filename:
+              "measurement_#{@measurement.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /measurements/new

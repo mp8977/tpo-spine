@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160503155752) do
+ActiveRecord::Schema.define(version: 20160508163540) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -194,8 +194,9 @@ ActiveRecord::Schema.define(version: 20160503155752) do
   create_table "measurement_docs", force: :cascade do |t|
     t.integer  "check_up_id",         limit: 4
     t.integer  "part_measurement_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "deleted",                       default: false, null: false
   end
 
   add_index "measurement_docs", ["check_up_id"], name: "fk_rails_ef34d5a81a", using: :btree
@@ -204,8 +205,9 @@ ActiveRecord::Schema.define(version: 20160503155752) do
   create_table "measurement_homes", force: :cascade do |t|
     t.integer  "patient_id",          limit: 4
     t.integer  "part_measurement_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "deleted",                       default: false, null: false
   end
 
   add_index "measurement_homes", ["part_measurement_id"], name: "fk_rails_5263711ed8", using: :btree

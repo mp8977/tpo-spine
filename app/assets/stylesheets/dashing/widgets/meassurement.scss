@@ -33,6 +33,21 @@
     margin-left: 5%;
   }
 
+  #expand-measurement:focus{
+    outline:0;
+  }
+  #expand-measurement {
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    width: 24px;
+    height: 24px;
+    border: solid white 0px;
+    padding: 1px;
+    margin: 8px;
+    z-index: 1;
+  }
+
 
 
 }

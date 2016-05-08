@@ -20,7 +20,7 @@
 }
 #side-menu{
     height: 110%;
-    background-color: #1a6665;
+    background-color: rgba(26, 102, 101,1);
     float:left;
     position: fixed;
     width: 250px;
@@ -42,50 +42,154 @@
     text-decoration: underline;
     cursor:pointer;
 }
-
+/*PopUp*/
 #lightbox {
     position:fixed;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    background: rgba(0,0,0,.8);
+    background: rgba(0,0,0,.9);
     text-align:center;
-    z-index:2;
+    z-index:10;
     overflow-y: auto;
 }
-#content{
+#content,#expand-view{
+    background-color: rgb(2, 100, 99);
     overflow-y: auto;
-    box-shadow:0 0 25px #111;
-    -webkit-box-shadow:0 0 25px #111;
-    -moz-box-shadow:0 0 25px #111;
     max-width:940px;
-    height:100%;
     margin-left: auto;
     margin-right:auto;
-    background-color: rgb(200, 200, 200);
+    padding-left: 25px;
+    border-right-width: 50px;
+    padding-right: 25px;
+    color: rgba(255, 255, 255, 0.9);
+    position:relative;
 }
 
-#appointmentDetailsShow{
-    color: rgba(0, 0, 0, 0.8);
+
+
+#lightbox-container{
+    height:100%;
+}
+
+#appointmentDetailsShow,#expand-view > div{
     text-align: left;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 60px;
     padding-bottom: 60px;
 }
-#appointmentDetailsShow>h1{
+#appointmentDetailsShow>h1,#expand-view>div>h1{
     text-align: center;
     font-size: 40px;
+    font-weight: bold;
 }
-
+.appointment-subtitles{
+    font-size: 22px;
+    font-weight: 500;
+}
 #appointment-diets>ul,#appointment-allergy>ul,#appointment-illness>ul,#appointment-medicine>ul,#appointment-measurement>ul{
     padding-left: 30px;
 }
 #appointment-diets>ul>ul{
     padding-left: 40px;
 }
-#appointment-diets>ul>ul>li:hover,#appointment-medicine>ul>li:hover{
+#appointment-diets>ul>ul>li:hover,#appointment-medicine>ul>li:hover,#expand-view > div > ul > li > a:hover{
     text-decoration: underline;
+}
 
+#expand-view > div > ul > li{
+    font-size: 24px;
+}
+
+
+/*tabela diete razširjena*/
+#info-diet-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+#info-diet-extend, #info-diet-extend > tbody > tr,#info-diet-extend > tbody > tr > td,#info-diet-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+
+/*tabela pretekli pregledi razširjeni*/
+#info-pappointments-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+
+}
+
+#info-pappointments-extend, #info-pappointments-extend > tbody > tr,#info-pappointments-extend > tbody > tr > td,#info-pappointments-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+
+/*meritve razširejna*/
+#measurement-select-extend{
+    border:	2px solid #ffffff;
+    background-color: #005e84 ;
+    color:white;
+    margin-left: 41%;
+}
+
+#measurement-table-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+    table-layout: fixed
+}
+
+#measurement-table-extend, #measurement-table-extend > tbody > tr,#measurement-table-extend > tbody > tr > td,#measurement-table-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+
+/*Urnik */
+#weekly-schedule{
+   margin-left: 50px;
+   margin-right: 50px;
+}
+
+
+.schedule-rows td {
+    width: 80px;
+    height: 30px;
+    margin: 3px;
+    padding: 5px;
+    background-color: #1a6665;
+    cursor: pointer;
+}
+
+.schedule-rows td:first-child {
+    background-color: transparent;
+    text-align: right;
+    position: relative;
+    top: -12px;
+}
+
+.schedule-rows td[data-selected],
+.schedule-rows td[data-selecting] { background-color: #e7c012; }
+
+.schedule-rows td[data-disabled] { opacity: 0.55; }
+.schedule-table{
+    border-collapse: collapse;
+}
+.schedule-table td{
+    border: 1px solid white;
+}
+.schedule-table tr{
+    padding:2px;!important;
+}
+
+.schedule-table{
+    width:100%;
+    margin:auto;
 }

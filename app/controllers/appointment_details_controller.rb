@@ -9,9 +9,9 @@ class AppointmentDetailsController < ApplicationController
 
     if nextDate!=nil
       nextDate=nextDate.date
-      @nextDate=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+      @nextDate=nextDate.strftime("%H:%M %d.%m.%Y")
     end
-    @pastDate=pastDate.hour.to_s+":"+pastDate.min.to_s+" "+pastDate.day.to_s+"/"+pastDate.month.to_s+"/"+pastDate.year.to_s
+    @pastDate=pastDate.strftime("%H:%M %d.%m.%Y")
     pastDoctor=Doctor.find(pregled.doctor_id)
     @pastDoctorType=pastDoctor.category
     @pastDoctor=pastDoctor.firstName+" "+pastDoctor.lastName

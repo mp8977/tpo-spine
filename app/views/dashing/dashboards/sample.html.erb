@@ -39,7 +39,7 @@
     patientInfo+= address.streetName+" "+address.streetNumber+"<br />"
     patientInfo+= post.postNumber+" "+post.postName+"<br />"
     patientInfo+=patient.phone+"<br />"
-    patientInfo+=patient.birthDate.to_s+"<br />"
+    patientInfo+=patient.birthDate.strftime("%d.%m.%Y")+"<br />"
     patientInfo+= patient.cardNumber+"<br />"
 
 
@@ -120,18 +120,20 @@
         dietIds.push(dietCheck.diet_id)
       end
 
-      dietIds=dietIds.take(5)
-      dietN=''
+
+      dietN=[]
       for el in dietIds
-        dietN+='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
+        dietLine='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
         dietUrls=DietInstruction.where("diet_id=?",el)
         urlCounter=1;
         dietUrls.each do |dietUrl|
-          dietN+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
+          dietLine+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
           urlCounter+=1
         end
-        dietN+='</td></tr>'
+        dietLine+='</td></tr>'
+        dietN.push(dietLine)
       end
+
 
 
       #alergije in bolezni
@@ -140,20 +142,19 @@
       illnessChecks.each do |illnessCheck|
         illnessIds.push(illnessCheck.illness_id)
       end
-      allergyNames=[]
-      illnessNames=[]
+      allergyN=[]
+      illnessN=[]
+
       illnessIds.each do |el|
         diagnose=Illness.where("id=?",el).first
         if diagnose.isAllergy
-          allergyNames.push(diagnose.name)
+          allergyN.push(diagnose.name)
         else
-          illnessNames.push(diagnose.name)
+          illnessN.push(diagnose.name)
         end
       end
-      allergyNames=allergyNames.take(5)
-      illnessNames=illnessNames.take(5)
-      allergyN=allergyNames.join(tag(:br))
-      illnessN=illnessNames.join(tag(:br))
+
+
 
       #zdravila
       medicineChecks=MedicineCheck.where("check_up_id = ?",checkUp.id)
@@ -162,7 +163,7 @@
       medicineChecks.each do |medicineCheck|
         medicineIds.push(medicineCheck.medicine_id)
       end
-      medicineIds=medicineIds.take(5)
+
 
       medicineNames=[]
       medicineUrl=[]
@@ -172,18 +173,18 @@
         medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
       end
 
-      medicineString=''
+      medicineString=[]
       for i in 0..medicineUrl.count-1
-        medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
+        medicineString.append("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
       end
     end
     #naslednji pregled
-    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc').limit(10)
+    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc')
     nextAppointmentString=[]
     nextAppointments.each do |nextAppointment|
       nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
       nextDate=nextAppointment.date
-      nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+      nextDateS=nextDate.strftime("%H:%M %d.%m.%Y")
       if nextDoctor.nil?||nextAppointments.count==0
       else
         nextAppointmentString.push('Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>')
@@ -191,14 +192,14 @@
     end
 
     #pretekli pregledi
-    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC').limit(5)
+    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
     pastAppointmentString=[]
     pastAppointmentIds=[]
     pastIndex=0
     pastAppointments.each do |pastAppointment|
       pastDoctor=Doctor.where("id=?",pastAppointment.doctor_id).first
       pastDate=pastAppointment.date
-      pastDateS=pastDate.hour.to_s+":"+pastDate.min.to_s+" "+pastDate.day.to_s+"/"+pastDate.month.to_s+"/"+pastDate.year.to_s
+      pastDateS=pastDate.strftime("%H:%M %d.%m.%Y")
       if pastDoctor.nil?||pastAppointment.nil?
       else
         pastAppointmentIds.push(pastAppointment.id)
@@ -261,7 +262,9 @@
       </ul>
     </li>
     <br />
-    <%=link_to 'Izpis', "/#", :method => :delete%>
+    <li onclick="schedule()"> Urnik </li>
+    <li> <%=link_to 'Izpis', "/#", :method => :delete%></li>
+
   </ul>
 </div>
 
@@ -276,12 +279,12 @@
         <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight=<%= measurementWeight.to_json%>    data-temperature=<%= measurementTemperature.to_json%>  data-glucose=<%= measurementGlucose.to_json%>  data-heart=<%= measurementHeart.to_json%>></div>
       </li>
     <%end%>
-    <%if illnessNames!=nil && illnessNames.count>0%>
+    <%if illnessN!=nil && illnessN.count>0%>
       <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
         <div id="illness" data-view="Illness"  data-title="Bolezni" data-info="<%= illnessN %>"></div>
       </li>
     <% end %>
-    <%if allergyNames!=nil &&allergyNames.count>0%>
+    <%if allergyN!=nil &&allergyN.count>0%>
       <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
         <div id="allergy"  data-view="Allergy"  data-title="Alergije" data-info="<%= allergyN %>"></div>
       </li>
@@ -319,15 +322,29 @@
 
 <%#popUp window za prikaz npr. podrobnosti pregleda%>
 <div id="lightbox">
-  <div id="content">
-  </div>
+    <div id="expand-view"></div><%#uporaba za prikaz vseh meritev, bolezni etc.%>
+    <div id="content"></div><%#uporaba za preglede%>
 </div>
+
+
+
 <script>
   var staffNumber=0;
   var patI=<%=patientIndex+1%>;
+  //podčrtamo trenutnega pacienta
+  $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "underline");
+  $("#lightbox").hide();
+
+  //prikaz podrobnosti pregleda
   function detailsappointment(pastAppointmentIndex){
+    $("#expand-view").html("");
     $("#lightbox").show();
+    expandPAppointments();
     $('html').css('overflow','hidden');
+    $("#content").css("min-height","100%");
+    $("#content").css("background-color","#97664c");
+    $("#expand-view").css("min-height","0%");
+    document.getElementById('content').scrollIntoView();
     $.ajax({
       type: "GET",
       url: '/appointment_details/'+pastAppointmentIndex
@@ -336,18 +353,30 @@
       dummy.html(data);
       vsebina=$("#appointmentDetailsShow",dummy);
       $("#content").html(vsebina);
+
     });
   };
 
-  $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "underline");
-  $("#lightbox").hide();
+  //začetek prikaza urnika
+  function schedule(){
+    $("#lightbox").show();
+    $('html').css('overflow','hidden');
+    $("#content").html('<div id="weekly-schedule"></div>');
+    $("#weekly-schedule").dayScheduleSelector({
+    });
+  }
 
+
+  //zapiranje lightboxa ko kliknemo izven njega
   $('#lightbox').click( function(e) {
     if (e.target !== this)
       return;
     $('#lightbox').hide();
     $('html').css('overflow','scroll');
+    $("#expand-view").css("min-height","0%");
   });
+
+
 
 
 </script>

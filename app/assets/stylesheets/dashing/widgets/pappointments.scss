@@ -6,7 +6,7 @@
 // Widget-pappointments styles
 // ----------------------------------------------------------------------------
 .widget-pappointments {
-  background-color: #ba8b56;
+  background-color: #97664c;
   vertical-align: baseline !important;
 
   .title{
@@ -37,6 +37,21 @@
   }
   .past-detail:hover{
     cursor: pointer;
+  }
+
+  #expand-pappointment:focus{
+    outline:0;
+  }
+  #expand-pappointment{
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    width: 24px;
+    height: 24px;
+    border: solid white 0px;
+    padding: 1px;
+    margin: 8px;
+    z-index: 1;
   }
 
 }

@@ -3,30 +3,30 @@
   <br/>
   <div id="appointment-header">
     <% if @pastDate!=nil %>
-      <p>Datum: <%= @pastDate%></p>
+      <p><span class="appointment-subtitles">Datum:</span> <%= @pastDate%></p>
     <%end%>
 
     <% if @pastDoctorType!=nil %>
-      <p><%= @pastDoctorType.slice(0,1).capitalize+@pastDoctorType.slice(1..-1)+': '+@pastDoctor%></p>
+      <p><span class="appointment-subtitles"><%= @pastDoctorType.slice(0,1).capitalize+@pastDoctorType.slice(1..-1)+': '%></span><%=@pastDoctor%></p>
     <%end%>
 
     <% if @nextDate!=nil%>
-      <p>Naslednji pregled: <%= @nextDate%></p>
+      <p><span class="appointment-subtitles">Naslednji pregled:</span> <%= @nextDate%></p>
     <%end%>
   </div>
   <br/>
 
   <div id="appointment-instruciton">
     <%if @instructions!= nil and @instructions.length>0%>
-     <p>Navodila:</p>
-     <p><%=@instructions%></p>
+     <p class="appointment-subtitles">Navodila:</p>
+     <%=@instructions%><br />
      <br />
     <%end%>
   </div>
 
   <div id="appointment-diets">
     <%if @dietNames!=nil and @dietNames.count>0%>
-      <p>Diete:</p>
+      <p class="appointment-subtitles">Diete:</p>
       <ul style="list-style-type:none">
       <%i=0%>
       <% @dietNames.each do |dietName|%>
@@ -50,7 +50,7 @@
 
   <div id="appointment-illness">
     <%if @illnessNames!=nil%>
-      <p>Bolezni:</p>
+      <p class="appointment-subtitles">Bolezni:</p>
       <ul style="list-style-type:none">
       <% @illnessNames.each do |illnessName|%>
         <li><%=illnessName%></li>
@@ -62,7 +62,7 @@
   </div>
   <div id="appointment-allergy">
     <%if @allergyNames!=nil%>
-        <p>Alergije:</p>
+        <p class="appointment-subtitles">Alergije:</p>
         <ul style="list-style-type:none">
           <% @allergyNames.each do |allergyName|%>
               <li><%=allergyName%></li>
@@ -75,7 +75,7 @@
 
   <div id="appointment-medicine">
     <%if @medicineNames!=nil%>
-        <p>Zdravila:</p>
+        <p class="appointment-subtitles">Zdravila:</p>
         <ul style="list-style-type:none">
           <% i=0%>
           <% @medicineNames.each do |medicineName|%>
@@ -89,7 +89,7 @@
 
  <div id="appointment-measurement">
   <% if @partMeasurementAll!=nil %>
-    <p>Meritve:</p>
+    <p class="appointment-subtitles">Meritve:</p>
     <ul style="list-style-type:none">
     <%@partMeasurementAll.each do |partMeasurement|%>
         <%case partMeasurement[0]%>

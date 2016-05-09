@@ -102,7 +102,7 @@
            <%when "systolic"%>
               <li>Siastolični tlak: <%=partMeasurement[1]%> mmHg<li>
            <%when "HB"%>
-              <li>Srčni utrip: <%=partMeasurement[1]%> BPM<li>
+              <li>Srčni utrip: <%=partMeasurement[1].to_i%> BPM<li>
            <%when "temperature"%>
               <li>Temperatura: <%=partMeasurement[1]%> °C<li>
         <%end%>

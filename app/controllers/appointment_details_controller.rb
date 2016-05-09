@@ -24,13 +24,15 @@ class AppointmentDetailsController < ApplicationController
       @dietUrls=[];
       dietChecks.each do |dietCheck|
         dietIds.push(dietCheck.diet_id)
-        @dietNames.push(Diet.find(dietCheck.diet_id).name)
-        dietUrl=[]
-        allDietUrl=DietInstruction.where("diet_id=?",dietCheck.diet_id)
-        allDietUrl.each do |url|
-          dietUrl.push(url.url)
+        if !Diet.find(dietCheck.diet_id).deleted
+          @dietNames.push(Diet.find(dietCheck.diet_id).name)
+          dietUrl=[]
+          allDietUrl=DietInstruction.where("diet_id=? AND deleted=?",dietCheck.diet_id,false)
+          allDietUrl.each do |url|
+            dietUrl.push(url.url_string)
+          end
+          @dietUrls.push(dietUrl)
         end
-        @dietUrls.push(dietUrl)
       end
 
       illnessChecks=IllnessCheck.where("check_up_id = ?",checkUpId)
@@ -41,11 +43,13 @@ class AppointmentDetailsController < ApplicationController
       @allergyNames=[]
       @illnessNames=[]
       illnessIds.each do |el|
-        diagnose=Illness.where("id=?",el).first
-        if diagnose.isAllergy
-          @allergyNames.push(diagnose.name)
-        else
-          @illnessNames.push(diagnose.name)
+        diagnose=Illness.where("id=? AND deleted=?",el,false).first
+        if diagnose!=nil
+          if diagnose.isAllergy
+            @allergyNames.push(diagnose.name)
+          else
+            @illnessNames.push(diagnose.name)
+          end
         end
       end
       medicineChecks=MedicineCheck.where("check_up_id = ?",checkUpId)
@@ -59,7 +63,7 @@ class AppointmentDetailsController < ApplicationController
       for el in medicineIds
         med=Medicine.where("id=?",el).first
         @medicineNames.push(med.name)
-        @medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
+        @medicineUrl.push(MedicineInstruction.where("id=? AND deleted=?",med.medicine_instruction_id,false).first.url_string)
       end
 
       allMeasurementDoc=MeasurementDoc.where("check_up_id=?",checkUpId)

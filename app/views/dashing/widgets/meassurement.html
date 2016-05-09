@@ -48,7 +48,7 @@
             case "teža":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
                 for(i=0;i<Math.min(limitMeasurement,weight.length);i++)
-                    content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+parseInt(weight[i]["weight"])+'</td></tr>';
+                    content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
         }
@@ -100,7 +100,7 @@
                 case "teža":
                     content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
                     for(i=0;i<weight.length;i++)
-                        content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+parseInt(weight[i]["weight"])+'</td></tr>';
+                        content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
                     $("#measurement-table-extend").html(content)
                     break;
             }

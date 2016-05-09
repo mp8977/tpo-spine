@@ -127,7 +127,7 @@
         dietUrls=DietInstruction.where("diet_id=?",el)
         urlCounter=1;
         dietUrls.each do |dietUrl|
-          dietLine+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
+          dietLine+="<a href='"+dietUrl.url_string.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
           urlCounter+=1
         end
         dietLine+='</td></tr>'
@@ -170,7 +170,7 @@
       for el in medicineIds
         med=Medicine.where("id=?",el).first
         medicineNames.push(med.name)
-        medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
+        medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url_string)
       end
 
       medicineString=[]

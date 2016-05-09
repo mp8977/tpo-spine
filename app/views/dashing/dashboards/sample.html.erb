@@ -13,7 +13,7 @@
 
     if user_signed_in?
         userId=current_user.id
-        patientsAll=Patient.where("user_id=?",userId)
+        patientsAll=Patient.where("user_id=? AND deleted=?",userId,false)
         patientsAll.each do |patientId|
           patientIds.push(patientId.id)
           patientNames.push(patientId.firstName+' '+patientId.lastName)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160508163540) do
+ActiveRecord::Schema.define(version: 20160509060811) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -143,7 +143,7 @@ ActiveRecord::Schema.define(version: 20160508163540) do
     t.string   "lastName",               limit: 255
     t.string   "firstName",              limit: 255
     t.string   "phone",                  limit: 255
-    t.string   "limitPatient",           limit: 255
+    t.integer  "limitPatient",           limit: 4
     t.integer  "hospital_id",            limit: 4
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
@@ -214,6 +214,15 @@ ActiveRecord::Schema.define(version: 20160508163540) do
 
   add_index "measurement_homes", ["part_measurement_id"], name: "fk_rails_5263711ed8", using: :btree
   add_index "measurement_homes", ["patient_id"], name: "fk_rails_f43f4d1c2e", using: :btree
+
+  create_table "measurement_types", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.decimal  "min_value",              precision: 7, scale: 2
+    t.decimal  "max_value",              precision: 7, scale: 2
+    t.boolean  "deleted",                                        default: false, null: false
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+  end
 
   create_table "measurements", force: :cascade do |t|
     t.datetime "date"

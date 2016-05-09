@@ -19,8 +19,8 @@
     </tr>
     <%= f.fields_for :part_measurements do |p| %>
         <tr>
-          <td align="right">Ime</td>
-          <td align="left"><%= p.text_field :name, required: true %></td>
+          <td align="right">Vrsta meritve</td>
+          <td align="left"><%= p.collection_select(:name, MeasurementType.where(deleted: false), :id, :name) %></td>
         </tr>
         <tr>
           <td align="right">Enota</td>

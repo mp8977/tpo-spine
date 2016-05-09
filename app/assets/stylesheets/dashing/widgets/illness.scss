@@ -9,17 +9,34 @@
 .widget-illness {
   background-color: #843616;
   vertical-align: baseline !important;
-
+  position: relative;
+  z-index: 2;
   .title{
     font-size: 35px;
     margin-top: 20%;
     font-weight: bold;
     color: rgba(255, 255, 255, 0.9);
+
   }
 
   #info-illness{
     font-size: 20px;
-    color: #cccccc;
     color: rgba(255, 255, 255, 0.8);
   }
+
+  #expand-illness:focus{
+    outline:0;
+  }
+  #expand-illness {
+    position: absolute;
+    top: 0px;
+    right: 1px;
+    width: 24px;
+    height: 24px;
+    border: solid white 0px;
+    padding: 1px;
+    margin: 8px;
+    z-index: 1;
+  }
 }
+

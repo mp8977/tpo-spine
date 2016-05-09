@@ -1,9 +1,21 @@
 <div class="container">
+    <input id="expand-illness" type="image" height="23px" width="23px" onclick="expandIllness()" title="Razširi bolezni" src="/assets/expand.png" />
     <div data-bind="title" class="title"></div>
     <br>
     <div id="info-illness"></div>
 </div>
 <script>
   var illnesses=$("#illness").data("info");
-  $("#info-illness").append(illnesses);
+  var limitIllness=5;
+  $("#info-illness").append(illnesses.slice(0,limitIllness).join("<br />"));
+
+  function expandIllness(){
+    $("#lightbox").show();
+    $('html').css('overflow','hidden');
+    $("#content").html("");
+    $("#content").css("min-height","0%");
+    $("#expand-view").css("min-height","100%");
+    $("#expand-view").css("background-color","#843616");
+    $("#expand-view").html('<div><h1>Bolezni</h1><br /><ul><li>'+illnesses.join("</li><li>")+"</li></ul></div>");
+  }
 </script>

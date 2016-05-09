@@ -4,22 +4,28 @@
 <%  require 'json'
     require 'uri'
     require 'cgi'
-
-    userId=current_user.id
-    patientsAll=Patient.where("user_id=?",userId)
     patientIds=[]
     patientNames=[]
     patientIndex=params[:patientIndex].to_i
     if patientIndex==nil
       patientIndex=0
     end
-    k=0;
-    patientsAll.each do |patientId|
-      patientIds.push(patientId.id)
-      patientNames.push(patientId.firstName+' '+patientId.lastName)
-      k+=1
-    end
 
+    if user_signed_in?
+        userId=current_user.id
+        patientsAll=Patient.where("user_id=?",userId)
+        patientsAll.each do |patientId|
+          patientIds.push(patientId.id)
+          patientNames.push(patientId.firstName+' '+patientId.lastName)
+        end
+    elsif doctor_signed_in?
+        doctorId=current_doctor.id
+        patientsAll=DoctorHasPatient.where("doctor_id=?",doctorId)
+        patientsAll.each do |patientId|
+          patientIds.push(patientId.patient_id)
+          patientNames.push(Patient.find(patientId.patient_id).firstName+' '+Patient.find(patientId.patient_id).lastName)
+        end
+    end
     patId=patientIds[patientIndex]
     allCheckUps=CheckUp.where("patient_id = ?",patId)
     checkUp=allCheckUps.last
@@ -29,12 +35,11 @@
     patient=Patient.find(patId)
     address=Address.find(patient.address_id)
     post=Post.find(address.post_id)
-
     patientInfo=patient.firstName+" "+patient.lastName+"<br />"
     patientInfo+= address.streetName+" "+address.streetNumber+"<br />"
     patientInfo+= post.postNumber+" "+post.postName+"<br />"
     patientInfo+=patient.phone+"<br />"
-    patientInfo+=patient.birthDate.to_s+"<br />"
+    patientInfo+=patient.birthDate.strftime("%d.%m.%Y")+"<br />"
     patientInfo+= patient.cardNumber+"<br />"
 
 
@@ -110,22 +115,25 @@
       #diete
       dietChecks=DietCheck.where("check_up_id = ?",checkUp.id)
       dietIds=[];
-      dietIds=dietIds.take(5)
 
       dietChecks.each do |dietCheck|
         dietIds.push(dietCheck.diet_id)
       end
-      dietN=''
+
+
+      dietN=[]
       for el in dietIds
-        dietN+='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
+        dietLine='<tr><td>'+(Diet.where("id=?",el).first.name)+'</td><td>'
         dietUrls=DietInstruction.where("diet_id=?",el)
         urlCounter=1;
         dietUrls.each do |dietUrl|
-          dietN+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
+          dietLine+="<a href='"+dietUrl.url.to_s+"'target='_blank'>"+urlCounter.to_s+"</a> "
           urlCounter+=1
         end
-        dietN+='</td></tr>'
+        dietLine+='</td></tr>'
+        dietN.push(dietLine)
       end
+
 
 
       #alergije in bolezni
@@ -134,20 +142,19 @@
       illnessChecks.each do |illnessCheck|
         illnessIds.push(illnessCheck.illness_id)
       end
-      allergyNames=[]
-      illnessNames=[]
+      allergyN=[]
+      illnessN=[]
+
       illnessIds.each do |el|
         diagnose=Illness.where("id=?",el).first
         if diagnose.isAllergy
-          allergyNames.push(diagnose.name)
+          allergyN.push(diagnose.name)
         else
-          illnessNames.push(diagnose.name)
+          illnessN.push(diagnose.name)
         end
       end
-      allergyNames=allergyNames.take(5)
-      illnessNames=illnessNames.take(5)
-      allergyN=allergyNames.join(tag(:br))
-      illnessN=illnessNames.join(tag(:br))
+
+
 
       #zdravila
       medicineChecks=MedicineCheck.where("check_up_id = ?",checkUp.id)
@@ -156,7 +163,7 @@
       medicineChecks.each do |medicineCheck|
         medicineIds.push(medicineCheck.medicine_id)
       end
-      medicineIds=medicineIds.take(5)
+
 
       medicineNames=[]
       medicineUrl=[]
@@ -166,18 +173,18 @@
         medicineUrl.push(MedicineInstruction.where("id=?",med.medicine_instruction_id).first.url)
       end
 
-      medicineString=''
+      medicineString=[]
       for i in 0..medicineUrl.count-1
-        medicineString+=("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
+        medicineString.append("<a href='"+medicineUrl[i].to_s+"'target='_blank'>"+medicineNames[i].to_s+"</a><br />")
       end
     end
     #naslednji pregled
-    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc').limit(10)
+    nextAppointments=Appointment.where("patient_id=? AND date>=?",patId,Time.now).order('CAST(date AS DATETIME) asc')
     nextAppointmentString=[]
     nextAppointments.each do |nextAppointment|
       nextDoctor=Doctor.where("id=?",nextAppointment.doctor_id).first
       nextDate=nextAppointment.date
-      nextDateS=nextDate.hour.to_s+":"+nextDate.min.to_s+" "+nextDate.day.to_s+"/"+nextDate.month.to_s+"/"+nextDate.year.to_s
+      nextDateS=nextDate.strftime("%H:%M %d.%m.%Y")
       if nextDoctor.nil?||nextAppointments.count==0
       else
         nextAppointmentString.push('Naslednji pregled <b>'+nextDateS+'</b><br>pri '+nextDoctor.category+'-u <b>'+nextDoctor.firstName+' '+nextDoctor.lastName+'</b>')
@@ -185,17 +192,23 @@
     end
 
     #pretekli pregledi
-    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC').limit(5)
+    pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
     pastAppointmentString=[]
+    pastAppointmentIds=[]
+    pastIndex=0
     pastAppointments.each do |pastAppointment|
       pastDoctor=Doctor.where("id=?",pastAppointment.doctor_id).first
       pastDate=pastAppointment.date
-      pastDateS=pastDate.hour.to_s+":"+pastDate.min.to_s+" "+pastDate.day.to_s+"/"+pastDate.month.to_s+"/"+pastDate.year.to_s
+      pastDateS=pastDate.strftime("%H:%M %d.%m.%Y")
       if pastDoctor.nil?||pastAppointment.nil?
       else
-        pastAppointmentString.push('<tr><td>'+pastDateS+'</td><td>'+pastDoctor.category+'</td><td>'+pastDoctor.firstName+' '+pastDoctor.lastName+'</td></tr>')
+        pastAppointmentIds.push(pastAppointment.id)
+        pastAppointmentString.push('<tr><td>'+pastDateS+'</td><td>'+pastDoctor.category+'</td><td>'+pastDoctor.firstName+' '+pastDoctor.lastName+'</td><td><input type="image" class="past-detail" onclick="detailsappointment('+pastAppointment.id.to_s+')" title="Podrobnosti pregleda" src="/assets/details2.png" /></td></tr>')
       end
+      pastIndex+=1
     end
+
+
 
 
 
@@ -217,21 +230,26 @@
       doctorString=doctor.firstName+' '+doctor.lastName+'<br />'+doctor.email+'<br />'+doctor.phone+'<br />'+hospitalName
       doctorsInfo.push(doctorString)
       #medicinska sestra
-      nurseId=DoctorHasNurse.where("doctor_id=?",doctorId).first.nurse_id
-      nurse=Nurse.where("id=?",nurseId).first;
-      hospitalNurse=Hospital.where("id=?",nurse.hospital_id).first
-      hospitalName=''
-      if hospitalNurse!=nil
-        hospitalName=hospitalNurse.hospitalName
+      nurseString="<br />Ni podatkov<br /><br /><br /><br />"
+      nurseId=DoctorHasNurse.where("doctor_id=?",doctorId)
+      if nurseId.size>0
+        nurseId=nurseId.first.nurse_id
+        nurse=Nurse.where("id=?",nurseId).first;
+        hospitalNurse=Hospital.where("id=?",nurse.hospital_id).first
+        hospitalName=''
+        if hospitalNurse!=nil
+          hospitalName=hospitalNurse.hospitalName
+        end
+        nurseString=nurse.firstName+' '+nurse.lastName+'<br />'+nurse.email+'<br />'+nurse.phone+'<br />'+hospitalName
+
       end
-      nurseString=nurse.firstName+' '+nurse.lastName+'<br />'+nurse.email+'<br />'+nurse.phone+'<br />'+hospitalName
       nursesInfo.push(nurseString)
     end
 
 
 
 %>
-
+<%#sidebar%>
 <div id="side-menu">
   <ul>
     <li >Pacienti:<br>
@@ -239,17 +257,19 @@
         <% ind=0 %>
         <%patientNames.each do |patientName|%>
            <%=link_to( ("<li>"+patientName+"</li>").html_safe, patientIndex: ind.to_s) %>
-
-
           <%ind+=1%>
         <%end%>
       </ul>
     </li>
+    <br />
+    <li onclick="schedule()"> Urnik </li>
+    <li> <%=link_to 'Izpis', "/#", :method => :delete%></li>
+
   </ul>
 </div>
 
+<%#dashboard%>
 <div class="gridster">
-
   <ul>
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
       <div id="pat" data-view="Patient"  data-title="Pacient" data-info="<%=patientInfo %>"></div>
@@ -259,12 +279,12 @@
         <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight=<%= measurementWeight.to_json%>    data-temperature=<%= measurementTemperature.to_json%>  data-glucose=<%= measurementGlucose.to_json%>  data-heart=<%= measurementHeart.to_json%>></div>
       </li>
     <%end%>
-    <%if illnessNames!=nil && illnessNames.count>0%>
+    <%if illnessN!=nil && illnessN.count>0%>
       <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
         <div id="illness" data-view="Illness"  data-title="Bolezni" data-info="<%= illnessN %>"></div>
       </li>
     <% end %>
-    <%if allergyNames!=nil &&allergyNames.count>0%>
+    <%if allergyN!=nil &&allergyN.count>0%>
       <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
         <div id="allergy"  data-view="Allergy"  data-title="Alergije" data-info="<%= allergyN %>"></div>
       </li>
@@ -300,8 +320,65 @@
   </ul>
 </div>
 
+<%#popUp window za prikaz npr. podrobnosti pregleda%>
+<div id="lightbox">
+    <div id="expand-view"></div><%#uporaba za prikaz vseh meritev, bolezni etc.%>
+    <div id="content"></div><%#uporaba za preglede%>
+</div>
+
+
+
 <script>
-    var staffNumber=0;
+  var staffNumber=0;
+  var patI=<%=patientIndex+1%>;
+  //podčrtamo trenutnega pacienta
+  $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "underline");
+  $("#lightbox").hide();
+
+  //prikaz podrobnosti pregleda
+  function detailsappointment(pastAppointmentIndex){
+    $("#expand-view").html("");
+    $("#lightbox").show();
+    expandPAppointments();
+    $('html').css('overflow','hidden');
+    $("#content").css("min-height","100%");
+    $("#content").css("background-color","#97664c");
+    $("#expand-view").css("min-height","0%");
+    document.getElementById('content').scrollIntoView();
+    $.ajax({
+      type: "GET",
+      url: '/appointment_details/'+pastAppointmentIndex
+    }).success(function(data){
+      var dummy = $( '<div></div>' );
+      dummy.html(data);
+      vsebina=$("#appointmentDetailsShow",dummy);
+      $("#content").html(vsebina);
+
+    });
+  };
+
+  //začetek prikaza urnika
+  function schedule(){
+    $("#lightbox").show();
+    $('html').css('overflow','hidden');
+    $("#content").html('<div id="weekly-schedule"></div>');
+    $("#weekly-schedule").dayScheduleSelector({
+    });
+  }
+
+
+  //zapiranje lightboxa ko kliknemo izven njega
+  $('#lightbox').click( function(e) {
+    if (e.target !== this)
+      return;
+    $('#lightbox').hide();
+    $('html').css('overflow','scroll');
+    $("#expand-view").css("min-height","0%");
+  });
+
+
+
+
 </script>
 <%
   Redis.new.client.call(["client", "kill", "type", "pubsub"])

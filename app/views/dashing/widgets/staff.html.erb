@@ -10,8 +10,8 @@
 
       var nurse = $("#staff" + staffNumber).data("nurse");
       var doctor = $("#staff" + staffNumber).data("doctor");
-      $('#staff' + staffNumber).find('.nurse').append("<br />"+nurse);
-      $('#staff' + staffNumber).find('.doctor').append("<br />"+doctor);
+      $('#staff' + staffNumber).find('.nurse').append(nurse);
+      $('#staff' + staffNumber).find('.doctor').append(doctor);
       staffNumber++;
   });
 

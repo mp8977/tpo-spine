@@ -44,8 +44,10 @@ ActiveRecord::Schema.define(version: 20160508163540) do
     t.integer  "check_up_id", limit: 4
     t.integer  "doctor_id",   limit: 4
     t.integer  "patient_id",  limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.text     "instruction", limit: 65535
+    t.integer  "duration",    limit: 4
   end
 
   add_index "appointments", ["check_up_id"], name: "fk_rails_3d1ece398e", using: :btree

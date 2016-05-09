@@ -2,7 +2,6 @@
   <h2>Sifranti</h2>
 
     <!-- TODO povsod zamenjaj find z where stavkom -->
-    <!-- TODO meritve in ostalo ven, notr pa novo tabelo z vsemi moznimi meritvami (krvni tlak, sladkor, ...) -->
 
   <div class="izberi-sifrante">
     <select class="select">
@@ -16,7 +15,6 @@
       <option value="Diets">Diete</option>
       <option value="DietInstructions">Navodila za diete</option>
       <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
-      <!-- TODO za meritve poglej kaj prikazat in redirectaj -->
       <option value="MeasurementTypes">Tipi meritev</option>
     </select>
   </div>
@@ -346,10 +344,10 @@
       $("#show-data").DataTable({"info": false, "ordering": false});
     }
 
-    function formatDate(date) {
-      rez = date.slice(0,10);
-      return rez.slice(8,10) + '.' + rez.slice(5,7) + '.' + rez.slice(0,4);
-    }
+    //function formatDate(date) {
+    //  rez = date.slice(0,10);
+    //  return rez.slice(8,10) + '.' + rez.slice(5,7) + '.' + rez.slice(0,4);
+    //}
 
   </script>
 <div class="show-table">

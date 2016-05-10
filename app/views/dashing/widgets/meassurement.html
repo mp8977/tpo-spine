@@ -1,5 +1,6 @@
 <div class="container">
     <input id="expand-measurement" type="image" height="23px" width="23px" onclick="expandMeasurements()" title="Razširi meritve" src="/assets/expand.png" />
+    <input id="graph-show" type="image" height="23px" width="23px" onclick="showGraph()" title="Prikaži graf" src="/assets/graph.png" />
     <div data-bind="title" class="title"></div>
     <br />
     <select id="measurement-select">
@@ -15,6 +16,9 @@
     </table>
 </div>
 
+
+
+
 <script>
     var glucose=$("#measurement").data("glucose");
     var heart=$("#measurement").data("heart");
@@ -22,6 +26,29 @@
     var weight=$("#measurement").data("weight");
     var content="";
     var limitMeasurement=8;
+    var glucoseJson=[];
+    var temperatureJson=[];
+    var weightJson=[];
+    var heartJson=heart;
+
+    for(i=0;i<glucose.length;i++)
+        glucoseJson.push({date:glucose[i]["date"],value:parseFloat(glucose[i]["glucose"])});
+    for(i=0;i<weight.length;i++)
+        weightJson.push({date:weight[i]["date"],value:weight[i]["weight"]});
+    for(i=0;i<temperature.length;i++)
+        temperatureJson.push({date:temperature[i]["date"],value:temperature[i]["temperature"]});
+
+
+
+    function custom_sort(a, b) {
+        return new Date(a["date"]).getTime() - new Date(b["date"]).getTime();
+    }
+
+    glucoseJson=glucoseJson.sort(custom_sort);
+    weightJson=weightJson.sort(custom_sort);
+    temperatureJson=temperatureJson.sort(custom_sort);
+    heartJson=heartJson.sort(custom_sort);
+
 
     //sprememba izbira prikazane meritve na dashbordu
     $("#measurement-select").change(function() {
@@ -108,11 +135,237 @@
             if($('#measurement-select-extend').find(":selected").val()!="")
                 $("#measurement-select").val($('#measurement-select-extend').find(":selected").val()).change();
 
-
         });
         $("#measurement-select-extend").val($('#measurement-select').find(":selected").val()).change();
 
     }
 
 
+    function zoomChart() {
+        chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+    }
+    AmCharts.translations.slo={"monthNames":["Januar","Februar","Marec","April","Maj","Junij","Julij","Avgust","September","Oktober","November","December"],"shortMonthNames":["Jan.","Feb.","Marec","April","Maj","Junij","Julij","Avg.","Sept.","Okt.","Nov.","Dec."],"dayNames":["Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota","Nedelja"],"shortDayNames":["Pon","Tor","Sre","Čet","Pet","Sob","Ned"],"zoomOutText":"Prikaži vse"}
+
+    function showGraph(){
+        $("#lightbox").show();
+        $('html').css('overflow','hidden');
+        $("#content").html("");
+        $("#content").css("min-height","0%");
+        $("#expand-view").css("min-height","0%");
+        $("#expand-view").css("background-color","#005e84");
+        $("#expand-view").html("");
+        $("#lightbox").append('<div id="chartdiv"></div>');
+        if ($("#measurement-select").val()!="srce") {
+            var dataContent;
+            if($("#measurement-select").val()=="glukoza")
+                dataContent=glucoseJson;
+            else if($("#measurement-select").val()=="teža")
+                dataContent=weightJson;
+            else
+                dataContent=temperatureJson;
+            var chart = AmCharts.makeChart("chartdiv", {
+                "type": "serial",
+                "theme": "none",
+                "marginRight": 40,
+                "marginLeft": 40,
+                "autoMarginOffset": 20,
+                "mouseWheelZoomEnabled": true,
+                "dataDateFormat": "YYYY-MM-DDTJJ:NN:SS.QQQZ",
+                "language": "slo",
+                "titles": [{
+                    "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),
+                    "size": 25
+                }],
+                "valueAxes": [{
+                    "id": "v1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "ignoreAxisWidth": true
+                }],
+                "balloon": {
+                    "borderThickness": 1,
+                    "shadowAlpha": 0
+                },
+                "graphs": [{
+                    "id": "g1",
+                    "balloon": {
+                        "drop": true,
+                        "adjustBorderColor": false,
+                        "color": "#ffffff"
+                    },
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "bulletSize": 5,
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor":"#b7e021",
+                    "title": "red line",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "value",
+                    "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+                }],
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "oppositeAxis": false,
+                    "offset": 30,
+                    "scrollbarHeight": 80,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "graphLineAlpha": 0.5,
+                    "selectedGraphFillAlpha": 0,
+                    "selectedGraphLineAlpha": 1,
+                    "autoGridCount": true,
+                    "color": "#AAAAAA"
+                },
+                "chartCursor": {
+                    "pan": true,
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "cursorAlpha": 1,
+                    "cursorColor": "#258cbb",
+                    "limitToGraph": "g1",
+                    "valueLineAlpha": 0.2,
+                    "valueZoomable": true
+                },
+                "valueScrollbar": {
+                    "oppositeAxis": false,
+                    "offset": 50,
+                    "scrollbarHeight": 10
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": true
+                },
+                "dataProvider": dataContent
+            });
+        }
+        else {
+            var chart = AmCharts.makeChart("chartdiv", {
+                "legend": {
+                    "useGraphSettings": true
+                },
+                "type": "serial",
+                "theme": "none",
+                "marginRight": 40,
+                "marginLeft": 40,
+                "autoMarginOffset": 20,
+                "mouseWheelZoomEnabled": true,
+                "dataDateFormat": "YYYY-MM-DDTJJ:NN:SS.QQQZ",
+                "language": "slo",
+                "titles": [{
+                    "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),
+                    "size": 25
+                }],
+                "valueAxes": [{
+                    "id": "v1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "ignoreAxisWidth": true
+                }],
+                "balloon": {
+                    "borderThickness": 1,
+                    "shadowAlpha": 0
+                },
+                "graphs": [{
+                    "id": "g1",
+                    "balloon": {
+                        "drop": true,
+                        "adjustBorderColor": false,
+                        "color": "#ffffff"
+                    },
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "bulletSize": 5,
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor":"#ff0000",
+                    "title": "siastoličen tlak",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "systolic",
+                    "balloonText": "<span style='font-size:18px;'>[[value]]</span>"},
+                    {
+                        "id": "g2",
+                        "bullet": "round",
+                        "bulletBorderAlpha": 1,
+                        "bulletColor": "#00FF00",
+                        "bulletSize": 5,
+                        "hideBulletsCount": 50,
+                        "lineThickness": 2,
+                        "title": "diastoličen tlak",
+                        "lineColor":"#0000ff",
+                        "useLineColorForBulletBorder": true,
+                        "valueField": "diastolic"
+                    },
+                    {
+                        "id": "g3",
+                        "bullet": "round",
+                        "bulletBorderAlpha": 1,
+                        "bulletColor": "#00FF00",
+                        "bulletSize": 5,
+                        "hideBulletsCount": 50,
+                        "lineThickness": 2,
+                        "lineColor":"#00ff00",
+                        "title": "utripi/minuto",
+                        "useLineColorForBulletBorder": true,
+                        "valueField": "BPM"
+                    }
+                ],
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "oppositeAxis": false,
+                    "offset": 30,
+                    "scrollbarHeight": 80,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "graphLineAlpha": 0.5,
+                    "selectedGraphFillAlpha": 0,
+                    "selectedGraphLineAlpha": 1,
+                    "autoGridCount": true,
+                    "color": "#AAAAAA"
+                },
+                "chartCursor": {
+                    "pan": true,
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "cursorAlpha": 1,
+                    "cursorColor": "#258cbb",
+                    "limitToGraph": "g1",
+                    "valueLineAlpha": 0.2,
+                    "valueZoomable": true
+                },
+                "valueScrollbar": {
+                    "oppositeAxis": false,
+                    "offset": 50,
+                    "scrollbarHeight": 10
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": true
+                },
+                "dataProvider": heartJson
+            });
+        }
+        chart.addListener("rendered", zoomChart);
+        $('a[title="JavaScript charts"]').css('display', 'none');
+    }
+
+
+
+    $('#measurement-select').val("glukoza").change();
 </script>

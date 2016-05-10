@@ -322,6 +322,7 @@
 
 <%#popUp window za prikaz npr. podrobnosti pregleda%>
 <div id="lightbox">
+    <img id="close-icon" onclick="afterClose()" width="25px" height="25px" title="Zapri" src="/assets/close-button.png" />
     <div id="expand-view"></div><%#uporaba za prikaz vseh meritev, bolezni etc.%>
     <div id="content"></div><%#uporaba za preglede%>
 </div>
@@ -365,15 +366,19 @@
     $("#weekly-schedule").dayScheduleSelector({
     });
   }
-
-
-  //zapiranje lightboxa ko kliknemo izven njega
-  $('#lightbox').click( function(e) {
-    if (e.target !== this)
-      return;
+  function afterClose(){
     $('#lightbox').hide();
     $('html').css('overflow','scroll');
     $("#expand-view").css("min-height","0%");
+    $("#chartdiv").remove();
+  }
+
+  //zapiranje lightboxa ko kliknemo izven njega
+  $('#lightbox').mousedown( function(e) {
+    if (e.target !== this)
+      return;
+    afterClose();
+
   });
 
 

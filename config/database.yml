@@ -13,13 +13,13 @@ default: &default
   adapter: mysql2
   encoding: utf8
   pool: 5
-  username: spineadmin
-  password: spinebaza
+  username: mb5975
+  password: gd2ts4k5ex
   host: localhost
 
 development:
   <<: *default
-  database: spine_db
+  database: t9_2016
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: TPO_spine_production
-  username: TPO_spine
-  password: <%= ENV['TPO_SPINE_DATABASE_PASSWORD'] %>
+  database: t9_2016
+  username: mb5975
+  password: gd2ts4k5ex

@@ -56,14 +56,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dashing-rails'
 gem 'puma'
 
-gem 'nokogiri'
-gem 'htmlentities'
+
 
 gem 'pickadate-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'json'
-gem 'sinatra'
-gem 'sinatra-sse'
 
 #https://github.com/yamldb/yaml_db
 gem 'yaml_db'

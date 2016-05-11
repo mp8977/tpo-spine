@@ -1,3 +1,4 @@
+<% if admin_signed_in? %>
 <div class="text-center">
   <h1>Uredi zdravilo</h1>
 
@@ -6,3 +7,4 @@
   <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
 
 </div>
+<% end %>

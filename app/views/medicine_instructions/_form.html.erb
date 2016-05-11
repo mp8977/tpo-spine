@@ -13,14 +13,12 @@
 
   <table align="center">
     <td align="right">URL:</td>
-    <td align="left"><%= f.text_field :url_string %></td>
+    <td align="left"><%= f.text_field :url_string, required: true %></td>
     </tr>
-    <% if admin_signed_in? %>
-        <tr>
-          <td align="right">Izbrisana</td>
-          <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false}) %></td>
-        </tr>
-    <% end %>
+    <tr>
+      <td align="right">Izbrisana</td>
+      <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false, required: true}) %></td>
+    </tr>
   </table>
 
   <div class="actions">

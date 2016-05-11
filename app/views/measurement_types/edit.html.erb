@@ -1,9 +1,13 @@
 <div class="text-center">
+  <% if admin_signed_in? %>
 
-  <h1>Uredi element meritve</h1>
+      <h1>Uredi element meritve</h1>
 
-  <%= render 'form' %>
+      <%= render 'form' %>
 
-  <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+      <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
 
+  <% else %>
+      <h1>Dostop zavrnjen</h1>
+  <% end %>
 </div>

@@ -34,7 +34,7 @@ class DietPdf < Prawn::Document
       logo
     end
     move_down 20
-    text 'Zdravstveni informacijski sistem', align: :right, size: 33
+    text 'Zdravstveni informacijski sistem', align: :right, size: 29
     move_down 40
   end
 

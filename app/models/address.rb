@@ -6,4 +6,8 @@ class Address < ActiveRecord::Base
   has_one :hospital
   has_one :patient
   has_one :contact_person
+
+  def full_name
+    "#{streetName} #{streetNumber}"
+  end
 end

@@ -59,6 +59,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'dashing-rails'
 gem 'puma'
 
+
 gem 'nokogiri'
 gem 'htmlentities'
 

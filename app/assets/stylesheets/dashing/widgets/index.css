@@ -38,10 +38,12 @@
 }
 
 
-#side-menu>ul>li>ul>a>li:hover{
+#side-menu>ul>li>ul>a>li:hover,#urnik-menu:hover,#zdravnik-menu:hover{
     text-decoration: underline;
     cursor:pointer;
 }
+
+
 /*PopUp*/
 #lightbox {
     position:fixed;
@@ -88,7 +90,7 @@
     padding-top: 60px;
     padding-bottom: 60px;
 }
-#appointmentDetailsShow>h1,#expand-view>div>h1{
+#appointmentDetailsShow>h1,#expand-view>div>h1,#pick-doctor > h1{
     text-align: center;
     font-size: 40px;
     font-weight: bold;
@@ -162,6 +164,14 @@
 #measurement-table-extend, #measurement-table-extend > tbody > tr,#measurement-table-extend > tbody > tr > td,#measurement-table-extend > tbody > tr > th{
     border: 2px solid rgba(255, 255, 255, 0.8);
     color:rgba(255, 255, 255, 0.8)
+}
+/*izbira zdravnika*/
+#selectPatient{
+    border:	2px solid #ffffff;
+    color:white;
+    background-color:#222;
+    margin: 10px;
+    font-size: 15px;
 }
 /*graf*/
 #chartdiv {

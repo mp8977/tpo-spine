@@ -38,8 +38,8 @@ class MeasurementTypesController < ApplicationController
 
     respond_to do |format|
       if @measurement_type.save
-        format.html { redirect_to @measurement_type, notice: 'Measurement type was successfully created.' }
-        format.json { render :show, status: :created, location: @measurement_type }
+        flash[:notice] = 'Element meritve je bil uspesno kreiran'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @measurement_type.errors, status: :unprocessable_entity }
@@ -52,8 +52,9 @@ class MeasurementTypesController < ApplicationController
   def update
     respond_to do |format|
       if @measurement_type.update(measurement_type_params)
-        format.html { redirect_to @measurement_type, notice: 'Measurement type was successfully updated.' }
-        format.json { render :show, status: :ok, location: @measurement_type }
+        flash[:notice] = 'Element meritve je bil posodobljen'
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        #format.json { render :show, status: :ok, location: @measurement_type }
       else
         format.html { render :edit }
         format.json { render json: @measurement_type.errors, status: :unprocessable_entity }
@@ -64,10 +65,15 @@ class MeasurementTypesController < ApplicationController
   # DELETE /measurement_types/1
   # DELETE /measurement_types/1.json
   def destroy
-    @measurement_type.destroy
-    respond_to do |format|
-      format.html { redirect_to measurement_types_url, notice: 'Measurement type was successfully destroyed.' }
-      format.json { head :no_content }
+    @measurement_type.deleted = true
+    if @measurement_type.save
+      flash[:notice] = 'Element meritve je bil uspesno izbrisan'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju elementa meritve'
     end
   end
 

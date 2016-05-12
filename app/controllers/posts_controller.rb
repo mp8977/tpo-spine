@@ -28,8 +28,8 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
-        format.json { render :show, status: :created, location: @post }
+        flash[:notice] = 'Posta je bila uspesno kreirana'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
-        format.json { render :show, status: :ok, location: @post }
+        flash[:notice] = 'Posta je bila posodobljena'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :edit }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -54,10 +54,15 @@ class PostsController < ApplicationController
   # DELETE /posts/1
   # DELETE /posts/1.json
   def destroy
-    @post.destroy
-    respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
-      format.json { head :no_content }
+    @post.deleted = true
+    if @post.save
+      flash[:notice] = 'Posta je bil uspesno izbrisana'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju poste'
     end
   end
 

@@ -15,7 +15,8 @@
       <option value="Diets">Diete</option>
       <option value="DietInstructions">Navodila za diete</option>
       <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
-      <option value="MeasurementTypes">Tipi meritev</option>
+      <option value="MeasurementTypes">Elementi meritev</option>
+      <option value="Posts">Poste</option>
     </select>
   </div>
 
@@ -337,7 +338,35 @@
           }
         });
       }
+      else if (izbira == "Posts") {
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Postna stevilka</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
+        $.ajax({
+          url: "/posts.json",
+          dataType: "json",
+          type: "GET",
+          success: function(json) {
+            console.log(JSON.stringify(json));
+            var trHTML = '<tbody>';
+            $.each(json, function (index, post) {
+              trHTML += '<tr>';
+              trHTML += '<td>' + post.id + '</td>';
+              trHTML += '<td>' + post.postName + '</td>';
+              trHTML += '<td>' + post.postNumber + '</td>';
+              trHTML += '<td>' + post.deleted + '</td>';
+              trHTML += "<td align='right'>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/posts/" + post.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/posts/" + post.id + "'>Izbrisi</a>";
+              trHTML += '</tr>';
+            });
+            trHTML += '</tbody>';
+            $('#show-data').append(trHTML);
+            var new_button = $("<a class='btn btn-info add-new-button' href='/posts/new'>Dodaj posto</a>");
+            $('.profile-content').append(new_button);
+            makeTable();
+          }
+        });
+      }
     }
 
     function makeTable() {

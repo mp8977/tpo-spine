@@ -16,10 +16,9 @@
       <tr>
         <td align="right">Meritev:</td>
         <%= puts current_user.id %>
-        <!-- TODO popravi izpis datumov -->
         <td align="left"><%= f.collection_select(:measurement_id,
                                                  Measurement.joins(part_measurements: [:measurement_home]).where(deleted: false),
-                                                 :id, :date ,{include_blank: false},{:multiple => false}) %></td>
+                                                 :id, :format_date ,{include_blank: false},{:multiple => false}) %></td>
       </tr>
     <% elsif doctor_signed_in? %>
       <tr>

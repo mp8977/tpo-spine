@@ -14,15 +14,15 @@
   <table align="center">
     <tr>
       <td align="right">Ime</td>
-      <td align="left"><%= f.text_field :name %></td>
+      <td align="left"><%= f.text_field :name, required: true %></td>
     </tr>
     <tr>
       <td align="right">Max</td>
-      <td align="left"><%= f.text_field :min_value %></td>
+      <td align="left"><%= f.text_field :min_value, required: true %></td>
     </tr>
     <tr>
       <td align="right">Min</td>
-      <td align="left"><%= f.text_field :max_value %></td>
+      <td align="left"><%= f.text_field :max_value, required: true %></td>
     </tr>
   </table>
 

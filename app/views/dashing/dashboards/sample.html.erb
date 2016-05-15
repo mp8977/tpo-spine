@@ -76,8 +76,9 @@
 
         allPartMeasurements.each do |partMeasurement|
           name=partMeasurement.name
-          date=Measurement.where("id=?",partMeasurement.measurement_id).first.date
+          date=Measurement.where("id=?",partMeasurement.measurement_id).first.date.strftime("%H:%M %d.%m.%Y")
           value=partMeasurement.value
+
           case name
             when "weight"
               measurementWeight.push({"weight"=>value, "date"=>date})
@@ -290,7 +291,7 @@
     </li>
     <% if allPartMeasurements!=nil and allPartMeasurements.count>0 %>
       <li id="measurement-li" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
-        <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight=<%= measurementWeight.to_json%>    data-temperature=<%= measurementTemperature.to_json%>  data-glucose=<%= measurementGlucose.to_json%>  data-heart=<%= measurementHeart.to_json%>></div>
+        <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight="<%= measurementWeight.to_json%>"    data-temperature="<%= measurementTemperature.to_json%>"  data-glucose="<%= measurementGlucose.to_json%>"  data-heart="<%= measurementHeart.to_json%>"></div>
       </li>
     <%end%>
     <%if illnessN!=nil && illnessN.count>0%>

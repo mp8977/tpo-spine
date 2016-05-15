@@ -1,0 +1,52 @@
+<%= form_tag(:url => {:controller => "pick_doctor",action:"create"}, :method => "get") do  %>
+
+
+    <table align="center">
+        <td align="right">Pacient:</td>
+        <td align="left">
+          <select id="pacient-select-pd" name="pick[patient]">
+            <%@patientsPD.each do |patient| %>
+                <option  value="<%=patient.id %>"><%=patient.firstName+" "+patient.lastName%></option>
+            <%end%>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">Zdravnik:</td>
+        <td align="left">
+          <select id="doctor-select-pd" name="pick[doctor]">
+            <%@doctorsPD.each do |doctor| %>
+                <option  value="<%=doctor.id %>"><%=doctor.firstName+" "+doctor.lastName%></option>
+            <%end%>
+           </select>
+        </td>
+      </tr>
+      <tr>
+        <td align="right">Zobozdravnik:</td>
+        <td align="left">
+          <select id="dentist-select-pd" name="pick[dentist]">
+            <%@dentistPD.each do |dentist| %>
+                <option  value="<%=dentist.id %>"><%=dentist.firstName+" "+dentist.lastName%></option>
+            <%end%>
+          </select>
+        </td>
+      </tr>
+    </table>
+
+    <div class="actions">
+      <%= submit_tag(value="Poslji",class:"btn btn-info",style:"left: 50%;position: relative") %>
+    </div>
+
+<% end %>
+
+<script>
+  seznamIzbranihZdravnikov=<%=@listOfDoctorIDsPD%>
+  $("#doctor-select-pd").val(seznamIzbranihZdravnikov[0][0])
+  $("#dentist-select-pd").val(seznamIzbranihZdravnikov[0][1])
+  $("#pacient-select-pd").change(function(){
+    indexSelectePatient=$("#pacient-select-pd").prop('selectedIndex')
+    $("#doctor-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][0])
+    $("#dentist-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][1])
+  });
+
+</script>

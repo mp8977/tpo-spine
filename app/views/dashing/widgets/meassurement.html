@@ -38,10 +38,12 @@
     for(i=0;i<temperature.length;i++)
         temperatureJson.push({date:temperature[i]["date"],value:temperature[i]["temperature"]});
 
-
+    function parseDate(a){
+        return a.slice(12,16)+"-"+a.slice(9,11)+"-"+a.slice(6,8)+"T"+a.slice(0,5)+":00"
+    }
 
     function custom_sort(a, b) {
-        return new Date(a["date"]).getTime() - new Date(b["date"]).getTime();
+        return new Date(parseDate(a["date"])).getTime() - new Date(parseDate(b["date"])).getTime();
     }
 
     glucoseJson=glucoseJson.sort(custom_sort);
@@ -57,25 +59,25 @@
             case "glukoza":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[mmol/l]</th></tr>';
                 for(i=0;i<Math.min(limitMeasurement,glucose.length);i++)
-                    content+='<tr><td>'+glucose[i]["date"].substring(0,10)+'</td><td>'+glucose[i]["date"].substring(11,16)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
+                    content+='<tr><td>'+glucose[i]["date"].substring(6,16)+'</td><td>'+glucose[i]["date"].substring(0,5)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "srce":
                 content+='<tr><th>Datum</th><th>Čas</th><th>Krvni pritisk</th><th>BPM</th></tr>';
                 for(i=0;i<Math.min(limitMeasurement,heart.length);i++)
-                    content+='<tr><td>'+heart[i]["date"].substring(0,10)+'</td><td>'+heart[i]["date"].substring(11,16)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+parseInt(heart[i]["BPM"])+'</td></tr>';
+                    content+='<tr><td>'+heart[i]["date"].substring(6,16)+'</td><td>'+heart[i]["date"].substring(0,5)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+parseInt(heart[i]["BPM"])+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "temperatura":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[°C]</th></tr>';
                 for(i=0;i<Math.min(limitMeasurement,temperature.length);i++)
-                    content+='<tr><td>'+temperature[i]["date"].substring(0,10)+'</td><td>'+temperature[i]["date"].substring(11,16)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
+                    content+='<tr><td>'+temperature[i]["date"].substring(6,16)+'</td><td>'+temperature[i]["date"].substring(0,5)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "teža":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
                 for(i=0;i<Math.min(limitMeasurement,weight.length);i++)
-                    content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
+                    content+='<tr><td>'+weight[i]["date"].substring(6,16)+'</td><td>'+weight[i]["date"].substring(0,5)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
         }
@@ -109,25 +111,25 @@
                 case "glukoza":
                     content+='<tr><th>Datum</th><th>Čas</th><th>[mmol/l]</th></tr>';
                     for(i=0;i<glucose.length;i++)
-                        content+='<tr><td>'+glucose[i]["date"].substring(0,10)+'</td><td>'+glucose[i]["date"].substring(11,16)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
+                        content+='<tr><td>'+glucose[i]["date"].substring(6,16)+'</td><td>'+glucose[i]["date"].substring(0,5)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
                     $("#measurement-table-extend").html(content)
                     break;
                 case "srce":
                     content+='<tr><th>Datum</th><th>Čas</th><th>Krvni pritisk</th><th>BPM</th></tr>';
                     for(i=0;i<heart.length;i++)
-                        content+='<tr><td>'+heart[i]["date"].substring(0,10)+'</td><td>'+heart[i]["date"].substring(11,16)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+parseInt(heart[i]["BPM"])+'</td></tr>';
+                        content+='<tr><td>'+heart[i]["date"].substring(6,16)+'</td><td>'+heart[i]["date"].substring(0,5)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+parseInt(heart[i]["BPM"])+'</td></tr>';
                     $("#measurement-table-extend").html(content)
                     break;
                 case "temperatura":
                     content+='<tr><th>Datum</th><th>Čas</th><th>[°C]</th></tr>';
                     for(i=0;i<temperature.length;i++)
-                        content+='<tr><td>'+temperature[i]["date"].substring(0,10)+'</td><td>'+temperature[i]["date"].substring(11,16)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
+                        content+='<tr><td>'+temperature[i]["date"].substring(6,16)+'</td><td>'+temperature[i]["date"].substring(0,5)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
                     $("#measurement-table-extend").html(content)
                     break;
                 case "teža":
                     content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
                     for(i=0;i<weight.length;i++)
-                        content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
+                        content+='<tr><td>'+weight[i]["date"].substring(6,16)+'</td><td>'+weight[i]["date"].substring(0,5)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
                     $("#measurement-table-extend").html(content)
                     break;
             }
@@ -170,7 +172,7 @@
                 "marginLeft": 40,
                 "autoMarginOffset": 20,
                 "mouseWheelZoomEnabled": true,
-                "dataDateFormat": "YYYY-MM-DDTJJ:NN:SS.QQQZ",
+                "dataDateFormat": "JJ:NN DD-MM-YYYY",
                 "language": "slo",
                 "titles": [{
                     "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),
@@ -258,7 +260,7 @@
                 "marginLeft": 40,
                 "autoMarginOffset": 20,
                 "mouseWheelZoomEnabled": true,
-                "dataDateFormat": "YYYY-MM-DDTJJ:NN:SS.QQQZ",
+                "dataDateFormat": "JJ:NN DD-MM-YYYY",
                 "language": "slo",
                 "titles": [{
                     "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),

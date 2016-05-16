@@ -13,7 +13,7 @@
   <!-- admins#sifranti isci po sifrah https://datatables.net -->
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
-
+  <%= javascript_include_tag 'chosen.jquery.min' %>
   <%= csrf_meta_tags %>
 
 </head>
@@ -247,4 +247,20 @@
 </body>
 </html>
 <!-- TODO vprasaj pluta od kje pride canvas-->
-<script>$(".header-bg").hide();</script>
+<script>
+  $(".header-bg").hide();
+  /*
+
+  $(function(){
+    $(".chosen-select").chosen({width: "390px"});
+  });
+
+  HTML example
+   <select class="form-control chosen-select" multiple="true">
+   <option value="one">B1</option>
+   <option value="one">B2</option>
+   <option value="one">B3</option>
+   </select>
+
+  */
+</script>

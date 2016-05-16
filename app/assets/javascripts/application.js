@@ -16,3 +16,4 @@
 //= require_tree .
 //= require pickadate/translations/bg_BG
 //= require bootstrap-datepicker
+//= require chosen.jquery.min

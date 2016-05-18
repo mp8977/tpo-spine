@@ -381,7 +381,7 @@
   $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "underline");
   $("#lightbox").hide();
 
- 
+
   //prikaz podrobnosti pregleda
   function detailsappointment(pastAppointmentIndex){
     $("#expand-view").html("");
@@ -404,14 +404,7 @@
     });
   };
 
-  //začetek prikaza urnika
-  function schedule(){
-    $("#lightbox").show();
-    $('html').css('overflow','hidden');
-    $("#content").html('<div id="weekly-schedule"></div>');
-    $("#weekly-schedule").dayScheduleSelector({
-    });
-  }
+
   function afterClose(){
     $('#lightbox').hide();
     $('html').css('overflow','scroll');
@@ -427,6 +420,7 @@
 
   });
 
+  //iskanje pacienta
   $( "#automplete-1" ).autocomplete({
     source: pacientNameList,
     select: function(event,ui){

@@ -16,6 +16,185 @@
  */
 
 
+/*Urnik */
+#weekly-schedule{
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+
+.schedule-rows td {
+    width: 80px;
+    height: 30px;
+    margin: 3px;
+    padding: 5px;
+    background-color: rgba(102, 0, 1, 0.27);
+    cursor: pointer;
+}
+
+.schedule-rows td:first-child {
+    background-color: transparent;
+    text-align: right;
+    position: relative;
+    top: -12px;
+}
+#weekly-schedule > div > table > thead > tr > th{
+    text-align: center;
+}
+
+.schedule-rows td[data-selected],
+.schedule-rows td[data-selecting] { background-color: #238923; }
+
+.schedule-rows td[data-disabled] { opacity: 0.55; }
+.schedule-table{
+    border-collapse: collapse;
+}
+.schedule-table td{
+    border: 1px solid white;
+}
+.schedule-table tr{
+    padding:2px !important;
+}
+
+.schedule-table{
+    width:500px;
+    margin:auto;
+}
+
+
+
+
+/*izbira v tednu*/
+#ui-datepicker-div > table > tbody > tr:hover{
+    background-color: #3050ff;
+}
+
+
+#ui-datepicker-div > div > a.ui-datepicker-prev.ui-corner-all,#ui-datepicker-div > div > a.ui-datepicker-next.ui-corner-all{
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#ui-datepicker-div > div > a.ui-datepicker-prev.ui-corner-all:hover,#ui-datepicker-div > div > a.ui-datepicker-next.ui-corner-all:hover{
+    background: transparent;
+    cursor: pointer;
+}
+
+
+.ui-datepicker-title{
+    background-color: dodgerblue;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top:5px;
+}
+
+
+
+.ui-datepicker-calendar{
+    background-color: rgb(108, 108, 108);
+}
+
+.ui-datepicker {
+    background-color: #fff;
+    border: 1px solid #66AFE9;
+    border-radius: 4px;
+    box-shadow: 0 0 8px rgba(102,175,233,.6);
+    display: none;
+    margin-top: 4px;
+    padding: 10px;
+    width: 240px;
+}
+.ui-datepicker a,
+.ui-datepicker a:hover {
+    text-decoration: none;
+
+}
+.ui-datepicker a:hover,
+.ui-datepicker td:hover a {
+    color: white;
+    -webkit-transition: color 0.1s ease-in-out;
+    -moz-transition: color 0.1s ease-in-out;
+    -o-transition: color 0.1s ease-in-out;
+    transition: color 0.1s ease-in-out;
+}
+.ui-datepicker .ui-datepicker-header {
+    margin-bottom: 4px;
+    text-align: center;
+}
+.ui-datepicker .ui-datepicker-title {
+    font-weight: 700;
+}
+.ui-datepicker .ui-datepicker-prev,
+.ui-datepicker .ui-datepicker-next {
+    cursor: default;
+    font-family: 'Glyphicons Halflings';
+    -webkit-font-smoothing: antialiased;
+    font-style: normal;
+    font-weight: normal;
+    height: 20px;
+    line-height: 1;
+    margin-top: 2px;
+    width: 30px;
+}
+.ui-datepicker .ui-datepicker-prev {
+    float: left;
+    text-align: left;
+}
+.ui-datepicker .ui-datepicker-next {
+    float: right;
+    text-align: right;
+}
+.ui-datepicker .ui-datepicker-prev:before {
+    content: "\e079";
+}
+.ui-datepicker .ui-datepicker-next:before {
+    content: "\e080";
+}
+.ui-datepicker .ui-icon {
+    display: none;
+}
+.ui-datepicker .ui-datepicker-calendar {
+    table-layout: fixed;
+    width: 100%;
+}
+.ui-datepicker .ui-datepicker-calendar th,
+.ui-datepicker .ui-datepicker-calendar td {
+    text-align: center;
+    padding: 4px 0;
+}
+.ui-datepicker .ui-datepicker-calendar td {
+    border-radius: 4px;
+    -webkit-transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    -moz-transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    -o-transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+    transition: background-color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+.ui-datepicker .ui-datepicker-calendar td:hover {
+    color:white;
+    cursor: pointer;
+}
+.ui-datepicker .ui-datepicker-calendar td a {
+    text-decoration: none;
+}
+.ui-datepicker .ui-datepicker-current-day {
+    background-color: #4289cc;
+}
+.ui-datepicker .ui-datepicker-current-day a {
+    color: #fff
+}
+.ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable:hover {
+    background-color: #fff;
+    cursor: default;
+    color:white
+}
+
+.ui-priority-secondary{
+    color: #c5c5c5 !important;
+}
+
+/*konec urnika*/
+
+
 td {
     padding: 7px;
 }

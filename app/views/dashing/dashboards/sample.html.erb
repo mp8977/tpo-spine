@@ -381,22 +381,7 @@
   $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "underline");
   $("#lightbox").hide();
 
-  function doctorSelect(){
-    $("#pacientList > a:nth-child(" + patI + ") > li").css("text-decoration", "none");
-    patI=-1;
-    $(".gridster").html('<div id="pick-doctor"><h1>Izbira zdravnika</h1><br />Pacient:</div>');
-    $("#pick-doctor").css("margin-top","40px");
-    selectPatient='<select id="selectPatient">';
-    for (i=0;i<pacientNameList.length;i++)
-      selectPatient+="<option value="+patientIds[i]+">"+pacientNameList[i]+"</option>";
-    selectPatient+=" </select>";
-    $("#pick-doctor").append(selectPatient);
-    $("#selectPatient").change(function(){
-      console.log($("#selectPatient").val());
-    });
-    $("#pick-doctor").append('<div id="doctor-select-content"></div>');
-    //$("#pick-doctor").css("background-color","red");
-  }
+ 
   //prikaz podrobnosti pregleda
   function detailsappointment(pastAppointmentIndex){
     $("#expand-view").html("");

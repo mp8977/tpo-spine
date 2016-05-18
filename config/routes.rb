@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     resources :check_ups
     resources :addresses
     resources :pick_doctor
+    resources :scheduler
     #resource :appointment_details
 
     #resources :admins

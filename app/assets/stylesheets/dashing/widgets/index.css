@@ -14,6 +14,77 @@
  *= require pickadate/default.time
  *= require bootstrap-datepicker3
  */
+* {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+/*.ui-widget-content
+{
+    border: 5px solid black;
+    color: #222222;
+    background-color: Red;
+}*/
+.ui-widget
+{
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 15px;
+}
+.ui-menu
+{
+    display: block;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 2px;
+
+}
+#measurement-select>{
+    border: 1px solid white;
+}
+
+.ui-menu .ui-menu-item
+{
+    clear: left;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+}
+.ui-menu .ui-menu-item a
+{
+    display: block;
+    padding: 3px 3px 3px 3px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgba(26, 102, 101,1);
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    border: 0px;
+    font-weight: normal;
+    color: #ffffff;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkiPlfDwADmwHcaV65UQAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+}
+#automplete-1{
+    background-color: transparent;
+    border:2px solid white;
+    outline:none;
+    color: rgba(255, 255, 255, 0.8);
+}
+.ui-widget-content a
+{
+    color: #ffffff;
+}
+
+
 
 .gridster{
     padding-left: 250px;

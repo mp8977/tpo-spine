@@ -1,5 +1,7 @@
 
 
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
 
 <%  require 'json'
     require 'uri'
@@ -256,25 +258,37 @@
 %>
 <%#sidebar%>
 <div id="side-menu">
+
   <%pacientNameList=[]%>
   <ul>
-    <li >Pacienti:<br>
-      <ul id="pacientList">
-        <% ind=0 %>
-        <%patientNames.each do |patientName|%>
-           <%=link_to( ("<li>"+patientName+"</li>").html_safe, patientIndex: ind.to_s) %>
-          <% pacientNameList.push(patientName)%>
-          <%ind+=1%>
-        <%end%>
-      </ul>
-    </li>
-    <br />
-    <% if doctor_signed_in?%>
-      <li id="urnik-menu" onclick="schedule()"> Urnik </li>
-    <%end%>
     <%if user_signed_in?%>
-      <!--<li id="zdravnik-menu" onclick="doctorSelect()"> Izbira zdravnika </li>-->
+      <li >Pacienti:<br>
+        <ul id="pacientList">
+          <% ind=0 %>
+          <%patientNames.each do |patientName|%>
+             <%=link_to( ("<li>"+patientName+"</li>").html_safe, patientIndex: ind.to_s) %>
+            <%pacientNameList.push(patientName)%>
+            <%ind+=1%>
+          <%end%>
+        </ul>
+      </li>
+    <br />
     <%end%>
+
+    <% if doctor_signed_in?%>
+        <% ind=0 %>
+         <%patientNames.each do |patientName|%>
+            <%pacientNameList.push({"value":patientName,"url":"/dashing/dashboards?patientIndex="+ind.to_s})%>
+            <%ind+=1%>
+        <%end%>
+
+        <label for="automplete-1">Pacient: </label>
+        <br/>
+        <input id="automplete-1" class="ui-autocomplete-input">
+        <br/>
+      <!--<li id="urnik-menu" onclick="schedule()"> Urnik </li>-->
+    <%end%>
+    <br/>
     <li> <%=link_to 'Izpis', "/#", :method => :delete%></li>
 
   </ul>
@@ -349,8 +363,16 @@
   var patI=<%=patientIndex+1%>;
   var pacientNameList=[];
   var patientIds=[];
-  <%pacientNameList.each do |name|%>
-    pacientNameList.push("<%=name%>");
+
+
+  <% if user_signed_in?%>
+    <%pacientNameList.each do |name|%>
+     pacientNameList.push("<%=name%>");
+    <%end%>
+  <%end%>
+  <% if doctor_signed_in?%>
+   <%pacientNameList=pacientNameList.to_json%>
+    pacientNameList=<%=pacientNameList.html_safe%>;
   <%end%>
   <%patientIds.each do |id|%>
     patientIds.push("<%=id%>");
@@ -420,6 +442,13 @@
 
   });
 
+  $( "#automplete-1" ).autocomplete({
+    source: pacientNameList,
+    select: function(event,ui){
+      window.location = ui.item.url;
+    }
+  });
+  $("#automplete-1").attr("placeholder", pacientNameList[patI-1]["value"]);
 
 
 

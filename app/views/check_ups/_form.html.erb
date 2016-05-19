@@ -1,21 +1,77 @@
 <%= form_for(@check_up) do |f| %>
-  <% if @check_up.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@check_up.errors.count, "error") %> prohibited this check_up from being saved:</h2>
+    <% if @check_up.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@check_up.errors.count, "error") %> prohibited this check_up from being saved:</h2>
 
-      <ul>
-      <% @check_up.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @check_up.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <table align="center" width="100%">
+      <tr>
+        <td align="right">Datum:</td>
+        <td align="left"><%= f.date_select :date, include_blank: true, help: "Must be at least 6 characters long" %></td>
+      </tr>
+      <tr>
+        <td align="right">Pacient:</td>
+        <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+      </tr>
+      <tr>
+        <td align="right">Zdravnik:</td>
+        <td align="left"><%= f.collection_select(:doctor_id, Doctor.where(id: current_doctor.id), :id, :full_name ,{:multiple => false}) %></td>
+      </tr>
+
+      <tr>
+        <td align="right">Diete:</td>
+        <td align="left">
+          <div class="cloneable-unselected">
+            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:onchange => 'cloneDropdown(this);'})%>
+            <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+          </div>
+        </td>
+        <!--%= f.collection_check_boxes(:diet_ids, Diet.all, :id, :name) %-->
+      </tr>
+      <tr>
+        <td align="right">Bolezni ali alergije:</td>
+        <td align="left">
+          <div class="cloneable-unselected">
+            <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:onchange => 'cloneDropdown(this);'})%>
+            <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+
+        <td align="right">Zdravila:</td>
+        <td align="left">
+          <div class="cloneable-unselected">
+            <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:onchange => 'cloneDropdown(this);'}) %>
+            <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+          </div>
+        </td>
+      </tr>
+
+    </table>
+    <br>
+
+    <%= f.fields_for :measurements do |m| %>
+        <!--display: none !important;-->
+        <button id="btn<%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <%= @headers[m.index]%></button><br>
+        <div id="<%=m.index %>" class="hide">
+          <h3 class="inline"><%= @headers[m.index]%></h3>
+          <button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button>
+          <%= render 'measurement_fields', :f => m %>
+        </div>
+        <br>
+    <% end %>
+    <!--%= link_to_add_fields "Add File", f, :measurement_docs %-->
+
+
+    <div class="actions">
+      <%= f.submit class: "btn btn-info", value: "Poslji" %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :date %><br>
-    <%= f.date_select :date %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

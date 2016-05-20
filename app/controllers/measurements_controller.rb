@@ -22,12 +22,17 @@ class MeasurementsController < ApplicationController
     end
   end
 
+  #https://www.youtube.com/watch?v=j1zZ4Lgzf9s poglej za formo
   # GET /measurements/new
   def new
     @measurement = Measurement.new
     @part_measurement = @measurement.part_measurements.build
-    @part_measurement.build_measurement_home
-    @part_measurement.build_measurement_doc
+    #@measurement.part_measurements.build
+    if user_signed_in?
+      @part_measurement.build_measurement_home
+    elsif doctor_signed_in?
+      @part_measurement.build_measurement_doc
+    end
   end
 
   # GET /measurements/1/edit

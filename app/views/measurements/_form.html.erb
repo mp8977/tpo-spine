@@ -47,6 +47,8 @@
                   <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
                 </tr>
             <% end %>
+        <% elsif admin_signed_in? %>
+            <p>Meritev naj ne dela adminstrator, ker potem manjkajo podatki</p>
         <% end %>
     <% end %>
   </table>

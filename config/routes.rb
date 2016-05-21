@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :measurement_categories
     resources :measurement_types
     get 'static/home'
     get 'static/admin_dashboard'

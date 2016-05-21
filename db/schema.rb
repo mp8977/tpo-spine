@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160511202925) do
+ActiveRecord::Schema.define(version: 20160521161720) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -193,6 +193,18 @@ ActiveRecord::Schema.define(version: 20160511202925) do
     t.boolean  "deleted",                   default: false, null: false
   end
 
+  create_table "illnesses_medicines", id: false, force: :cascade do |t|
+    t.integer "illness_id",  limit: 4, null: false
+    t.integer "medicine_id", limit: 4, null: false
+  end
+
+  create_table "measurement_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "elements",   limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
   create_table "measurement_docs", force: :cascade do |t|
     t.integer  "check_up_id",         limit: 4
     t.integer  "part_measurement_id", limit: 4
@@ -315,9 +327,9 @@ ActiveRecord::Schema.define(version: 20160511202925) do
   create_table "posts", force: :cascade do |t|
     t.string   "postName",   limit: 255
     t.string   "postNumber", limit: 255
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.boolean  "deleted",                default: false, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+    t.boolean  "deleted"
   end
 
   create_table "users", force: :cascade do |t|

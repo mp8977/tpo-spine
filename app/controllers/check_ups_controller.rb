@@ -15,7 +15,18 @@ class CheckUpsController < ApplicationController
   # GET /check_ups/new
   def new
     @check_up = CheckUp.new
+    @m_docs = @check_up.measurement_docs.build
+    @m_part = @m_docs.build_part_measurement
+    @measurement = @m_part.build_measurement
+    @m_docs2 = @check_up.measurement_docs.build
+    @m_part2 = @m_docs2.build_part_measurement
+    puts 'id:'
+    puts @measurement.id
+    @m_part2.measurement_id = @measurement.id
+
   end
+
+
 
   # GET /check_ups/1/edit
   def edit
@@ -69,6 +80,11 @@ class CheckUpsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def check_up_params
-      params.require(:check_up).permit(:date, :patient_id, :doctor_id)
+      params.require(:check_up).permit(:date, :patient_id, :doctor_id, :diet_ids => [], :medicine_ids => [],
+                                       :illness_ids => [], measurement_docs_attributes: [:id, :deleted,
+          part_measurement_attributes: [:id, :name, :unit, :value, :deleted,
+            measurement_attributes: [:id, :date, :deleted]
+          ]
+          ])
     end
 end

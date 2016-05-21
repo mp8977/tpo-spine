@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @measurement_category.name %>
+</p>
+
+<p>
+  <strong>Elements:</strong>
+  <%= @measurement_category.elements %>
+</p>
+
+<%= link_to 'Edit', edit_measurement_category_path(@measurement_category) %> |
+<%= link_to 'Back', measurement_categories_path %>

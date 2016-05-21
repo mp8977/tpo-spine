@@ -14,16 +14,54 @@
   <table align="center">
     <tr>
       <td align="right">Datum:</td>
-      <td align="left"><%= f.date_select :date, include_blank: true %></td>
+      <td align="left"><%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
+          use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
     </tr>
     <tr>
       <td align="right">Pacient</td>
-      <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+      <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
     </tr>
     <tr>
       <td align="right">Zdravnik</td>
-      <td align="left"><%= f.collection_select(:doctor_id, Doctor.where(deleted: false), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+      <td align="left"><%= f.collection_select(:doctor_id, Doctor.where(deleted: false), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
     </tr>
+    <tr>
+      <td align="right">Diete</td>
+      <td align="left"><%= f.collection_select(:diet_ids, Diet.where(deleted: false), :id, :name ,{include_blank: true}, {multiple: true}) %></td>
+    </tr>
+    <tr>
+      <td align="right">Zdravila</td>
+      <td align="left"><%= f.collection_select(:medicine_ids, Medicine.where(inUse: true), :id, :name ,{include_blank: true}, {multiple: true}) %></td>
+    </tr>
+    <tr>
+      <td align="right">Bolezni</td>
+      <td align="left"><%= f.collection_select(:illness_ids, Illness.where(deleted: false), :id, :name ,{include_blank: true}, {multiple: true}) %></td>
+    </tr>
+
+    <%= f.fields_for :measurement_docs do |d| %>
+      <%= d.fields_for :part_measurement do |p| %>
+            <tr>
+              <td align="right">Ime</td>
+              <td align="left"><%= p.text_field :name, required: true %></td>
+            </tr>
+            <tr>
+              <td align="right">Enota</td>
+              <td align="left"><%= p.text_field :unit, required: true %></td>
+            </tr>
+            <tr>
+              <td align="right">Kolicina</td>
+              <td align="left"><%= p.text_field :value, type: 'number', step: '0.01', required: true %></td>
+            </tr>
+            <%= p.fields_for :measurement do |m| %>
+                <tr>
+                  <td align="right">Datum meritve:</td>
+                  <td align="left"><%= m.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
+                                                     use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
+                </tr>
+            <% end %>
+
+      <% end %>
+    <% end %>
   </table>
   <div class="actions">
     <%= f.submit class: "btn btn-info", value: "Poslji" %>

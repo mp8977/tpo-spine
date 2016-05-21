@@ -8,4 +8,6 @@ class PartMeasurement < ActiveRecord::Base
   has_one :measurement_doc
   accepts_nested_attributes_for :measurement_home
   accepts_nested_attributes_for :measurement_doc
+  accepts_nested_attributes_for :measurement
+
 end

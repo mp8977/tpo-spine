@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-Medicine.create! name: 'Zdrav1', inUse: true, medicineNumber: 3426
-Medicine.create! name: 'Zdrav2', inUse: true, medicineNumber: 3428
-Medicine.create! name: 'Zdrav3', inUse: true, medicineNumber:  3429
-Illness.create! name: 'Bolez',illnessNumber: 2123, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav3'])
-Illness.create! name: 'Bolez2',illnessNumber: 2124, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav2'])
-Illness.create! name: 'Bolez3',illnessNumber: 2121, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav3','Zdrav2'])
+Medicine.create! name: 'Zdravil1', inUse: true, medicineNumber: 3426
+Medicine.create! name: 'Zdravil2', inUse: true, medicineNumber: 3428
+Medicine.create! name: 'Zdravil3', inUse: true, medicineNumber:  3429
+Illness.create! name: 'Bolezil',illnessNumber: 2123, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav3'])
+Illness.create! name: 'Bolezil2',illnessNumber: 2124, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav2'])
+Illness.create! name: 'Bolezil3',illnessNumber: 2121, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav3','Zdrav2'])
 
 #Illness.where(:name => 'Bolez11').medicines << Medicine.where(:name => 'Zdrav1')
 Illness.find(1).medicines << Medicine.find(1)

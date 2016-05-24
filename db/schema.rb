@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160512172341) do
+ActiveRecord::Schema.define(version: 20160518171228) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -64,36 +64,6 @@ ActiveRecord::Schema.define(version: 20160512172341) do
   add_index "check_ups", ["doctor_id"], name: "fk_rails_9948e4a45d", using: :btree
   add_index "check_ups", ["patient_id"], name: "fk_rails_b3f02e3817", using: :btree
 
-  create_table "check_ups_diets", force: :cascade do |t|
-    t.integer  "diet_id",     limit: 4
-    t.integer  "check_up_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "check_ups_diets", ["check_up_id"], name: "fk_rails_d15c0f9979", using: :btree
-  add_index "check_ups_diets", ["diet_id"], name: "fk_rails_72b2ed97d4", using: :btree
-
-  create_table "check_ups_illnesses", force: :cascade do |t|
-    t.integer  "illness_id",  limit: 4
-    t.integer  "check_up_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "check_ups_illnesses", ["check_up_id"], name: "fk_rails_a24aa67e18", using: :btree
-  add_index "check_ups_illnesses", ["illness_id"], name: "fk_rails_890d4e35be", using: :btree
-
-  create_table "check_ups_medicines", force: :cascade do |t|
-    t.integer  "medicine_id", limit: 4
-    t.integer  "check_up_id", limit: 4
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-  end
-
-  add_index "check_ups_medicines", ["check_up_id"], name: "fk_rails_72f5af1792", using: :btree
-  add_index "check_ups_medicines", ["medicine_id"], name: "fk_rails_ecd3adc7bb", using: :btree
-
   create_table "contact_people", force: :cascade do |t|
     t.string   "lastName",     limit: 255
     t.string   "firstName",    limit: 255
@@ -117,6 +87,16 @@ ActiveRecord::Schema.define(version: 20160512172341) do
 
   add_index "diagnose_has_medicines", ["illness_id"], name: "fk_rails_9fb7f36d9c", using: :btree
   add_index "diagnose_has_medicines", ["medicine_id"], name: "fk_rails_9ec0584fb1", using: :btree
+
+  create_table "diet_checks", force: :cascade do |t|
+    t.integer  "diet_id",     limit: 4
+    t.integer  "check_up_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "diet_checks", ["check_up_id"], name: "fk_rails_d15c0f9979", using: :btree
+  add_index "diet_checks", ["diet_id"], name: "fk_rails_72b2ed97d4", using: :btree
 
   create_table "diet_instructions", force: :cascade do |t|
     t.string   "url",        limit: 255
@@ -192,6 +172,16 @@ ActiveRecord::Schema.define(version: 20160512172341) do
 
   add_index "hospitals", ["address_id"], name: "fk_rails_1673fa1e63", using: :btree
 
+  create_table "illness_checks", force: :cascade do |t|
+    t.integer  "illness_id",  limit: 4
+    t.integer  "check_up_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "illness_checks", ["check_up_id"], name: "fk_rails_a24aa67e18", using: :btree
+  add_index "illness_checks", ["illness_id"], name: "fk_rails_890d4e35be", using: :btree
+
   create_table "illnesses", force: :cascade do |t|
     t.string   "illnessNumber", limit: 255
     t.string   "name",          limit: 255
@@ -199,6 +189,11 @@ ActiveRecord::Schema.define(version: 20160512172341) do
     t.datetime "created_at",                                null: false
     t.datetime "updated_at",                                null: false
     t.boolean  "deleted",                   default: false, null: false
+  end
+
+  create_table "illnesses_medicines", id: false, force: :cascade do |t|
+    t.integer "illness_id",  limit: 4, null: false
+    t.integer "medicine_id", limit: 4, null: false
   end
 
   create_table "measurement_docs", force: :cascade do |t|
@@ -223,12 +218,19 @@ ActiveRecord::Schema.define(version: 20160512172341) do
 
   create_table "measurements", force: :cascade do |t|
     t.datetime "date"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
-    t.integer  "check_up_id", limit: 4
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "measurements", ["check_up_id"], name: "index_measurements_on_check_up_id", using: :btree
+  create_table "medicine_checks", force: :cascade do |t|
+    t.integer  "medicine_id", limit: 4
+    t.integer  "check_up_id", limit: 4
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
+  end
+
+  add_index "medicine_checks", ["check_up_id"], name: "fk_rails_72f5af1792", using: :btree
+  add_index "medicine_checks", ["medicine_id"], name: "fk_rails_ecd3adc7bb", using: :btree
 
   create_table "medicine_instructions", force: :cascade do |t|
     t.string   "url",        limit: 255
@@ -334,16 +336,12 @@ ActiveRecord::Schema.define(version: 20160512172341) do
   add_foreign_key "appointments", "patients"
   add_foreign_key "check_ups", "doctors"
   add_foreign_key "check_ups", "patients"
-  add_foreign_key "check_ups_diets", "check_ups"
-  add_foreign_key "check_ups_diets", "diets"
-  add_foreign_key "check_ups_illnesses", "check_ups"
-  add_foreign_key "check_ups_illnesses", "illnesses"
-  add_foreign_key "check_ups_medicines", "check_ups"
-  add_foreign_key "check_ups_medicines", "medicines"
   add_foreign_key "contact_people", "addresses"
   add_foreign_key "contact_people", "patients"
   add_foreign_key "diagnose_has_medicines", "illnesses"
   add_foreign_key "diagnose_has_medicines", "medicines"
+  add_foreign_key "diet_checks", "check_ups"
+  add_foreign_key "diet_checks", "diets"
   add_foreign_key "diet_instructions", "diets"
   add_foreign_key "doctor_has_nurses", "doctors"
   add_foreign_key "doctor_has_nurses", "nurses"
@@ -351,11 +349,14 @@ ActiveRecord::Schema.define(version: 20160512172341) do
   add_foreign_key "doctor_has_patients", "patients"
   add_foreign_key "doctors", "hospitals"
   add_foreign_key "hospitals", "addresses"
+  add_foreign_key "illness_checks", "check_ups"
+  add_foreign_key "illness_checks", "illnesses"
   add_foreign_key "measurement_docs", "check_ups"
   add_foreign_key "measurement_docs", "part_measurements"
   add_foreign_key "measurement_homes", "part_measurements"
   add_foreign_key "measurement_homes", "patients"
-  add_foreign_key "measurements", "check_ups"
+  add_foreign_key "medicine_checks", "check_ups"
+  add_foreign_key "medicine_checks", "medicines"
   add_foreign_key "medicines", "medicine_instructions"
   add_foreign_key "nurses", "hospitals"
   add_foreign_key "part_measurements", "measurements"

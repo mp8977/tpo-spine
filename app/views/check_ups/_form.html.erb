@@ -29,46 +29,69 @@
         <td align="right">Diete:</td>
         <td align="left">
           <div class="cloneable-unselected">
-            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:onchange => 'cloneDropdown(this);'})%>
+            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
             <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
           </div>
         </td>
         <!--%= f.collection_check_boxes(:diet_ids, Diet.all, :id, :name) %-->
       </tr>
-      <tr>
-        <td align="right">Bolezni ali alergije:</td>
-        <td align="left">
-          <div class="cloneable-unselected">
-            <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:onchange => 'cloneDropdown(this);'})%>
-            <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
-
-        <td align="right">Zdravila:</td>
-        <td align="left">
-          <div class="cloneable-unselected">
-            <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:onchange => 'cloneDropdown(this);'}) %>
-            <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
-          </div>
-        </td>
-      </tr>
 
     </table>
-    <br>
 
-    <%= f.fields_for :measurements do |m| %>
-        <!--display: none !important;-->
-        <button id="btn<%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <%= @headers[m.index]%></button><br>
-        <div id="<%=m.index %>" class="hide">
-          <h3 class="inline"><%= @headers[m.index]%></h3>
-          <button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button>
-          <%= render 'measurement_fields', :f => m %>
-        </div>
+    <div align="center" id="kloni">
+      <div class="cloneable" hidden >
+        <table align="center">
+          <tr>
+            <td align="right">Bolezen ali alergija:</td>
+            <td align="left">
+              <div class="cloneable-unselected">
+                <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
+                <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
+              </div>
+            </td>
+          </tr>
+          <tr>
+
+            <td align="right">Zdravila:</td>
+            <td align="left">
+              <div class="cloneable-unselected bolezni">
+                <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
+                <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+              </div>
+            </td>
+          </tr>
+          </table>
+          <br>
+        <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
         <br>
-    <% end %>
-    <!--%= link_to_add_fields "Add File", f, :measurement_docs %-->
+        <br>
+        <!--button class ="btn btn-secondary btn-xs" type="button" onclick="cloneDiv(this.parentNode.parentNode); this.classList.add('hide'); ">Dodaj bolezen</button-->
+      </div>
+      <button class ="btn btn-primary btn-xs" type="button" onclick="cloneDiv(this.parentNode); ">Dodaj bolezen in zdravila</button>
+    </div>
+
+
+
+    <br>
+    <!--polja za measurement k jih zdej nerabmo-->
+    <!--%= f.fields_for :measurements do |m| %-->
+        <!--button id="btn<!--%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<!--%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <!--%= @headers[m.index]%></button><br-->
+        <!--div id="<!--%=m.index %>" class="hide"-->
+          <!--h3 class="inline"><!--%= @headers[m.index]%></h3-->
+          <!--button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<!--%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button-->
+          <!--%= render 'measurement_fields', :f => m %-->
+        <!--/div-->
+        <!--br-->
+    <!--% end %-->
+
+    <%= f.fields_for :measurement_docs do |measurement_docs_for_form| %>
+        <%= render 'measurement_doc_fields', :f => measurement_docs_for_form %>
+    <% end%>
+    <br>
+    <br>
+    <%= link_to_add_fields "Dodaj meritev", f, :measurement_docs %>
+    <br>
+    <br>
 
 
     <div class="actions">

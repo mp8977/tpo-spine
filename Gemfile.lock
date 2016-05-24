@@ -44,7 +44,7 @@ GEM
     bootstrap-datepicker-rails (1.6.0.1)
       railties (>= 3.0)
     builder (3.2.2)
-    byebug (8.2.4)
+    byebug (9.0.0)
     coffee-rails (4.1.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.1.x)
@@ -52,7 +52,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
-    concurrent-ruby (1.0.1)
+    concurrent-ruby (1.0.2)
     connection_pool (2.2.0)
     dashing-rails (2.5.0)
       coffee-script (>= 2.0)
@@ -62,12 +62,11 @@ GEM
       redis (~> 3.2)
       rufus-scheduler (~> 3.2)
     debug_inspector (0.0.2)
-    devise (3.5.6)
+    devise (4.1.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
+      railties (>= 4.1.0, < 5.1)
       responders
-      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.6.0)
@@ -93,16 +92,20 @@ GEM
     mime-types-data (3.2016.0221)
     mini_portile2 (2.0.0)
     minitest (5.8.4)
-    multi_json (1.11.2)
-    mysql2 (0.4.3-x64-mingw32)
-    mysql2 (0.4.3-x86-mingw32)
+    multi_json (1.12.0)
+    mysql2 (0.4.4-x64-mingw32)
+    mysql2 (0.4.4-x86-mingw32)
     nokogiri (1.6.7.2-x64-mingw32)
       mini_portile2 (~> 2.0.0.rc2)
     nokogiri (1.6.7.2-x86-mingw32)
       mini_portile2 (~> 2.0.0.rc2)
     orm_adapter (0.5.0)
+    pdf-core (0.6.1)
     pickadate-rails (3.5.6.0)
       railties (>= 3.1.0)
+    prawn (2.1.0)
+      pdf-core (~> 0.6.1)
+      ttfunk (~> 1.4.0)
     puma (3.4.0)
     rack (1.6.4)
     rack-protection (1.5.3)
@@ -136,10 +139,10 @@ GEM
     rake (11.1.2)
     rdoc (4.2.2)
       json (~> 1.4)
-    redis (3.2.2)
-    responders (2.1.2)
+    redis (3.3.0)
+    responders (2.2.0)
       railties (>= 4.2.0, < 5.1)
-    rufus-scheduler (3.2.0)
+    rufus-scheduler (3.2.1)
     sass (3.4.22)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -150,6 +153,9 @@ GEM
     sdoc (0.4.1)
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
+    seed_dump (3.2.4)
+      activerecord (>= 4)
+      activesupport (>= 4)
     sinatra (1.4.7)
       rack (~> 1.5)
       rack-protection (~> 1.4)
@@ -167,11 +173,12 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.2)
+    ttfunk (1.4.0)
     turbolinks (2.5.3)
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2016.3)
+    tzinfo-data (1.2016.4)
       tzinfo (>= 1.0.0)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
@@ -204,11 +211,13 @@ DEPENDENCIES
   mysql2 (>= 0.3.13, < 0.5)
   nokogiri
   pickadate-rails
+  prawn
   puma
   rails (= 4.2.5)
   redis
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  seed_dump
   sinatra
   sinatra-sse
   turbolinks

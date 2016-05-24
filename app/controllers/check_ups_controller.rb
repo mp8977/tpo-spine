@@ -147,6 +147,7 @@ class CheckUpsController < ApplicationController
     @check_up = CheckUp.find(params[:id])
   end
 
+
   # Never trust parameters from the scary internet, only allow the white list through.
 
  # measurements_attributes: [:id,:date,

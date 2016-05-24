@@ -21,6 +21,11 @@ class AdminsController < ApplicationController
   def edit
   end
 
+  # GET /admins/sifranti
+  def sifranti
+
+  end
+
   # POST /admins
   # POST /admins.json
   def create

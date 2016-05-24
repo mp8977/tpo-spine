@@ -11,11 +11,21 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :url %><br>
-    <%= f.text_field :url %>
-  </div>
+  <table align="center">
+    <tr>
+      <td align="right">Spletni naslov:</td>
+      <td align="left"><%= f.text_field :url_string, required: true %></td>
+    </tr>
+    <tr>
+      <td align="right">Dieta</td>
+      <td align="left"><%= f.collection_select(:diet_id, Diet.all, :id, :name ,{include_blank: false},{:multiple => false, required: true}) %></td>
+    </tr>
+    <tr>
+      <td align="right">Izbrisana</td>
+      <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false, required: true}) %></td>
+    </tr>
+  </table>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
 <% end %>

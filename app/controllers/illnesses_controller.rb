@@ -7,9 +7,19 @@ class IllnessesController < ApplicationController
     @illnesses = Illness.all
   end
 
-  # GET /illnesses/1
-  # GET /illnesses/1.json
+  # GET /illnesses/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = IllnessPdf.new(@illness, view_context)
+          send_data pdf.render, filename:
+              "illness_#{@illness.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /illnesses/new
@@ -28,8 +38,8 @@ class IllnessesController < ApplicationController
 
     respond_to do |format|
       if @illness.save
-        format.html { redirect_to @illness, notice: 'Illness was successfully created.' }
-        format.json { render :show, status: :created, location: @illness }
+        flash[:notice] = 'Bolezen je bila uspesno kreirana'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @illness.errors, status: :unprocessable_entity }
@@ -42,8 +52,9 @@ class IllnessesController < ApplicationController
   def update
     respond_to do |format|
       if @illness.update(illness_params)
-        format.html { redirect_to @illness, notice: 'Illness was successfully updated.' }
-        format.json { render :show, status: :ok, location: @illness }
+        flash[:notice] = 'Bolezen je bila posodobljena'
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        #format.json { render :show, status: :ok, location: @illness }
       else
         format.html { render :edit }
         format.json { render json: @illness.errors, status: :unprocessable_entity }
@@ -54,10 +65,15 @@ class IllnessesController < ApplicationController
   # DELETE /illnesses/1
   # DELETE /illnesses/1.json
   def destroy
-    @illness.destroy
-    respond_to do |format|
-      format.html { redirect_to illnesses_url, notice: 'Illness was successfully destroyed.' }
-      format.json { head :no_content }
+    @illness.deleted = true
+    if @illness.save
+      flash[:notice] = 'Bolezen je bila uspesno izbrisana'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju bolezni'
     end
   end
 
@@ -69,6 +85,10 @@ class IllnessesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def illness_params
-      params.require(:illness).permit(:illnessNumber, :name, :isAllergy)
+      if admin_signed_in?
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy, :deleted)
+      else
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy)
+      end
     end
 end

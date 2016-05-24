@@ -1,9 +1,10 @@
 <div class="text-center">
   <h1>Urejanje profila pacienta</h1>
 
-  <% if  !(user_signed_in?) %>
+  <% if  !(user_signed_in? or admin_signed_in?) %>
       <div>
-        <%= link_to("Preskoci", { controller: "static", action: "confirmation" }) %><br>
+        <% flash[:notice] = 'Potrdite vaš uporabniški račun.' %>
+        <%= link_to("Preskoci", root_path) %><br>
       </div>
   <% end %>
 

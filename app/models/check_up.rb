@@ -41,4 +41,8 @@ class CheckUp < ActiveRecord::Base
     end
   end
 
+  def full_name
+    "#{date} #{Patient.find(patient_id).full_name}"
+  end
+
 end

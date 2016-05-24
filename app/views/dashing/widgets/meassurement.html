@@ -1,4 +1,6 @@
 <div class="container">
+    <input id="expand-measurement" type="image" height="23px" width="23px" onclick="expandMeasurements()" title="Razširi meritve" src="/assets/expand.png" />
+    <input id="graph-show" type="image" height="23px" width="23px" onclick="showGraph()" title="Prikaži graf" src="/assets/graph.png" />
     <div data-bind="title" class="title"></div>
     <br />
     <select id="measurement-select">
@@ -14,42 +16,358 @@
     </table>
 </div>
 
+
+
+
 <script>
     var glucose=$("#measurement").data("glucose");
     var heart=$("#measurement").data("heart");
     var temperature=$("#measurement").data("temperature");
     var weight=$("#measurement").data("weight");
     var content="";
-    var limit=8;
+    var limitMeasurement=8;
+    var glucoseJson=[];
+    var temperatureJson=[];
+    var weightJson=[];
+    var heartJson=heart;
+
+    for(i=0;i<glucose.length;i++)
+        glucoseJson.push({date:glucose[i]["date"],value:parseFloat(glucose[i]["glucose"])});
+    for(i=0;i<weight.length;i++)
+        weightJson.push({date:weight[i]["date"],value:weight[i]["weight"]});
+    for(i=0;i<temperature.length;i++)
+        temperatureJson.push({date:temperature[i]["date"],value:temperature[i]["temperature"]});
+
+    function parseDate(a){
+        return a.slice(12,16)+"-"+a.slice(9,11)+"-"+a.slice(6,8)+"T"+a.slice(0,5)+":00"
+    }
+
+    function custom_sort(a, b) {
+        return new Date(parseDate(a["date"])).getTime() - new Date(parseDate(b["date"])).getTime();
+    }
+
+    glucoseJson=glucoseJson.sort(custom_sort);
+    weightJson=weightJson.sort(custom_sort);
+    temperatureJson=temperatureJson.sort(custom_sort);
+    heartJson=heartJson.sort(custom_sort);
+
+
+    //sprememba izbira prikazane meritve na dashbordu
     $("#measurement-select").change(function() {
         content="";
         switch($("#measurement-select  option:selected").val()){
             case "glukoza":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[mmol/l]</th></tr>';
-                for(i=0;i<Math.min(limit,glucose.length);i++)
-                    content+='<tr><td>'+glucose[i]["date"].substring(0,10)+'</td><td>'+glucose[i]["date"].substring(11,16)+'</td><td>'+glucose[i]["glucose"]+'</td></tr>';
+                for(i=0;i<Math.min(limitMeasurement,glucose.length);i++)
+                    content+='<tr><td>'+glucoseJson[i]["date"].substring(6,16)+'</td><td>'+glucoseJson[i]["date"].substring(0,5)+'</td><td>'+glucoseJson[i]["value"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "srce":
                 content+='<tr><th>Datum</th><th>Čas</th><th>Krvni pritisk</th><th>BPM</th></tr>';
-                for(i=0;i<Math.min(limit,heart.length);i++)
-                    content+='<tr><td>'+heart[i]["date"].substring(0,10)+'</td><td>'+heart[i]["date"].substring(11,16)+'</td><td>'+heart[i]["systolic"]+"/"+heart[i]["diastolic"]+'</td><td>'+heart[i]["BPM"]+'</td></tr>';
+                for(i=0;i<Math.min(limitMeasurement,heart.length);i++)
+                    content+='<tr><td>'+heartJson[i]["date"].substring(6,16)+'</td><td>'+heartJson[i]["date"].substring(0,5)+'</td><td>'+heartJson[i]["systolic"]+"/"+heartJson[i]["diastolic"]+'</td><td>'+parseInt(heartJson[i]["BPM"])+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "temperatura":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[°C]</th></tr>';
-                for(i=0;i<Math.min(limit,temperature.length);i++)
-                    content+='<tr><td>'+temperature[i]["date"].substring(0,10)+'</td><td>'+temperature[i]["date"].substring(11,16)+'</td><td>'+temperature[i]["temperature"]+'</td></tr>';
+                for(i=0;i<Math.min(limitMeasurement,temperature.length);i++)
+                    content+='<tr><td>'+temperatureJson[i]["date"].substring(6,16)+'</td><td>'+temperatureJson[i]["date"].substring(0,5)+'</td><td>'+temperatureJson[i]["value"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
             case "teža":
                 content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
-                for(i=0;i<Math.min(limit,weight.length);i++)
-                    content+='<tr><td>'+weight[i]["date"].substring(0,10)+'</td><td>'+weight[i]["date"].substring(11,16)+'</td><td>'+weight[i]["weight"]+'</td></tr>';
+                for(i=0;i<Math.min(limitMeasurement,weight.length);i++)
+                    content+='<tr><td>'+weightJson[i]["date"].substring(6,16)+'</td><td>'+weightJson[i]["date"].substring(0,5)+'</td><td>'+weightJson[i]["value"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
         }
 
     });
 
+
+    //prikaz vseh meritev
+    function expandMeasurements(){
+        $("#lightbox").show();
+        $('html').css('overflow','hidden');
+        $("#content").html("");
+        $("#content").css("min-height","0%");
+        $("#expand-view").css("min-height","100%");
+        $("#expand-view").css("background-color","#005e84");
+        $("#expand-view").html('<div><h1>Meritve</h1><br />' +
+                '<select id="measurement-select-extend" >'+
+                    '<option disabled selected value> -- izberite meritev -- </option>'+
+                    '<option value="glukoza">Glukoza</option>'+
+                    '<option value="srce">Srce</option>'+
+                    '<option value="temperatura">Telesna temperatura</option>'+
+                    '<option value="teža">Teža</option>'+
+                '</select> <br><br>' +
+                '<table id="measurement-table-extend">'+
+                '</table>'+
+                '</div>');
+
+        $("#measurement-select-extend").change(function() {
+            content="";
+            switch($("#measurement-select-extend  option:selected").val()){
+                case "glukoza":
+                    content+='<tr><th>Datum</th><th>Čas</th><th>[mmol/l]</th></tr>';
+                    for(i=0;i<glucose.length;i++)
+                        content+='<tr><td>'+glucoseJson[i]["date"].substring(6,16)+'</td><td>'+glucoseJson[i]["date"].substring(0,5)+'</td><td>'+glucoseJson[i]["value"]+'</td></tr>';
+                    $("#measurement-table-extend").html(content)
+                    break;
+                case "srce":
+                    content+='<tr><th>Datum</th><th>Čas</th><th>Krvni pritisk</th><th>BPM</th></tr>';
+                    for(i=0;i<heart.length;i++)
+                        content+='<tr><td>'+heartJson[i]["date"].substring(6,16)+'</td><td>'+heartJson[i]["date"].substring(0,5)+'</td><td>'+heartJson[i]["systolic"]+"/"+heartJson[i]["diastolic"]+'</td><td>'+parseInt(heartJson[i]["BPM"])+'</td></tr>';
+                    $("#measurement-table-extend").html(content)
+                    break;
+                case "temperatura":
+                    content+='<tr><th>Datum</th><th>Čas</th><th>[°C]</th></tr>';
+                    for(i=0;i<temperature.length;i++)
+                        content+='<tr><td>'+temperatureJson[i]["date"].substring(6,16)+'</td><td>'+temperatureJson[i]["date"].substring(0,5)+'</td><td>'+temperatureJson[i]["value"]+'</td></tr>';
+                    $("#measurement-table-extend").html(content)
+                    break;
+                case "teža":
+                    content+='<tr><th>Datum</th><th>Čas</th><th>[kg]</th></tr>';
+                    for(i=0;i<weight.length;i++)
+                        content+='<tr><td>'+weightJson[i]["date"].substring(6,16)+'</td><td>'+weightJson[i]["date"].substring(0,5)+'</td><td>'+weightJson[i]["value"]+'</td></tr>';
+                    $("#measurement-table-extend").html(content)
+                    break;
+            }
+
+            if($('#measurement-select-extend').find(":selected").val()!="")
+                $("#measurement-select").val($('#measurement-select-extend').find(":selected").val()).change();
+
+        });
+        $("#measurement-select-extend").val($('#measurement-select').find(":selected").val()).change();
+
+    }
+
+
+    function zoomChart() {
+        chart.zoomToIndexes(chart.dataProvider.length - 40, chart.dataProvider.length - 1);
+    }
+    AmCharts.translations.slo={"monthNames":["Januar","Februar","Marec","April","Maj","Junij","Julij","Avgust","September","Oktober","November","December"],"shortMonthNames":["Jan.","Feb.","Marec","April","Maj","Junij","Julij","Avg.","Sept.","Okt.","Nov.","Dec."],"dayNames":["Ponedeljek","Torek","Sreda","Četrtek","Petek","Sobota","Nedelja"],"shortDayNames":["Pon","Tor","Sre","Čet","Pet","Sob","Ned"],"zoomOutText":"Prikaži vse"}
+
+    function showGraph(){
+        $("#lightbox").show();
+        $('html').css('overflow','hidden');
+        $("#content").html("");
+        $("#content").css("min-height","0%");
+        $("#expand-view").css("min-height","0%");
+        $("#expand-view").css("background-color","#005e84");
+        $("#expand-view").html("");
+        $("#lightbox").append('<div id="chartdiv"></div>');
+        if ($("#measurement-select").val()!="srce") {
+            var dataContent;
+            if($("#measurement-select").val()=="glukoza")
+                dataContent=glucoseJson;
+            else if($("#measurement-select").val()=="teža")
+                dataContent=weightJson;
+            else
+                dataContent=temperatureJson;
+            var chart = AmCharts.makeChart("chartdiv", {
+                "type": "serial",
+                "theme": "none",
+                "marginRight": 40,
+                "marginLeft": 40,
+                "autoMarginOffset": 20,
+                "mouseWheelZoomEnabled": true,
+                "dataDateFormat": "JJ:NN DD-MM-YYYY",
+                "language": "slo",
+                "titles": [{
+                    "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),
+                    "size": 25
+                }],
+                "valueAxes": [{
+                    "id": "v1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "ignoreAxisWidth": true
+                }],
+                "balloon": {
+                    "borderThickness": 1,
+                    "shadowAlpha": 0
+                },
+                "graphs": [{
+                    "id": "g1",
+                    "balloon": {
+                        "drop": true,
+                        "adjustBorderColor": false,
+                        "color": "#ffffff"
+                    },
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "bulletSize": 5,
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor":"#b7e021",
+                    "title": "red line",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "value",
+                    "balloonText": "<span style='font-size:18px;'>[[value]]</span>"
+                }],
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "oppositeAxis": false,
+                    "offset": 30,
+                    "scrollbarHeight": 80,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "graphLineAlpha": 0.5,
+                    "selectedGraphFillAlpha": 0,
+                    "selectedGraphLineAlpha": 1,
+                    "autoGridCount": true,
+                    "color": "#AAAAAA"
+                },
+                "chartCursor": {
+                    "pan": true,
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "cursorAlpha": 1,
+                    "cursorColor": "#258cbb",
+                    "limitToGraph": "g1",
+                    "valueLineAlpha": 0.2,
+                    "valueZoomable": true
+                },
+                "valueScrollbar": {
+                    "oppositeAxis": false,
+                    "offset": 50,
+                    "scrollbarHeight": 10
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": true
+                },
+                "dataProvider": dataContent
+            });
+        }
+        else {
+            var chart = AmCharts.makeChart("chartdiv", {
+                "legend": {
+                    "useGraphSettings": true
+                },
+                "type": "serial",
+                "theme": "none",
+                "marginRight": 40,
+                "marginLeft": 40,
+                "autoMarginOffset": 20,
+                "mouseWheelZoomEnabled": true,
+                "dataDateFormat": "JJ:NN DD-MM-YYYY",
+                "language": "slo",
+                "titles": [{
+                    "text": $("#measurement-select").val().charAt(0).toUpperCase() + $("#measurement-select").val().slice(1),
+                    "size": 25
+                }],
+                "valueAxes": [{
+                    "id": "v1",
+                    "axisAlpha": 0,
+                    "position": "left",
+                    "ignoreAxisWidth": true
+                }],
+                "balloon": {
+                    "borderThickness": 1,
+                    "shadowAlpha": 0
+                },
+                "graphs": [{
+                    "id": "g1",
+                    "balloon": {
+                        "drop": true,
+                        "adjustBorderColor": false,
+                        "color": "#ffffff"
+                    },
+                    "bullet": "round",
+                    "bulletBorderAlpha": 1,
+                    "bulletColor": "#FFFFFF",
+                    "bulletSize": 5,
+                    "hideBulletsCount": 50,
+                    "lineThickness": 2,
+                    "lineColor":"#ff0000",
+                    "title": "siastoličen tlak",
+                    "useLineColorForBulletBorder": true,
+                    "valueField": "systolic",
+                    "balloonText": "<span style='font-size:18px;'>[[value]]</span>"},
+                    {
+                        "id": "g2",
+                        "bullet": "round",
+                        "bulletBorderAlpha": 1,
+                        "bulletColor": "#00FF00",
+                        "bulletSize": 5,
+                        "hideBulletsCount": 50,
+                        "lineThickness": 2,
+                        "title": "diastoličen tlak",
+                        "lineColor":"#0000ff",
+                        "useLineColorForBulletBorder": true,
+                        "valueField": "diastolic"
+                    },
+                    {
+                        "id": "g3",
+                        "bullet": "round",
+                        "bulletBorderAlpha": 1,
+                        "bulletColor": "#00FF00",
+                        "bulletSize": 5,
+                        "hideBulletsCount": 50,
+                        "lineThickness": 2,
+                        "lineColor":"#00ff00",
+                        "title": "utripi/minuto",
+                        "useLineColorForBulletBorder": true,
+                        "valueField": "BPM"
+                    }
+                ],
+                "chartScrollbar": {
+                    "graph": "g1",
+                    "oppositeAxis": false,
+                    "offset": 30,
+                    "scrollbarHeight": 80,
+                    "backgroundAlpha": 0,
+                    "selectedBackgroundAlpha": 0.1,
+                    "selectedBackgroundColor": "#888888",
+                    "graphFillAlpha": 0,
+                    "graphLineAlpha": 0.5,
+                    "selectedGraphFillAlpha": 0,
+                    "selectedGraphLineAlpha": 1,
+                    "autoGridCount": true,
+                    "color": "#AAAAAA"
+                },
+                "chartCursor": {
+                    "pan": true,
+                    "valueLineEnabled": true,
+                    "valueLineBalloonEnabled": true,
+                    "cursorAlpha": 1,
+                    "cursorColor": "#258cbb",
+                    "limitToGraph": "g1",
+                    "valueLineAlpha": 0.2,
+                    "valueZoomable": true
+                },
+                "valueScrollbar": {
+                    "oppositeAxis": false,
+                    "offset": 50,
+                    "scrollbarHeight": 10
+                },
+                "categoryField": "date",
+                "categoryAxis": {
+                    "parseDates": true,
+                    "dashLength": 1,
+                    "minorGridEnabled": true
+                },
+                "export": {
+                    "enabled": true
+                },
+                "dataProvider": heartJson
+            });
+        }
+        chart.addListener("rendered", zoomChart);
+        $('a[title="JavaScript charts"]').css('display', 'none');
+    }
+
+
+
+    $('#measurement-select').val("glukoza").change();
 </script>

@@ -1,5 +1,10 @@
-<h1>New Hospital</h1>
+<% if admin_signed_in? %>
+    <div class="text-center">
+    <h1>Nov izvajalec zdravstvenih storitev</h1>
 
-<%= render 'form' %>
+    <%= render 'form' %>
 
-<%= link_to 'Back', hospitals_path %>
+    <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+
+  </div>
+<% end %>

@@ -1,0 +1,11 @@
+<% if @docMsg!=nil%>
+    <p><%=@docMsg%></p>
+<%end%>
+
+<% if @denMsg!=nil%>
+    <p><%=@denMsg%></p>
+<%end%>
+
+<%if @denMsg==nil and  @docMsg==nil%>
+    <p>Uspešno ste posodobili svoje zdravnike.</p>
+<%end%>

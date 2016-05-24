@@ -4,4 +4,5 @@ class Diet < ActiveRecord::Base
 
   has_many :diet_instructions
   has_and_belongs_to_many :check_ups
+
 end

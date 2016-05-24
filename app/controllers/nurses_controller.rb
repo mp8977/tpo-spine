@@ -7,9 +7,19 @@ class NursesController < ApplicationController
     @nurses = Nurse.all
   end
 
-  # GET /nurses/1
-  # GET /nurses/1.json
+  # GET /nurses/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = NursePdf.new(@nurse, view_context)
+          send_data pdf.render, filename:
+              "nurse_#{@nurse.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /nurses/new
@@ -23,26 +33,21 @@ class NursesController < ApplicationController
 
   # POST /nurses
   # POST /nurses.json
-  def create
-    @nurse = Nurse.new(nurse_params)
-
-    respond_to do |format|
-      if @nurse.save
-        format.html { redirect_to @nurse, notice: 'Nurse was successfully created.' }
-        format.json { render :show, status: :created, location: @nurse }
-      else
-        format.html { render :new }
-        format.json { render json: @nurse.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+ # def create
+ #   puts 'devise skrbi za kreiranje'
+ # end
 
   # PATCH/PUT /nurses/1
   # PATCH/PUT /nurses/1.json
   def update
     respond_to do |format|
       if @nurse.update(nurse_params)
-        format.html { redirect_to controller: "nurses/registrations", action: "new", notice: 'Nurse was successfully updated.' }
+        flash[:notice] = 'Profil medicinske sestre je bil uspešno posodobljen.'
+        if admin_signed_in?
+          format.html { redirect_to controller: "admins", action: "sifranti"}
+        else
+          format.html { redirect_to controller: "nurses", action: "edit", id: nurse.id}
+        end
         format.json { render :show, status: :ok, location: @nurse }
       else
         format.html { render :edit }
@@ -54,10 +59,19 @@ class NursesController < ApplicationController
   # DELETE /nurses/1
   # DELETE /nurses/1.json
   def destroy
-    @nurse.destroy
-    respond_to do |format|
-      format.html { redirect_to nurses_url, notice: 'Nurse was successfully destroyed.' }
-      format.json { head :no_content }
+    @nurse.deleted = true
+    if @nurse.save
+      flash[:notice] = 'Medicinska sestra je bila uspešno izbrisana'
+      respond_to do |format|
+        if admin_signed_in?
+          format.html { redirect_to controller: :admins, action: :sifranti }
+          format.json { head :no_content }
+        else # zbrise se sestra sama TODO
+          puts 'ce ne dela, dodaj spodaj private metodo iz user_controller: after_sign_out_path_for'
+          sign_out_and_redirect(@nurse)
+        end
+      end
+    else
     end
   end
 
@@ -69,6 +83,10 @@ class NursesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def nurse_params
-      params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id)
+      if admin_signed_in?
+        params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id, :deleted)
+      else
+        params.require(:nurse).permit(:nurseNumber, :email, :password, :lastName, :firstName, :phone, :hospital_id)
+      end
     end
 end

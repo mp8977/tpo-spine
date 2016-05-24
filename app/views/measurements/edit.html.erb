@@ -1,6 +1,12 @@
-<h1>Editing Measurement</h1>
+<div class="text-center">
+  <% if doctor_signed_in? or user_signed_in? or admin_signed_in? %>
+      <h1>Uredi meritev</h1>
 
-<%= render 'form' %>
+      <%= render 'form' %>
 
-<%= link_to 'Show', @measurement %> |
-<%= link_to 'Back', measurements_path %>
+      <% if admin_signed_in? %>
+        <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+      <% end %>
+
+  <% end %>
+</div>

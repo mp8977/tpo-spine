@@ -1,0 +1,32 @@
+<%= form_for(@measurement_type) do |f| %>
+  <% if @measurement_type.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@measurement_type.errors.count, "error") %> prohibited this measurement_type from being saved:</h2>
+
+      <ul>
+      <% @measurement_type.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table align="center">
+    <tr>
+      <td align="right">Ime</td>
+      <td align="left"><%= f.text_field :name, required: true %></td>
+    </tr>
+    <tr>
+      <td align="right">Max</td>
+      <td align="left"><%= f.text_field :min_value, required: true %></td>
+    </tr>
+    <tr>
+      <td align="right">Min</td>
+      <td align="left"><%= f.text_field :max_value, required: true %></td>
+    </tr>
+  </table>
+
+  <div class="actions">
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
+  </div>
+<% end %>

@@ -1,6 +1,10 @@
-<h1>Editing Medicine Instruction</h1>
+<% if admin_signed_in? %>
 
-<%= render 'form' %>
+  <div class="text-center">
+    <h1>Uredi navodilo</h1>
 
-<%= link_to 'Show', @medicine_instruction %> |
-<%= link_to 'Back', medicine_instructions_path %>
+    <%= render 'form' %>
+
+    <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+  </div>
+<% end %>

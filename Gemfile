@@ -17,6 +17,10 @@ gem 'coffee-rails', '~> 4.1.0'
 # fix for stylesheet_link_tag
 gem 'coffee-script-source', '1.8.0'
 
+# pdf gem
+gem 'prawn'
+
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -65,3 +69,5 @@ gem 'sinatra-sse'
 gem 'yaml_db'
 
 gem 'redis'
+#https://github.com/rroblak/seed_dump
+gem 'seed_dump'

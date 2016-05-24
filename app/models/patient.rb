@@ -25,4 +25,5 @@ class Patient < ActiveRecord::Base
   def full_name
     "#{firstName} #{lastName}"
   end
+
 end

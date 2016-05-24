@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @measurement_type.name %>
+</p>
+
+<p>
+  <strong>Min value:</strong>
+  <%= @measurement_type.min_value %>
+</p>
+
+<p>
+  <strong>Max value:</strong>
+  <%= @measurement_type.max_value %>
+</p>
+
+<p>
+  <strong>Deleted:</strong>
+  <%= @measurement_type.deleted %>
+</p>
+
+<%= link_to 'Edit', edit_measurement_type_path(@measurement_type) %> |
+<%= link_to 'Back', measurement_types_path %>

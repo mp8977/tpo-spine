@@ -16,6 +16,7 @@
 //= require_tree .
 //= require pickadate/translations/bg_BG
 //= require bootstrap-datepicker
+//= require chosen.jquery.min
 
 function cloneDropdown(callerNode) {
     var div = callerNode.parentNode;
@@ -175,3 +176,4 @@ $(document).ready(function() {//
         dirtyHackLoad(value)
     });
 });
+

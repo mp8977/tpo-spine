@@ -1,11 +1,7 @@
 
 <% if !(admin_signed_in? || user_signed_in? || doctor_signed_in? || nurse_signed_in?)%>
 <div class="container">
-  <div class="row">
-    <h1 class="text-center">
-      Izberi svoj tip uporabnika!
-    </h1>
-  </div>
+
   <div class="row">
     <div class="col-sm-3">
       <div class="card">
@@ -22,7 +18,7 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/user-icon.png')%>
+          <%= image_tag('/assets/doctor-icon.png')%>
         </div>
         <div class="content">
           <p><button type="button" class="btn btn-default" onclick="location.href = '/doctors/sign_in';">Zdravnik</button></p>
@@ -33,7 +29,7 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/user-icon.png')%>
+          <%= image_tag('/assets/nurse-icon.png')%>
         </div>
         <div class="content">
           <p><button type="button" class="btn btn-default" onclick="location.href = '/nurses/sign_in';">Medicinska sestra</button></p>
@@ -44,7 +40,7 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/user-icon.png')%>
+          <%= image_tag('/assets/admin-icon.png')%>
         </div>
         <div class="content">
           <p><button type="button" class="btn btn-default" onclick="location.href = '/admins/sign_in';">Administrator</button></p>

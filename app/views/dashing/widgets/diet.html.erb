@@ -1,4 +1,5 @@
 <div class="container">
+    <input id="expand-diet" type="image" height="23px" width="23px" onclick="expandDiet()" title="Razširi diete" src="/assets/expand.png" />
     <div data-bind="title" class="title"></div>
     <br>
     <table id="info-diet"><tr><th>Ime</th><th>Navodila</th></tr></table>
@@ -6,5 +7,17 @@
 
 <script>
   var diets=$("#diet").data("info");
-  $("#info-diet").append(diets);
+  var limitDiet=5;
+  $("#info-diet").append(diets.slice(0,limitDiet).join(""));
+
+  function expandDiet(){
+    $("#lightbox").show();
+    $('html').css('overflow','hidden');
+    $("#content").html("");
+    $("#content").css("min-height","0%");
+    $("#expand-view").css("min-height","100%");
+    $("#expand-view").css("background-color","#27841b");
+    $("#expand-view").html('<div><h1>Diete</h1><br /><table id="info-diet-extend"><tr><th>Ime</th><th>Navodila</th></tr>'+diets.join("")+"</table></div>");
+  }
+
 </script>

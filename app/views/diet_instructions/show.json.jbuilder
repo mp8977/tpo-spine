@@ -1,1 +1,1 @@
-json.extract! @diet_instruction, :id, :url, :created_at, :updated_at
+json.extract! @diet_instruction, :id, :url_string, :created_at, :updated_at

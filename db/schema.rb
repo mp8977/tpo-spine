@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160518171228) do
+=======
+ActiveRecord::Schema.define(version: 20160511202925) do
+>>>>>>> master
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -47,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160518171228) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.text     "instruction", limit: 65535
+    t.integer  "duration",    limit: 4
   end
 
   add_index "appointments", ["check_up_id"], name: "fk_rails_3d1ece398e", using: :btree
@@ -99,10 +104,11 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   add_index "diet_checks", ["diet_id"], name: "fk_rails_72b2ed97d4", using: :btree
 
   create_table "diet_instructions", force: :cascade do |t|
-    t.string   "url",        limit: 255
     t.integer  "diet_id",    limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
+    t.string   "url_string", limit: 255
   end
 
   add_index "diet_instructions", ["diet_id"], name: "fk_rails_86f8c39ff5", using: :btree
@@ -199,8 +205,9 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   create_table "measurement_docs", force: :cascade do |t|
     t.integer  "check_up_id",         limit: 4
     t.integer  "part_measurement_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "deleted",                       default: false, null: false
   end
 
   add_index "measurement_docs", ["check_up_id"], name: "fk_rails_ef34d5a81a", using: :btree
@@ -209,17 +216,28 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   create_table "measurement_homes", force: :cascade do |t|
     t.integer  "patient_id",          limit: 4
     t.integer  "part_measurement_id", limit: 4
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+    t.boolean  "deleted",                       default: false, null: false
   end
 
   add_index "measurement_homes", ["part_measurement_id"], name: "fk_rails_5263711ed8", using: :btree
   add_index "measurement_homes", ["patient_id"], name: "fk_rails_f43f4d1c2e", using: :btree
 
+  create_table "measurement_types", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.decimal  "min_value",              precision: 7, scale: 2
+    t.decimal  "max_value",              precision: 7, scale: 2
+    t.boolean  "deleted",                                        default: false, null: false
+    t.datetime "created_at",                                                     null: false
+    t.datetime "updated_at",                                                     null: false
+  end
+
   create_table "measurements", force: :cascade do |t|
     t.datetime "date"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+    t.boolean  "deleted",    default: false, null: false
   end
 
   create_table "medicine_checks", force: :cascade do |t|
@@ -233,9 +251,10 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   add_index "medicine_checks", ["medicine_id"], name: "fk_rails_ecd3adc7bb", using: :btree
 
   create_table "medicine_instructions", force: :cascade do |t|
-    t.string   "url",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
+    t.string   "url_string", limit: 255
   end
 
   create_table "medicines", force: :cascade do |t|
@@ -276,10 +295,11 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   create_table "part_measurements", force: :cascade do |t|
     t.string   "name",           limit: 255
     t.string   "unit",           limit: 255
-    t.decimal  "value",                      precision: 10
     t.integer  "measurement_id", limit: 4
-    t.datetime "created_at",                                null: false
-    t.datetime "updated_at",                                null: false
+    t.datetime "created_at",                                                         null: false
+    t.datetime "updated_at",                                                         null: false
+    t.decimal  "value",                      precision: 5, scale: 2
+    t.boolean  "deleted",                                            default: false, null: false
   end
 
   add_index "part_measurements", ["measurement_id"], name: "fk_rails_b6e1df50d3", using: :btree
@@ -304,8 +324,9 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   create_table "posts", force: :cascade do |t|
     t.string   "postName",   limit: 255
     t.string   "postNumber", limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -14,13 +14,84 @@
  *= require pickadate/default.time
  *= require bootstrap-datepicker3
  */
+* {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+/*.ui-widget-content
+{
+    border: 5px solid black;
+    color: #222222;
+    background-color: Red;
+}*/
+.ui-widget
+{
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 15px;
+}
+.ui-menu
+{
+    display: block;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 2px;
+
+}
+#measurement-select>{
+    border: 1px solid white;
+}
+
+.ui-menu .ui-menu-item
+{
+    clear: left;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+}
+.ui-menu .ui-menu-item a
+{
+    display: block;
+    padding: 3px 3px 3px 3px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgba(26, 102, 101,1);
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    border: 0px;
+    font-weight: normal;
+    color: #ffffff;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkiPlfDwADmwHcaV65UQAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+}
+#automplete-1{
+    background-color: transparent;
+    border:2px solid white;
+    outline:none;
+    color: rgba(255, 255, 255, 0.8);
+}
+.ui-widget-content a
+{
+    color: #ffffff;
+}
+
+
 
 .gridster{
     padding-left: 250px;
 }
 #side-menu{
     height: 110%;
-    background-color: #1a6665;
+    background-color: rgba(26, 102, 101,1);
     float:left;
     position: fixed;
     width: 250px;
@@ -38,54 +109,151 @@
 }
 
 
-#side-menu>ul>li>ul>a>li:hover{
+#side-menu>ul>li>ul>a>li:hover,#urnik-menu:hover,#zdravnik-menu:hover{
     text-decoration: underline;
     cursor:pointer;
 }
 
+
+/*PopUp*/
 #lightbox {
     position:fixed;
     top:0;
     left:0;
     width:100%;
     height:100%;
-    background: rgba(0,0,0,.8);
+    background: rgba(0,0,0,.9);
     text-align:center;
-    z-index:2;
+    z-index:10;
     overflow-y: auto;
 }
-#content{
+#content,#expand-view{
+    background-color: rgb(2, 100, 99);
     overflow-y: auto;
-    box-shadow:0 0 25px #111;
-    -webkit-box-shadow:0 0 25px #111;
-    -moz-box-shadow:0 0 25px #111;
     max-width:940px;
-    height:100%;
     margin-left: auto;
     margin-right:auto;
-    background-color: rgb(200, 200, 200);
+    padding-left: 25px;
+    border-right-width: 50px;
+    padding-right: 25px;
+    color: rgba(255, 255, 255, 0.9);
+    position:relative;
 }
 
-#appointmentDetailsShow{
-    color: rgba(0, 0, 0, 0.8);
+
+
+#lightbox-container{
+    height:100%;
+}
+
+#close-icon{
+    position: absolute;
+    top:4px;
+    right: 4px;
+}
+#close-icon:hover{
+    cursor: pointer;
+}
+#appointmentDetailsShow,#expand-view > div{
     text-align: left;
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 60px;
     padding-bottom: 60px;
 }
-#appointmentDetailsShow>h1{
+#appointmentDetailsShow>h1,#expand-view>div>h1,#pick-doctor > h1{
     text-align: center;
     font-size: 40px;
+    font-weight: bold;
 }
-
+.appointment-subtitles{
+    font-size: 22px;
+    font-weight: 500;
+}
 #appointment-diets>ul,#appointment-allergy>ul,#appointment-illness>ul,#appointment-medicine>ul,#appointment-measurement>ul{
     padding-left: 30px;
 }
 #appointment-diets>ul>ul{
     padding-left: 40px;
 }
-#appointment-diets>ul>ul>li:hover,#appointment-medicine>ul>li:hover{
+#appointment-diets>ul>ul>li:hover,#appointment-medicine>ul>li:hover,#expand-view > div > ul > li > a:hover{
     text-decoration: underline;
+}
 
+#expand-view > div > ul > li{
+    font-size: 24px;
+}
+
+
+/*tabela diete razširjena*/
+#info-diet-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+#info-diet-extend, #info-diet-extend > tbody > tr,#info-diet-extend > tbody > tr > td,#info-diet-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+
+/*tabela pretekli pregledi razširjeni*/
+#info-pappointments-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+
+}
+#info-pappointments-extend > tbody > tr > td> input{
+    padding-top: 4px;
+    outline: none;
+}
+
+#info-pappointments-extend, #info-pappointments-extend > tbody > tr,#info-pappointments-extend > tbody > tr > td,#info-pappointments-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+
+/*meritve razširejna*/
+#measurement-select-extend{
+    border:	2px solid #ffffff;
+    background-color: #005e84 ;
+    color:white;
+    margin-left: 41%;
+}
+
+#measurement-table-extend{
+    border-collapse: collapse;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+    table-layout: fixed
+}
+
+#measurement-table-extend, #measurement-table-extend > tbody > tr,#measurement-table-extend > tbody > tr > td,#measurement-table-extend > tbody > tr > th{
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    color:rgba(255, 255, 255, 0.8)
+}
+/*izbira zdravnika*/
+#selectPatient{
+    border:	2px solid #ffffff;
+    color:white;
+    background-color:#222;
+    margin: 10px;
+    font-size: 15px;
+}
+/*graf*/
+#chartdiv {
+    width	: 800px;
+    height	: 500px;
+    background-color: white;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
 }

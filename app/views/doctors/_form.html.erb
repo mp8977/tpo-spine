@@ -39,10 +39,16 @@
         <td align="right">Bolnisnica</td>
         <td align="left"><%= f.collection_select(:hospital_id, Hospital.all.order(:hospitalNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
       </tr>
+      <% if admin_signed_in? %>
+          <tr>
+            <td align="right">Izbrisan</td>
+            <td align="left"><%= f.collection_select(:deleted, %w(true false), :to_s, :to_s, {include_blank: false},{:multiple => false}) %></td>
+          </tr>
+      <% end %>
     </table>
 
     <div class="actions">
-      <%= f.submit class: "btn btn-success", value: "Poslji" %>
+      <%= f.submit class: "btn btn-info", value: "Poslji" %>
     </div>
 
 <% end %>

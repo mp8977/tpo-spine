@@ -1,5 +1,9 @@
-<h1>New Medicine</h1>
+<% if admin_signed_in? %>
+<div class="text-center">
+  <h1>Dodaj novo zdravilo</h1>
 
-<%= render 'form' %>
+  <%= render 'form' %>
 
-<%= link_to 'Back', medicines_path %>
+  <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+</div>
+<% end %>

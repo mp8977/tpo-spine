@@ -7,9 +7,19 @@ class DoctorsController < ApplicationController
     @doctors = Doctor.all
   end
 
-  # GET /doctors/1
-  # GET /doctors/1.json
+  # GET /doctors/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = DoctorPdf.new(@doctor, view_context)
+          send_data pdf.render, filename:
+              "doctor_#{@doctor.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
 
   # GET /doctors/new
@@ -23,26 +33,21 @@ class DoctorsController < ApplicationController
 
   # POST /doctors
   # POST /doctors.json
-  def create
-    @doctor = Doctor.new(doctor_params)
-
-    respond_to do |format|
-      if @doctor.save
-        format.html { redirect_to @doctor, notice: 'Doctor was successfully created.' }
-        format.json { render :show, status: :created, location: @doctor }
-      else
-        format.html { render :new }
-        format.json { render json: @doctor.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+#  def create
+#    puts 'devise skrbi za kreiranje'
+#  end
 
   # PATCH/PUT /doctors/1
   # PATCH/PUT /doctors/1.json
   def update
     respond_to do |format|
       if @doctor.update(doctor_params)
-        format.html { redirect_to controller: "doctors/registrations", action: "new", notice: 'Doctor was successfully updated.' }
+        flash[:notice] = 'Profil zdravnika je bil uspešno posodobljen'
+        if admin_signed_in?
+          format.html { redirect_to controller: "admins", action: "sifranti"}
+        else
+          format.html { redirect_to controller: "doctors", action: "edit", id: @doctor.id}
+        end
         format.json { render :show, status: :ok, location: @doctor }
       else
         format.html { render :edit }
@@ -54,10 +59,20 @@ class DoctorsController < ApplicationController
   # DELETE /doctors/1
   # DELETE /doctors/1.json
   def destroy
-    @doctor.destroy
-    respond_to do |format|
-      format.html { redirect_to doctors_url, notice: 'Doctor was successfully destroyed.' }
-      format.json { head :no_content }
+    @doctor.deleted = true
+    if @doctor.save
+      flash[:notice] = 'Zdravnik je bil uspešno izbrisan'
+      respond_to do |format|
+        if admin_signed_in?
+          format.html { redirect_to controller: :admins, action: :sifranti }
+          format.json { head :no_content }
+        else # zbrise se zdravnik sam
+          puts 'ce ne dela, dodaj spodaj private metodo iz user_controller: after_sign_out_path_for'
+          sign_out_and_redirect(@doctor)
+        end
+      end
+    else
+      flash[:notice] = 'Tezava pri brisanju zdravnika'
     end
   end
 
@@ -69,6 +84,10 @@ class DoctorsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def doctor_params
-      params.require(:doctor).permit(:doctorNumber, :category, :email, :password, :lastName, :firstName, :phone, :limitPatient, :hospital_id)
+      if admin_signed_in?
+        params.require(:doctor).permit(:doctorNumber, :category, :email, :password, :lastName, :firstName, :phone, :limitPatient, :hospital_id, :deleted)
+      else
+        params.require(:doctor).permit(:doctorNumber, :category, :email, :password, :lastName, :firstName, :phone, :limitPatient, :hospital_id)
+      end
     end
 end

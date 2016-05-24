@@ -5,8 +5,8 @@ class PatientsController < ApplicationController
   # GET /patients
   # GET /patients.json
   def index
-    #@patients = Patient.all
-    @patients = current_user.patients
+    @user = current_user
+    @patients = @user.patients
   end
 
   # GET /patients/1
@@ -34,9 +34,12 @@ class PatientsController < ApplicationController
 
     respond_to do |format|
       if @patient.save
-       # if user_l
-        format.html { redirect_to @patient, notice: 'Patient was successfully created.' }
-        #format.json { render :show, status: :created, location: @patient }
+        flash[:notice] = 'Pacient je bil uspešno kreiran.'
+        if current_user.count_patients == 1
+          format.html { redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id }
+        else
+          format.html { redirect_to controller: :patients, action: :index }
+        end
       else
         format.html { render :new }
         format.json { render json: @patient.errors, status: :unprocessable_entity }
@@ -50,10 +53,14 @@ class PatientsController < ApplicationController
     respond_to do |format|
       if @patient.update(patient_params)
         if  !user_signed_in?
-          format.html { redirect_to controller: "static", action: "confirmation" }
+          format.html { redirect_to root_path }
         else
-          flash[:notice] = 'Patient was successfully updated.'
-          format.html { redirect_to controller: :users, action: :edit, id: @patient.user_id }
+          flash[:notice] = 'Pacient je bil uspešno posodobljen.'
+          if current_user.count_patients == 1
+            format.html { redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id }
+          else
+            format.html { redirect_to controller: :patients, action: :index }
+          end
         end
       else
         format.html { render :edit }
@@ -65,12 +72,15 @@ class PatientsController < ApplicationController
   # DELETE /patients/1
   # DELETE /patients/1.json
   def destroy
-    puts 'zbrisi pacienta'
     puts @patient.id
     @patient.deleted = true
     if @patient.save
-      flash[:notice] = "Pacient je bil uspesno izbrisan"
-      redirect_to controller: :users, action: :edit, id: current_user.id
+      flash[:notice] = 'Pacient je bil uspešno izbrisan'
+      if current_user.count_patients == 1
+        redirect_to controller: :patients, action: :edit, id: current_user.find_only_one_patient.id
+      else
+        redirect_to controller: :patients, action: :index
+      end
     else
       flash[:notice] = "Tezave pri brisanju pacienta"
       puts "Tezave pri brisanju pacienta"

@@ -6,4 +6,5 @@ class Medicine < ActiveRecord::Base
   belongs_to :medicine_instruction
   has_and_belongs_to_many :check_ups
   has_and_belongs_to_many :illnesses
+
 end

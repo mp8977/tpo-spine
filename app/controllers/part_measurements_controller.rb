@@ -28,6 +28,7 @@ class PartMeasurementsController < ApplicationController
 
     respond_to do |format|
       if @part_measurement.save
+        puts @part_measurement.value
         format.html { redirect_to @part_measurement, notice: 'Part measurement was successfully created.' }
         format.json { render :show, status: :created, location: @part_measurement }
       else

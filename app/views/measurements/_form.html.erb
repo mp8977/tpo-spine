@@ -11,6 +11,8 @@
     </div>
   <% end %>
 
+
+    <!-- TODO build-i (v controllerju) doloceno stevilo elementov za doloceno meritev! -->
   <table align="center">
     <tr>
       <td align="right">Datum:</td>
@@ -19,7 +21,7 @@
     </tr>
     <%= f.fields_for :part_measurements do |p| %>
         <tr>
-          <td align="right">Vrsta meritve</td>
+          <td align="right">Element meritve</td>
           <td align="left"><%= p.collection_select(:name, MeasurementType.where(deleted: false), :id, :name) %></td>
         </tr>
         <tr>
@@ -41,7 +43,7 @@
         <% elsif doctor_signed_in? %>
             <%= p.fields_for :measurement_doc do |d| %>
                 <tr>
-                  <td align="right">Pregled:</td>
+                  <td align="right">Pregled:</td>                                                            <!-- TODO dodaj deleted v bazo in sem -->
                   <td align="left"><%= d.collection_select(:check_up_id, CheckUp.where(doctor_id: current_doctor.id), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
                 </tr>
             <% end %>

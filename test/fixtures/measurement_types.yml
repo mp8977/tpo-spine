@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  min_value: 
+  min_value: 
+  max_value: 
+  max_value: 
+  deleted: false
+
+two:
+  name: MyString
+  min_value: 
+  min_value: 
+  max_value: 
+  max_value: 
+  deleted: false

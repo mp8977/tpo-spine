@@ -1,4 +1,5 @@
 (function ($) {
+
   'use strict';
 
   var DayScheduleSelector = function (el, options) {

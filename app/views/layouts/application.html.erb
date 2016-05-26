@@ -13,7 +13,7 @@
   <!-- admins#sifranti isci po sifrah https://datatables.net -->
   <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.11/css/jquery.dataTables.css">
   <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.11/js/jquery.dataTables.js"></script>
-
+  <%= javascript_include_tag 'chosen.jquery.min' %>
   <%= csrf_meta_tags %>
 
 </head>
@@ -132,21 +132,26 @@
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
-                <li> <!-- class="active" -->
+                <li>
+                  <a href="/dashing">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Dashboard</a>
+                </li>
+                <li>
                   <a href="/doctors/<%= current_doctor.id%>/edit">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
+                </li>
+                <li>
+                  <a href="/scheduler">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    Urnik</a>
                 </li>
                 <li>
                   <a href="<%= destroy_doctor_session_path %>" data-method="delete">
                     <i class="glyphicon glyphicon-remove"></i>
                     Izpis
                   </a>
-                </li>
-                <li class="active">
-                  <a href="/dashing">
-                    <i class="glyphicon glyphicon-user"></i>
-                    Dashboard</a>
                 </li>
 
               </ul>
@@ -200,6 +205,11 @@
                     Dodaj pacienta</a>
                 </li>
                 <li>
+                  <a href="/pick_doctor">
+                    <i class="glyphicon glyphicon-heart"></i>
+                    Izbira zdravnika </a>
+                </li>
+                <li>
                   <a href="/users/<%=current_user.id %>/edit">
                     <i class="glyphicon glyphicon-wrench"></i>
                     Urejanje uporabniskega racuna</a>
@@ -242,4 +252,20 @@
 </body>
 </html>
 <!-- TODO vprasaj pluta od kje pride canvas-->
-<script>$(".header-bg").hide();</script>
+<script>
+  $(".header-bg").hide();
+  /*
+
+  $(function(){
+    $(".chosen-select").chosen({width: "390px"});
+  });
+
+  HTML example
+   <select class="form-control chosen-select" multiple="true">
+   <option value="one">B1</option>
+   <option value="one">B2</option>
+   <option value="one">B3</option>
+   </select>
+
+  */
+</script>

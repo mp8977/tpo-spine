@@ -1,8 +1,10 @@
-<div class="text-center">
+<% if admin_signed_in? %>
+  <div class="text-center">
 
-  <h1>Novo navodilo</h1>
+    <h1>Novo navodilo</h1>
 
-  <%= render 'form' %>
+    <%= render 'form' %>
 
-  <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
-</div>
+    <%= link_to 'Nazaj', controller: :admins, action: :sifranti %>
+  </div>
+<% end %>

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -14,6 +14,77 @@
  *= require pickadate/default.time
  *= require bootstrap-datepicker3
  */
+* {
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+}
+
+/*.ui-widget-content
+{
+    border: 5px solid black;
+    color: #222222;
+    background-color: Red;
+}*/
+.ui-widget
+{
+    font-family: Verdana,Arial,sans-serif;
+    font-size: 15px;
+}
+.ui-menu
+{
+    display: block;
+    float: left;
+    list-style: none outside none;
+    margin: 0;
+    padding: 2px;
+
+}
+#measurement-select>{
+    border: 1px solid white;
+}
+
+.ui-menu .ui-menu-item
+{
+    clear: left;
+    float: left;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+
+}
+.ui-menu .ui-menu-item a
+{
+    display: block;
+    padding: 3px 3px 3px 3px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: rgba(26, 102, 101,1);
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+    border: 0px;
+    font-weight: normal;
+    color: #ffffff;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkiPlfDwADmwHcaV65UQAAAABJRU5ErkJggg==);
+    background-repeat: repeat;
+}
+#automplete-1{
+    background-color: transparent;
+    border:2px solid white;
+    outline:none;
+    color: rgba(255, 255, 255, 0.8);
+}
+.ui-widget-content a
+{
+    color: #ffffff;
+}
+
+
 
 .gridster{
     padding-left: 250px;
@@ -38,10 +109,12 @@
 }
 
 
-#side-menu>ul>li>ul>a>li:hover{
+#side-menu>ul>li>ul>a>li:hover,#urnik-menu:hover,#zdravnik-menu:hover{
     text-decoration: underline;
     cursor:pointer;
 }
+
+
 /*PopUp*/
 #lightbox {
     position:fixed;
@@ -73,6 +146,14 @@
     height:100%;
 }
 
+#close-icon{
+    position: absolute;
+    top:4px;
+    right: 4px;
+}
+#close-icon:hover{
+    cursor: pointer;
+}
 #appointmentDetailsShow,#expand-view > div{
     text-align: left;
     padding-left: 50px;
@@ -80,7 +161,7 @@
     padding-top: 60px;
     padding-bottom: 60px;
 }
-#appointmentDetailsShow>h1,#expand-view>div>h1{
+#appointmentDetailsShow>h1,#expand-view>div>h1,#pick-doctor > h1{
     text-align: center;
     font-size: 40px;
     font-weight: bold;
@@ -155,37 +236,28 @@
     border: 2px solid rgba(255, 255, 255, 0.8);
     color:rgba(255, 255, 255, 0.8)
 }
+/*izbira zdravnika*/
+#selectPatient{
+    border:	2px solid #ffffff;
+    color:white;
+    background-color:#222;
+    margin: 10px;
+    font-size: 15px;
+}
+/*graf*/
+#chartdiv {
+    width	: 800px;
+    height	: 500px;
+    background-color: white;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-/*Urnik */
-#weekly-schedule{
-   margin-left: 50px;
-   margin-right: 50px;
+    margin: auto;
 }
 
-
-.schedule-rows td {
-    width: 80px;
-    height: 30px;
-    margin: 3px;
-    padding: 5px;
-    background-color: #1a6665;
-    cursor: pointer;
-}
-
-.schedule-rows td:first-child {
-    background-color: transparent;
-    text-align: right;
-    position: relative;
-    top: -12px;
-}
-
-.schedule-rows td[data-selected],
-.schedule-rows td[data-selecting] { background-color: #e7c012; }
-
-.schedule-rows td[data-disabled] { opacity: 0.55; }
-.schedule-table{
-    border-collapse: collapse;
-}
 .schedule-table td{
     border: 1px solid white;
 }
@@ -197,3 +269,4 @@
     width:100%;
     margin:auto;
 }
+

@@ -73,3 +73,5 @@ gem 'sinatra-sse'
 gem 'yaml_db'
 
 gem 'redis'
+#https://github.com/rroblak/seed_dump
+gem 'seed_dump'

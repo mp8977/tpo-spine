@@ -11,11 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
 ActiveRecord::Schema.define(version: 20160518171228) do
-=======
-ActiveRecord::Schema.define(version: 20160511202925) do
->>>>>>> master
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255

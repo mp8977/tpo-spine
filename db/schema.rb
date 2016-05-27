@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160518171228) do
+ActiveRecord::Schema.define(version: 20160527175059) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -196,6 +196,13 @@ ActiveRecord::Schema.define(version: 20160518171228) do
   create_table "illnesses_medicines", id: false, force: :cascade do |t|
     t.integer "illness_id",  limit: 4, null: false
     t.integer "medicine_id", limit: 4, null: false
+  end
+
+  create_table "measurement_categories", force: :cascade do |t|
+    t.string   "name",       limit: 255
+    t.integer  "elements",   limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "measurement_docs", force: :cascade do |t|

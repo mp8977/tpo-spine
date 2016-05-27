@@ -132,21 +132,26 @@
             <!-- SIDEBAR MENU -->
             <div class="profile-usermenu">
               <ul class="nav">
-                <li> <!-- class="active" -->
+                <li>
+                  <a href="/dashing">
+                    <i class="glyphicon glyphicon-user"></i>
+                    Dashboard</a>
+                </li>
+                <li>
                   <a href="/doctors/<%= current_doctor.id%>/edit">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
+                </li>
+                <li>
+                  <a href="/scheduler">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    Urnik</a>
                 </li>
                 <li>
                   <a href="<%= destroy_doctor_session_path %>" data-method="delete">
                     <i class="glyphicon glyphicon-remove"></i>
                     Izpis
                   </a>
-                </li>
-                <li class="active">
-                  <a href="/dashing">
-                    <i class="glyphicon glyphicon-user"></i>
-                    Dashboard</a>
                 </li>
 
               </ul>

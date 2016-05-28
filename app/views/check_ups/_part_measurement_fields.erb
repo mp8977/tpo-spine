@@ -1,0 +1,15 @@
+<!--toj je zdej za to povezavo k je measuremnt _docs povezan-->
+<fieldset>
+  <%= f.text_field :name, {:placeholder => 'Ime delne meritve'} %>   <%= f.text_field :value, {:placeholder => 'Vrednost'} %>   <%= f.text_field :unit, {:placeholder => 'Enota'} %>
+</fieldset>
+
+
+
+
+
+<!--%= f.fields_for :measurement_doc do |m| %>
+<!--% end %>
+<!--tr>
+    <!--td align="right"><!--%= f.object.name %>:<!--%= f.text_field :name, {:hidden => true} %></td-->
+    <!--td-- align="left"><!--%= f.text_field :value, {:placeholder => 'Vrednost'} %> <!--%= f.object.unit %><!--%= f.text_field :unit, {:hidden => true} %></td-->
+<!--/tr-->

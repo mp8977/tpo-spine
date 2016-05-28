@@ -1,0 +1,22 @@
+
+<table align="center">
+  <tr>
+    <td align="right">Datum meritve:</td>
+    <td align="left"><%= f.datetime_select :date, include_blank: true, order: [:hour, :minute,:day, :month, :year],
+                                       use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
+  </tr>
+  <%= f.fields_for :part_measurements do |pm| %>
+      <%= render 'part_measurement_fields', :f => pm %>
+   <%end%>
+
+  <!--%= f.check_box :_destroy %-->
+  <!--%= f.label :_destroy, "Remove Question" %-->
+
+  <!--tr>
+    <td></td>
+    <td align="left"><button class="btn btn-info btn-xs" onclick="removeElement(this.parentNode.parentNode.parentNode.parentNode.parentNode);">Odstrani</button></td>
+  </tr-->
+
+  <!--%= link_to "link",  "",{:onclick => "remove_fields(this);"} %-->
+
+  </table>

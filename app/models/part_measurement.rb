@@ -6,6 +6,8 @@ class PartMeasurement < ActiveRecord::Base
   belongs_to :measurement
   has_one :measurement_home
   has_one :measurement_doc
+
+  #accepts_nested_attributes_for :measurement_doc, :allow_destroy => true
   accepts_nested_attributes_for :measurement_home
   accepts_nested_attributes_for :measurement_doc
   accepts_nested_attributes_for :measurement

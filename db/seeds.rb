@@ -1,3 +1,26 @@
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
+#
+# Examples:
+#
+#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
+#   Mayor.create(name: 'Emanuel', city: cities.first)
+
+Medicine.create! name: 'Zdravil1', inUse: true, medicineNumber: 3426
+Medicine.create! name: 'Zdravil2', inUse: true, medicineNumber: 3428
+Medicine.create! name: 'Zdravil3', inUse: true, medicineNumber:  3429
+Illness.create! name: 'Bolezil',illnessNumber: 2123, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav3'])
+Illness.create! name: 'Bolezil2',illnessNumber: 2124, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav1','Zdrav2'])
+Illness.create! name: 'Bolezil3',illnessNumber: 2121, isAllergy: false#, :medicine => Medicine.where(:name =>['Zdrav3','Zdrav2'])
+
+#Illness.where(:name => 'Bolez11').medicines << Medicine.where(:name => 'Zdrav1')
+Illness.find(1).medicines << Medicine.find(1)
+Illness.find(1).medicines << Medicine.find(2)
+Illness.find(2).medicines << Medicine.find(1)
+Illness.find(2).medicines << Medicine.find(2)
+Illness.find(3).medicines << Medicine.find(2)
+Illness.find(3).medicines << Medicine.find(3)
+
 User.create!([
   {validated: false, email: "dom0308@gmail.com", encrypted_password: "$2a$10$EscKDU622RQHrC4W7LSSX.DuZC4WtUYPzsPjToeNAxzFRH.fkvKBy", reset_password_token: nil, reset_password_sent_at: nil, sign_in_count: 17, current_sign_in_at: "2016-05-12 15:32:54", last_sign_in_at: "2016-05-12 12:46:08", current_sign_in_ip: "::1", last_sign_in_ip: "::1", confirmation_token: "2xwCxKrHNKg-CFDxyQMo", confirmed_at: "2016-04-14 12:01:07", confirmation_sent_at: "2016-04-14 11:59:15", unconfirmed_email: nil, failed_attempts: 0, locked_at: nil, deleted: false}
 ])

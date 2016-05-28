@@ -382,3 +382,26 @@ div.panel {
     min-height: 460px;
 }
 
+
+/* Cloneable dropdowns */
+.cloneable-unselected > button {
+    display: none;
+}
+
+.cloneable-selected > select > option:first-child {
+    display: none;
+}
+
+/*za pregled*/
+.inline{
+    display: inline-block;
+
+}
+/*hides element*/
+.hide{
+    display:none !important;
+}
+
+button.long {
+    width: 50%;
+}

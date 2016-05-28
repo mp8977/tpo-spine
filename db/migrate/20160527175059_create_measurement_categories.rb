@@ -5,6 +5,7 @@ class CreateMeasurementCategories < ActiveRecord::Migration
       t.integer :elements
 
       t.timestamps null: false
+
     end
   end
 end

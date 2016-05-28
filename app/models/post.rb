@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
   #validates :postName, presence: true, uniqueness: true
-  #validates :postNumber,presence: true, uniqueness: true
+  validates :postNumber, uniqueness: true
 
   #validates_format_of :postNumber,with: /\A[0-9]{4}\z/
 

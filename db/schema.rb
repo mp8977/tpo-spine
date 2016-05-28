@@ -13,7 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20160521161720) do
 
-
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
     t.string   "streetNumber", limit: 255
@@ -328,9 +327,9 @@ ActiveRecord::Schema.define(version: 20160521161720) do
   create_table "posts", force: :cascade do |t|
     t.string   "postName",   limit: 255
     t.string   "postNumber", limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-    t.boolean  "deleted"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.boolean  "deleted",                default: false, null: false
   end
 
   create_table "users", force: :cascade do |t|

@@ -150,17 +150,7 @@ class CheckUpsController < ApplicationController
     @check_up = CheckUp.find(params[:id])
   end
 
-<<<<<<< HEAD
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def check_up_params
-      params.require(:check_up).permit(:date, :patient_id, :doctor_id, :diet_ids => [], :medicine_ids => [],
-                                       :illness_ids => [], measurement_docs_attributes: [:id, :deleted,
-          part_measurement_attributes: [:id, :name, :unit, :value, :deleted,
-            measurement_attributes: [:id, :date, :deleted]
-          ]
-          ])
-    end
-=======
+
 
   # Never trust parameters from the scary internet, only allow the white list through.
 
@@ -176,5 +166,4 @@ class CheckUpsController < ApplicationController
                                                                               part_measurement_attributes: [:id,:unit, :name, :value]])
 
   end
->>>>>>> nin2
 end

@@ -84,13 +84,11 @@
         <!--br-->
     <!--% end %-->
 
-    <%= f.fields_for :measurement_docs do |measurement_docs_for_form| %>
-        <%= render 'measurement_doc_fields', :f => measurement_docs_for_form %>
-    <% end%>
+
+    <%= link_to_add_fields "Dodaj meritve za srce", f, :measurement_docs %>
     <br>
-    <br>
-    <%= link_to_add_fields "Dodaj meritev", f, :measurement_docs %>
-    <br>
+    <%= link_to_add_fields "Dodaj meritve za glukozo", f, :measurement_docs %>
+
     <br>
 
 

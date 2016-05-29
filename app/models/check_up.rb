@@ -12,7 +12,7 @@ class CheckUp < ActiveRecord::Base
   #has_many :prescriptions
   #has_many :illnesses, through: :prescritions
 
-  accepts_nested_attributes_for :measurement_docs, :allow_destroy => true, reject_if: proc { |a| a['part_measurement_id'].blank? }
+  accepts_nested_attributes_for :measurement_docs#, :allow_destroy => true, reject_if: proc { |a| a['part_measurement_id'].blank? }
 
   def measurement_docs_for_form
     collection = measurement_docs.where(check_up_id: id)

@@ -1,6 +1,6 @@
 <!--toj je zdej za to povezavo k je measuremnt _docs povezan-->
 <fieldset>
-  <%= f.collection_select(:name, MeasurementType.all, :id, :name ,{:multiple => false}) %>   <%= f.text_field :value, {:placeholder => 'Vrednost'} %>   <%= f.text_field :unit, {:placeholder => 'Enota'} %>
+  <%= f.collection_select(:name, MeasurementType.all, :id, :name ,{:multiple => false}) %>   <%= f.text_field :value, {:placeholder => 'Vrednost', required: true} %>   <%= f.text_field :unit, {:placeholder => 'Enota', required: true} %>
 </fieldset>
 
 

@@ -3,4 +3,10 @@
   <%= f.fields_for :part_measurement, (f.object.build_part_measurement) do |pm| %>
       <%= render 'part_measurement_fields', :f => pm %>
   <% end%>
+
+
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "remove", '#', class: "remove_fields" %>
+
+
 </fieldset>

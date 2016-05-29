@@ -1,7 +1,8 @@
 module CheckUpsHelper
   def link_to_add_fields(name, f, association)
-    if name == "Dodaj meritve za srce"
+    if name == "Dodaj meritev za srce"
       fields = "<div>"
+      fields +="Srce<br>"
       new_object = f.object.send(association).klass.new
       id = new_object.object_id
       fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
@@ -21,8 +22,25 @@ module CheckUpsHelper
       end
       fields += "<button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button></div>"
       link_to(name, '', class: "add_fields btn btn-info btn-xs", data: {id: id, fields: fields.gsub("\n", "")})
-
-    elsif name == "Dodaj meritve za glukozo"
+    elsif name == "Dodaj meritev za glukozo"
+      fields = "<div>"
+      new_object = f.object.send(association).klass.new
+      id = new_object.object_id
+      fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
+        render(association.to_s.singularize + "_fields", f: measurement_docs_for_form)
+      end
+      fields += "<button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button></div>"
+      link_to(name, '', class: "add_fields btn btn-info btn-xs", data: {id: id, fields: fields.gsub("\n", "")})
+    elsif name == "Dodaj meritev za telesno temperaturo"
+      fields = "<div>"
+      new_object = f.object.send(association).klass.new
+      id = new_object.object_id
+      fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
+        render(association.to_s.singularize + "_fields", f: measurement_docs_for_form)
+      end
+      fields += "<button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button></div>"
+      link_to(name, '', class: "add_fields btn btn-info btn-xs", data: {id: id, fields: fields.gsub("\n", "")})
+    elsif name == "Dodaj meritev za telesno težo"
       fields = "<div>"
       new_object = f.object.send(association).klass.new
       id = new_object.object_id

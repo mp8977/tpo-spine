@@ -1,7 +1,7 @@
 <!--% f.object.build_part_measurement %-->
 <fieldset>
   <%= f.fields_for :part_measurement, (f.object.build_part_measurement) do |pm| %>
-      <%= render 'part_measurement_fields', :f => pm %>
+      <%= render 'part_measurement_fields', :f => pm, :n => n, :u => u %>
   <% end%>
 
 

@@ -14,11 +14,12 @@
     <table align="center" width="100%">
       <tr>
         <td align="right">Datum:</td>
-        <td align="left"><%= f.date_select :date, include_blank: false, help: "Must be at least 6 characters long" %></td>
+        <td align="left"><%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
+                                           use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
       </tr>
       <tr>
         <td align="right">Pacient:</td>
-        <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
+        <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
       </tr>
       <tr>
         <td align="right">Zdravnik:</td>

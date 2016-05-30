@@ -1,5 +1,6 @@
 class Nurse < ActiveRecord::Base
 
+  validates :nurseNumber, uniqueness: true
 
   #validates :password, presence: true,
   #          :format => {:with => /\A(?=.*[a-zA-Z])(?=.*[0-9]).{6,40}\z/, message: "Geslo mora biti dolgo vsaj 6 znakov in vsebovati vsaj eno črko in številko."}

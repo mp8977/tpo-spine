@@ -14,19 +14,19 @@
 
     <table align="center">
       <tr>
-        <td align="right">St. zdravstvene kartice:</td>
+        <td align="right">*St. zdravstvene kartice:</td>
         <td align="left"><%= p.text_field :cardNumber %></td>
       </tr>
       <tr>
-        <td align="right">Priimek:</td>
+        <td align="right">*Priimek:</td>
         <td align="left"><%= p.text_field :lastName %></td>
       </tr>
       <tr>
-        <td align="right">Ime:</td>
+        <td align="right">*Ime:</td>
         <td align="left"><%= p.text_field :firstName %></td>
       </tr>
       <tr>
-        <td align="right">Rojstni datum:</td>
+        <td align="right">*Rojstni datum:</td>
         <td align="left"><%= p.date_select :birthDate, start_year: 1930,  include_blank: true, order: [:day, :month, :year],
                              use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
       </tr>
@@ -35,22 +35,22 @@
         <td align="left"><%= p.collection_select(:sex, %w(moški ženski), :to_s, :to_s, {include_blank: true},{:multiple => false}) %></td>
       </tr>
       <tr>
-        <td align="right">Telefon:</td>
+        <td align="right">*Telefon:</td>
         <td align="left"><%= p.text_field :phone %></td>
       </tr>
 
       <%= p.fields_for :address do |a| %>
 
           <tr>
-            <td align="right">Ulica</td>
+            <td align="right">*Ulica:</td>
             <td align="left"><%= a.text_field :streetName %></td>
           </tr>
           <tr>
-            <td align="right">Hišna številka</td>
+            <td align="right">*Hišna številka:</td>
             <td align="left"><%= a.text_field :streetNumber %></td>
           </tr>
           <tr>
-            <td align="right">Pošta</td>
+            <td align="right">*Pošta:</td>
             <td align="left"><%= a.collection_select(:post_id, Post.all.order(:postNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
           </tr>
 
@@ -59,34 +59,34 @@
       <%= p.fields_for :contact_person do |c| %>
 
           <tr>
-            <td align="right">Priimek kontaktne osebe</td>
+            <td align="right">Priimek kontaktne osebe:</td>
             <td align="left"><%= c.text_field :lastName %></td>
           </tr>
           <tr>
-            <td align="right">Ime kontaktne osebe</td>
+            <td align="right">Ime kontaktne osebe:</td>
             <td align="left"><%= c.text_field :firstName %></td>
           </tr>
           <tr>
-            <td align="right">Telefon kontaktne osebe</td>
+            <td align="right">Telefon kontaktne osebe:</td>
             <td align="left"><%= c.text_field :phone %></td>
           </tr>
           <tr>
-            <td align="right">Razmerje kontaktne osebe s pacientom</td>
+            <td align="right">Razmerje kontaktne osebe s pacientom:</td>
             <td align="left"><%= c.text_field :relationship %></td>
           </tr>
 
           <%= c.fields_for :address do |ad| %>
 
               <tr>
-                <td align="right">Ulica kontaktna</td>
+                <td align="right">Ulica kontaktna:</td>
                 <td align="left"><%= ad.text_field :streetName %></td>
               </tr>
               <tr>
-                <td align="right">Hišna številka kontaktna</td>
+                <td align="right">Hišna številka kontaktna:</td>
                 <td align="left"><%= ad.text_field :streetNumber %></td>
               </tr>
               <tr>
-                <td align="right">Pošta kontaktna</td>
+                <td align="right">Pošta kontaktna:</td>
                 <td align="left"><%= ad.collection_select(:post_id, Post.all.order(:postNumber), :id, :full_name ,{include_blank: true},{:multiple => false}) %></td>
               </tr>
 

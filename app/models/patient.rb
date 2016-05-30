@@ -1,10 +1,5 @@
 class Patient < ActiveRecord::Base
-  #validates :cardNumber,presence: true,uniqueness: true
-  #validates :firstName, presence: true
-  #validates :lastName, presence: true
-  #validates :phone, presence: true
-  #validates :birthDate, presence:true
-  #validates :sex, presence: true,length: {is: 1}
+  validates :cardNumber, uniqueness: true
 
   #validates_format_of :firstName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
   #validates_format_of :lastName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/

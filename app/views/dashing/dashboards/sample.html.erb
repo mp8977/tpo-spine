@@ -428,9 +428,6 @@
     }
   });
   $("#automplete-1").attr("placeholder", pacientNameList[patI-1]["value"]);
-
-
-
 </script>
 <%
   Redis.new.client.call(["client", "kill", "type", "pubsub"])

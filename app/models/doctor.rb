@@ -1,4 +1,5 @@
 class Doctor < ActiveRecord::Base
+  validates :doctorNumber, uniqueness: true
 
 
   #validates :password, presence: true,

@@ -111,7 +111,8 @@ class CheckUpsController < ApplicationController
 
     respond_to do |format|
       if @check_up.save
-        format.html { redirect_to @check_up, notice: 'Check up was successfully created.' }
+        flash[:notice] = 'Pregled je bil uspesno ustvarjen'
+        format.html { redirect_to controller: :check_ups, action: 'new' }
         format.json { render :show, status: :created, location: @check_up }
       else
         format.html { render :new }

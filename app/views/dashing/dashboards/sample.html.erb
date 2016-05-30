@@ -29,7 +29,7 @@
         end
     end
     patId=patientIds[patientIndex]
-    allCheckUps=CheckUp.where("patient_id = ?",patId)
+    allCheckUps=CheckUp.where("patient_id = ?",patId).order('CAST(date AS DATETIME) asc')
     checkUp=allCheckUps.last
 
     if(patientIds.count>0)
@@ -199,7 +199,7 @@
       end
 
       #pretekli pregledi
-      pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
+      pastAppointments=CheckUp.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
       pastAppointmentString=[]
       pastAppointmentIds=[]
       pastIndex=0

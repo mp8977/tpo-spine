@@ -16,19 +16,44 @@
  */
 
 
+/*lightbox*/
+
+#scheduler-popup{
+    background-color: white;
+    height: 450px;
+    width: 600px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    padding:20px;
+}
+
+
 /*Urnik */
 #weekly-schedule{
     margin-left: 50px;
     margin-right: 50px;
 }
 
+.schedule-table {
+    border: 2px solid #b0b0b0;
+}
+.schedule-header{
+    background-color: #5b9bd1;
+}
+#schedule-hide{
+    margin-top: 2px;
+}
 
 .schedule-rows td {
     width: 80px;
     height: 30px;
     margin: 3px;
     padding: 5px;
-    background-color: rgba(102, 0, 1, 0.27);
+    background-color: rgba(86, 72, 72, 0.27);
     cursor: pointer;
 }
 
@@ -65,10 +90,6 @@
 
 
 /*izbira v tednu*/
-#ui-datepicker-div > table > tbody > tr:hover{
-    background-color: #3050ff;
-}
-
 
 #ui-datepicker-div > div > a.ui-datepicker-prev.ui-corner-all,#ui-datepicker-div > div > a.ui-datepicker-next.ui-corner-all{
     padding-top: 5px;
@@ -183,14 +204,15 @@
     color: #fff
 }
 .ui-datepicker .ui-datepicker-calendar .ui-datepicker-unselectable:hover {
-    background-color: #fff;
+
     cursor: default;
-    color:white
+    color:#333;
 }
 
 .ui-priority-secondary{
     color: #c5c5c5 !important;
 }
+
 
 /*konec urnika*/
 

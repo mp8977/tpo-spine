@@ -1,6 +1,8 @@
 <!--toj je zdej za to povezavo k je measuremnt _docs povezan-->
 <fieldset>
-  <%=n%><%= f.hidden_field :name, :value => n %>   <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max} %>   <%=u%> <%= f.hidden_field :unit, :value => u %>
+  <%=n%><%= f.hidden_field :name, :value => n %>
+  <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max} %>
+  <%=u%> <%= f.hidden_field :unit, :value => u %>
 </fieldset>
 
 

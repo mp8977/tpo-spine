@@ -16,10 +16,10 @@ module CheckUpsHelper
 
 
       fields = "<div data-no-turbolink>"
-      new_object = f.object.send(association).klass.new
-      id = new_object.object_id
 
       for i in 0..(st_elementov-1)
+        new_object = f.object.send(association).klass.new
+        id = new_object.object_id
         fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
           ime = imena[i]
           enota = enote[i]
@@ -46,10 +46,11 @@ module CheckUpsHelper
       end
 
       fields = "<div data-no-turbolink>"
-      new_object = f.object.send(association).klass.new
-      id = new_object.object_id
+
 
       for i in 0..(st_elementov-1)
+        new_object = f.object.send(association).klass.new
+        id = new_object.object_id
         fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
           ime = imena[i]
           enota = enote[i]
@@ -76,10 +77,11 @@ module CheckUpsHelper
       end
 
       fields = "<div data-no-turbolink>"
-      new_object = f.object.send(association).klass.new
-      id = new_object.object_id
+
 
       for i in 0..(st_elementov-1)
+        new_object = f.object.send(association).klass.new
+        id = new_object.object_id
         fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
           ime = imena[i]
           enota = enote[i]
@@ -106,10 +108,11 @@ module CheckUpsHelper
       end
 
       fields = "<div data-no-turbolink>"
-      new_object = f.object.send(association).klass.new
-      id = new_object.object_id
+
 
       for i in 0..(st_elementov-1)
+        new_object = f.object.send(association).klass.new
+        id = new_object.object_id
         fields += f.fields_for(association, new_object, child_index: id) do |measurement_docs_for_form|
           ime = imena[i]
           enota = enote[i]

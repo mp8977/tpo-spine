@@ -199,7 +199,7 @@
       end
 
       #pretekli pregledi
-      pastAppointments=Appointment.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
+      pastAppointments=CheckUp.where("patient_id=? AND date<?",patId,Time.now).order('CAST(date AS DATETIME) DESC')
       pastAppointmentString=[]
       pastAppointmentIds=[]
       pastIndex=0

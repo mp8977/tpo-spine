@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160521161720) do
+ActiveRecord::Schema.define(version: 20160531072552) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -228,13 +228,17 @@ ActiveRecord::Schema.define(version: 20160521161720) do
   add_index "measurement_homes", ["patient_id"], name: "fk_rails_f43f4d1c2e", using: :btree
 
   create_table "measurement_types", force: :cascade do |t|
-    t.string   "name",       limit: 255
-    t.decimal  "min_value",              precision: 7, scale: 2
-    t.decimal  "max_value",              precision: 7, scale: 2
-    t.boolean  "deleted",                                        default: false, null: false
-    t.datetime "created_at",                                                     null: false
-    t.datetime "updated_at",                                                     null: false
+    t.string   "name",                    limit: 255
+    t.decimal  "min_value",                           precision: 7, scale: 2
+    t.decimal  "max_value",                           precision: 7, scale: 2
+    t.boolean  "deleted",                                                     default: false, null: false
+    t.datetime "created_at",                                                                  null: false
+    t.datetime "updated_at",                                                                  null: false
+    t.string   "unit",                    limit: 255
+    t.integer  "measurement_category_id", limit: 4
   end
+
+  add_index "measurement_types", ["measurement_category_id"], name: "index_measurement_types_on_measurement_category_id", using: :btree
 
   create_table "measurements", force: :cascade do |t|
     t.datetime "date"
@@ -379,6 +383,7 @@ ActiveRecord::Schema.define(version: 20160521161720) do
   add_foreign_key "measurement_docs", "part_measurements"
   add_foreign_key "measurement_homes", "part_measurements"
   add_foreign_key "measurement_homes", "patients"
+  add_foreign_key "measurement_types", "measurement_categories"
   add_foreign_key "medicine_checks", "check_ups"
   add_foreign_key "medicine_checks", "medicines"
   add_foreign_key "medicines", "medicine_instructions"

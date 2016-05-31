@@ -35,7 +35,6 @@ class MeasurementTypesController < ApplicationController
   # POST /measurement_types.json
   def create
     @measurement_type = MeasurementType.new(measurement_type_params)
-    puts 'dela'
     measurement_type_params[:measurement_category_id]
     m_cat = MeasurementCategory.where(id: measurement_type_params[:measurement_category_id]).first
     m_cat.elements = m_cat.elements + 1
@@ -73,6 +72,11 @@ class MeasurementTypesController < ApplicationController
   # DELETE /measurement_types/1
   # DELETE /measurement_types/1.json
   def destroy
+    m_cat = MeasurementCategory.where(id: @measurement_type.measurement_category_id).first
+    m_cat.elements = m_cat.elements - 1
+    if not m_cat.save
+      puts 'tezava pri posodabljanju stevila elementov za measurementCategory v measurementTypeController'
+    end
     @measurement_type.deleted = true
     if @measurement_type.save
       flash[:notice] = 'Element meritve je bil uspesno izbrisan'

@@ -7,7 +7,7 @@ module CheckUpsHelper
       enote = []
       maxs = []
       mins = []
-      MeasurementType.where(measurement_category_id: category_id).all.each do |m|
+      MeasurementType.where(measurement_category_id: category_id, deleted: false).all.each do |m|
         imena.push(m.name)
         enote.push(m.unit)
         maxs.push(m.max_value)
@@ -38,7 +38,7 @@ module CheckUpsHelper
       enote = []
       maxs = []
       mins = []
-      MeasurementType.where(measurement_category_id: category_id).all.each do |m|
+      MeasurementType.where(measurement_category_id: category_id, deleted: false).all.each do |m|
         imena.push(m.name)
         enote.push(m.unit)
         maxs.push(m.max_value)
@@ -68,7 +68,7 @@ module CheckUpsHelper
       enote = []
       maxs = []
       mins = []
-      MeasurementType.where(measurement_category_id: category_id).all.each do |m|
+      MeasurementType.where(measurement_category_id: category_id, deleted: false).all.each do |m|
         imena.push(m.name)
         enote.push(m.unit)
         maxs.push(m.max_value)
@@ -98,7 +98,7 @@ module CheckUpsHelper
       enote = []
       maxs = []
       mins = []
-      MeasurementType.where(measurement_category_id: category_id).all.each do |m|
+      MeasurementType.where(measurement_category_id: category_id, deleted: false).all.each do |m|
         imena.push(m.name)
         enote.push(m.unit)
         maxs.push(m.max_value)

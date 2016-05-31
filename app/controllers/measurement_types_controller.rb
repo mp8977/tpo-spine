@@ -35,6 +35,13 @@ class MeasurementTypesController < ApplicationController
   # POST /measurement_types.json
   def create
     @measurement_type = MeasurementType.new(measurement_type_params)
+    measurement_type_params[:measurement_category_id]
+    m_cat = MeasurementCategory.where(id: measurement_type_params[:measurement_category_id]).first
+    m_cat.elements = m_cat.elements + 1
+    if not m_cat.save
+      puts 'tezava pri posodabljanju stevila elementov za measurementCategory v measurementTypeController'
+    end
+
 
     respond_to do |format|
       if @measurement_type.save
@@ -65,6 +72,11 @@ class MeasurementTypesController < ApplicationController
   # DELETE /measurement_types/1
   # DELETE /measurement_types/1.json
   def destroy
+    m_cat = MeasurementCategory.where(id: @measurement_type.measurement_category_id).first
+    m_cat.elements = m_cat.elements - 1
+    if not m_cat.save
+      puts 'tezava pri posodabljanju stevila elementov za measurementCategory v measurementTypeController'
+    end
     @measurement_type.deleted = true
     if @measurement_type.save
       flash[:notice] = 'Element meritve je bil uspesno izbrisan'
@@ -85,6 +97,6 @@ class MeasurementTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def measurement_type_params
-      params.require(:measurement_type).permit(:name, :min_value, :min_value, :max_value, :max_value, :deleted)
+      params.require(:measurement_type).permit(:name, :min_value, :min_value, :max_value, :max_value, :unit, :measurement_category_id, :deleted)
     end
 end

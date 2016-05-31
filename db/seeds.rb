@@ -304,14 +304,14 @@ Illness.find(22).medicines << Medicine.find(88)
 Illness.find(22).medicines << Medicine.find(89)
 Illness.find(22).medicines << Medicine.find(90)
 
-kat1 = MeasurementCategory.create! :name => 'srce', :elements => 3
-kat2 = MeasurementCategory.create! :name => 'glukoza', :elements => 1
-kat3 = MeasurementCategory.create! :name => 'temperatura', :elements => 1
+kat1 = MeasurementCategory.create! :name => 'Srce', :elements => 3
+kat2 = MeasurementCategory.create! :name => 'Glukoza', :elements => 1
+kat3 = MeasurementCategory.create! :name => 'Temperatura', :elements => 1
 kat4 = MeasurementCategory.create! :name => 'teza', :elements => 1
 
-el1 = MeasurementType.create! :name => 'sistolicni tlak', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'mmHg'
-el2 = MeasurementType.create! :name => 'diastolicni tlak', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'mmHg'
-el3 = MeasurementType.create! :name => 'srcni utrip', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'stevilo srcnih utripov v minuti'
-el4 = MeasurementType.create! :name => 'glukoza', :min_value => 0, :max_value => 200, :measurement_category_id => 2, :unit => 'mmol/L'
-el5 = MeasurementType.create! :name => 'telesna temperatura', :min_value => 0, :max_value => 200, :measurement_category_id => 3, :unit => 'stopinj celzija'
-el6 = MeasurementType.create! :name => 'telesna teza', :min_value => 0, :max_value => 200, :measurement_category_id => 4, :unit => 'kg'
+el1 = MeasurementType.create! :name => 'Sistolicni tlak', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'mmHg'
+el2 = MeasurementType.create! :name => 'Diastolicni tlak', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'mmHg'
+el3 = MeasurementType.create! :name => 'Srcni utrip', :min_value => 0, :max_value => 200, :measurement_category_id => 1, :unit => 'stevilo srcnih utripov v minuti'
+el4 = MeasurementType.create! :name => 'Glukoza', :min_value => 0, :max_value => 200, :measurement_category_id => 2, :unit => 'mmol/L'
+el5 = MeasurementType.create! :name => 'Telesna temperatura', :min_value => 0, :max_value => 200, :measurement_category_id => 3, :unit => 'stopinj celzija'
+el6 = MeasurementType.create! :name => 'Telesna teza', :min_value => 0, :max_value => 200, :measurement_category_id => 4, :unit => 'kg'

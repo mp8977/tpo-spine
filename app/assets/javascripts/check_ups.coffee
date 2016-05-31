@@ -30,9 +30,14 @@ jQuery ->
     illnessChange($(this))
 
   $('form').on 'click', '.add_fields', (event) ->
-    time=new Date().getTime()
-    regexp=new RegExp($(this).data('id'), 'g')
-    $(this).before($(this).data('fields').replace(regexp,time))
+    array=$(this).data('ids')
+    y=$(this).data('fields')
+    for i in array
+      time=new Date().getTime()
+      #console.log($(this).data('fields').closest("fieldset"))
+      regexp=new RegExp(i, 'g')
+      console.log(array)
+      y=y.replace(regexp,time)
+    $(this).before(y)
     event.preventDefault()
 
-  

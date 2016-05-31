@@ -28,8 +28,8 @@ class MeasurementCategoriesController < ApplicationController
 
     respond_to do |format|
       if @measurement_category.save
-        format.html { redirect_to @measurement_category, notice: 'Measurement category was successfully created.' }
-        format.json { render :show, status: :created, location: @measurement_category }
+        flash[:notice] = 'Kategorija meritev je bila uspesno kreirana'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :new }
         format.json { render json: @measurement_category.errors, status: :unprocessable_entity }
@@ -42,8 +42,8 @@ class MeasurementCategoriesController < ApplicationController
   def update
     respond_to do |format|
       if @measurement_category.update(measurement_category_params)
-        format.html { redirect_to @measurement_category, notice: 'Measurement category was successfully updated.' }
-        format.json { render :show, status: :ok, location: @measurement_category }
+        flash[:notice] = 'Kategorija meritev je bila posodobljena'
+        format.html { redirect_to controller: :admins, action: :sifranti }
       else
         format.html { render :edit }
         format.json { render json: @measurement_category.errors, status: :unprocessable_entity }
@@ -54,10 +54,15 @@ class MeasurementCategoriesController < ApplicationController
   # DELETE /measurement_categories/1
   # DELETE /measurement_categories/1.json
   def destroy
-    @measurement_category.destroy
-    respond_to do |format|
-      format.html { redirect_to measurement_categories_url, notice: 'Measurement category was successfully destroyed.' }
-      format.json { head :no_content }
+    @measurement_category.deleted = true
+    if @measurement_category.save
+      flash[:notice] = 'Kategorija meritev je bila uspesno izbrisana'
+      respond_to do |format|
+        format.html { redirect_to controller: :admins, action: :sifranti }
+        format.json { head :no_content }
+      end
+    else
+      puts 'tezava pri brisanju kategorije meritev'
     end
   end
 
@@ -69,6 +74,6 @@ class MeasurementCategoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def measurement_category_params
-      params.require(:measurement_category).permit(:name, :elements)
+      params.require(:measurement_category).permit(:name, :elements, :deleted)
     end
 end

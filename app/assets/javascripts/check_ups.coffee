@@ -35,19 +35,4 @@ jQuery ->
     $(this).before($(this).data('fields').replace(regexp,time))
     event.preventDefault()
 
-  #$.each($('.check_up_diet_ids'), function( index, value ){
-  #//alert( index + ": " + value );
-  #dirtyHackLoad(value)
-  #});#
-  $('form').on 'click', '.add_fields_srce', (event) ->
-    console.log($(this).data('id1'))
-    console.log($(this).data('fields'))
-    time=new Date().getTime()
-    regexp=new RegExp($(this).data('id1'), 'g')
-    time2=new Date().getTime()
-    regexp2=new RegExp($(this).data('id2'))
-    time3=new Date().getTime()
-    regexp3=new RegExp($(this).data('id3'))
-    $(this).before($(this).data('fields').replace(regexp,time).replace(regexp2,time2).replace(regexp3,time3))
-
-    event.preventDefault()
+  

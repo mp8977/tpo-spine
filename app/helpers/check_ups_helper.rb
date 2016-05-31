@@ -28,7 +28,7 @@ module CheckUpsHelper
       end
     end
 
-    fields += "<button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button><br><br></div>"
+    fields += "<br><button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button><br><br></div>"
     link_to(name, '', class: "add_fields btn btn-info btn-xs", data: {no_turbolink: true,id: id, fields: fields.gsub("\n", "")})
 
   end

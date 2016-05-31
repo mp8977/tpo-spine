@@ -18,11 +18,11 @@
     </tr>
     <tr>
       <td align="right">Stevilo elementov:</td>
-      <td align="left"><%= f.number_field :elements, required: true %></td>
+      <td align="left"><%= f.number_field :elements, min: 0, required: true %></td>
     </tr>
 
   </table>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-info", value: "Poslji" %>
   </div>
 <% end %>

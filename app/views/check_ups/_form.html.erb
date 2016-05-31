@@ -83,22 +83,11 @@
     <!--% end %-->
 
 
-    <%= link_to_add_fields "Dodaj meritev za srce", f, :measurement_docs %>
-    <br>
-    <br>
-
-    <%= link_to_add_fields "Dodaj meritev za glukozo", f, :measurement_docs %>
-    <br>
-    <br>
-
-    <%= link_to_add_fields "Dodaj meritev za telesno temperaturo", f, :measurement_docs %>
-    <br>
-    <br>
-
-    <%= link_to_add_fields "Dodaj meritev za telesno težo", f, :measurement_docs %>
-    <br>
-    <br>
-
+    <% MeasurementCategory.all.each do |m| %>
+      <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
+      <br>
+      <br>
+    <% end %>
 
 
 

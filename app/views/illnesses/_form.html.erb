@@ -24,6 +24,11 @@
       <td align="right">Alergija</td>
       <td align="left"><%= f.check_box :isAllergy %></td>
     </tr>
+    <tr>
+      <td align="right">Zdravilo</td>
+      <td align="left"><%= f.collection_select(:medicine_ids, Medicine.where(inUse: true), :id, :name, {}, {:multiple => true}) %></td>
+    </tr>
+
     <% if admin_signed_in? %>
       <tr>
         <td align="right">Izbrisana</td>

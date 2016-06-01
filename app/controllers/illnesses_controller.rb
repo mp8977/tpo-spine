@@ -35,7 +35,7 @@ class IllnessesController < ApplicationController
   # POST /illnesses.json
   def create
     @illness = Illness.new(illness_params)
-
+    illness_params[:medicine_ids].length
     respond_to do |format|
       if @illness.save
         flash[:notice] = 'Bolezen je bila uspesno kreirana'
@@ -65,6 +65,7 @@ class IllnessesController < ApplicationController
   # DELETE /illnesses/1
   # DELETE /illnesses/1.json
   def destroy
+    # TODO izbrisi podatke v illnesses_medicines, oziroma pusti tam, ker nic ne motijo..
     @illness.deleted = true
     if @illness.save
       flash[:notice] = 'Bolezen je bila uspesno izbrisana'
@@ -86,9 +87,9 @@ class IllnessesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def illness_params
       if admin_signed_in?
-        params.require(:illness).permit(:illnessNumber, :name, :isAllergy, :deleted)
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy, :deleted, :medicine_ids => [])
       else
-        params.require(:illness).permit(:illnessNumber, :name, :isAllergy)
+        params.require(:illness).permit(:illnessNumber, :name, :isAllergy, :medicine_ids => [])
       end
     end
 end

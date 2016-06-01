@@ -84,9 +84,11 @@
 
 
     <% MeasurementCategory.where(deleted: false).each do |m| %>
-      <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
-      <br>
-      <br>
+        <% if m.elements > 0 %>
+          <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
+          <br>
+          <br>
+        <% end %>
     <% end %>
 
 

@@ -162,7 +162,7 @@ class CheckUpsController < ApplicationController
  #"#{ }"#measurement_docs_attributes: [:id,:name,
  #                              part_measurement_attributes: [:id,:unit, :name, :value]])
   def check_up_params
-    params.require(:check_up).permit(:date, :patient_id, :doctor_id, :diet_ids => [],:illness_ids => [],:medicine_ids => [],
+    params.require(:check_up).permit(:date, :patient_id, :doctor_id, :opombe, :diet_ids => [],:illness_ids => [],:medicine_ids => [],
                                      measurement_docs_attributes: [:id,:name,
                                                                               part_measurement_attributes: [:id,:unit, :name, :value]])
 

@@ -34,7 +34,6 @@
 
 
 /*legenda*/
-.my-legend{ margin: 0 auto}
 
 .my-legend .legend-scale ul {
 
@@ -42,6 +41,11 @@
     max-width: 215px;
     margin: 0 auto;
 }
+.legend-scale{
+    margin: 0 auto;
+    max-width: 350px;
+}
+
 .my-legend .legend-scale ul li {
     font-size: 80%;
     list-style: none;
@@ -49,8 +53,9 @@
     line-height: 18px;
 
 }
-#scheduler-scheduler > div.my-legend > div > ul > li{
+.legend-labels > li{
     margin-bottom: 3px;
+    cursor: pointer;
 }
 
 .my-legend ul.legend-labels li span {
@@ -63,9 +68,12 @@
     border: 1px solid #999;
 }
 
-#scheduler-scheduler > div.my-legend > div > ul > li{
-    cursor: pointer;
+
+/*kopiranje-prilepi*/
+#copy-scheduler-button,#paste-scheduler-button{
+    outline: none;
 }
+
 
 /*Urnik */
 #weekly-schedule{
@@ -81,6 +89,11 @@
 }
 #schedule-hide{
     margin-top: 2px;
+}
+
+#scheduler-scheduler > div:nth-child(3){
+    margin : 0 auto;
+    max-width:100px;
 }
 
 .schedule-rows td {
@@ -103,11 +116,10 @@
     text-align: center;
 }
 
-.schedule-rows td[data-selected=selected]{ background-color: #238923; }
 
-.schedule-rows td[data-selected=selected-taken] { background-color: #891d00; }
-
-.schedule-rows td[data-selected=selected-other] { background-color: #ffb600; }
+.schedule-rows td[data-selecting='selecting1'],.schedule-rows td[data-selected=selected]{ background-color: #238923; }
+.schedule-rows td[data-selecting='selecting2'],.schedule-rows td[data-selected=selected-taken] { background-color: #891d00; }
+.schedule-rows td[data-selecting='selecting3'],.schedule-rows td[data-selected=selected-other] { background-color: #ffb600; }
 
 .schedule-rows td[data-disabled] { opacity: 0.55; }
 .schedule-table{

@@ -1,7 +1,7 @@
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.css">
 <script src="http://jonthornton.github.io/jquery-timepicker/jquery.timepicker.js"></script>
-<div id="lightbox">
+<div id="lightbox" hidden>
   <img id="close-icon" onclick="afterClose()" width="25px" height="25px" title="Zapri" src="/assets/close-button.png" />
  <div id="scheduler-popup">
    <p><b>Vnesite opombo za <span id="scheduler-popup-day"></span></b></p>
@@ -51,7 +51,7 @@
 
   </div>
 
-  <!--<button onclick="urejanjeUrnika1()" style="margin:0 auto;display:block;" class="btn btn-info">Urejanje urnika</button>-->
+
 </div>
 
 <script>
@@ -76,6 +76,7 @@
   //dogodek ob kliku na beležko
   function detailsScheduler(index){
     $("#lightbox").show();
+    $("#lightbox").prop('hidden', false);
     $('html').css('overflow','hidden');
     $("#scheduler-popup-day").html(dnevi[index]);
     schedulerSelectedDay=index;
@@ -118,20 +119,20 @@
   }
 
   function selectOption(index){
-    $("#scheduler-scheduler > div.my-legend > div > ul > li").css("background-color","transparent")
+    $(".legend-labels > li").css("background-color","transparent")
     if(index==1){
       setSerlectedValue("selected");
-      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
+      $(".legend-labels > li:nth-child(1)").css("background-color","#5b9bd1")
       $("td[data-selecting='selecting']").css("background-color","#238923");
     }
     else if(index==2){
       setSerlectedValue("selected-taken");
-      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(2)").css("background-color","#5b9bd1")
+      $(".legend-labels > li:nth-child(2)").css("background-color","#5b9bd1")
       $("td[data-selecting]").css("background-color","#891d00");
     }
     else {
       setSerlectedValue("selected-other");
-      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(3)").css("background-color","#5b9bd1")
+      $(".legend-labels > li:nth-child(3)").css("background-color","#5b9bd1")
       $("td[data-selecting]").css("background-color","#ffb600");
     }
   }
@@ -144,17 +145,21 @@
 
       //legenda
       $("#scheduler-scheduler").html("<div class='my-legend'>"+
-                                        "<div class='legend-scale'>"+
-                                          "<ul class='legend-labels'>"+
-                                            "<li onClick='selectOption(1)'><span style='background:#238923;'></span>Prosti termini</li>"+
-                                            "<li onClick='selectOption(2)' ><span style='background:#891d00;'></span>Zasedeni termini</li>"+
-                                            "<li onClick='selectOption(3)' ><span style='background:#ffb600;'></span>Ostalo(malica,zamuda ...)</li>"+
-                                           "</ul>"+
-                                        "</div>"+
-                                      "</div>"+
-                                       "<br/>"+
-                                      "<br/>"+
-                                       "<br/><div id='weekly-schedule'></div>");
+                    "<div class='legend-scale'>"+
+                      "<table><tr>"+
+                      "<td><ul class='legend-labels'>"+
+                        "<li onClick='selectOption(1)'><span style='background:#238923;'></span>Prosti termini</li>"+
+                        "<li onClick='selectOption(2)' ><span style='background:#891d00;'></span>Zasedeni termini</li>"+
+                        "<li onClick='selectOption(3)' ><span style='background:#ffb600;'></span>Ostalo(malica,zamuda ...)</li>"+
+                       "</ul></td><td></td>"+
+          '<td><input id="copy-scheduler-button"  onClick="copiedScheduler()"  type="image" height="36px" width="36px" src="/assets/copy-content.png" title="Kopiraj"></td>'+
+          '<td><input id="paste-scheduler-button"  onClick="pasteScheduler()"  type="image" height="36px" width="36px" src="/assets/clipboard-paste-button-disabled.png" title="Prilepi" disable> </td>' +
+                    "</tr></table></div>"+
+
+                  "</div>"+
+                  "<br/>" +
+          "<br/><div id='weekly-schedule'></div>");
+
 
     //forma
       $("#scheduler-scheduler").append('<%= form_tag(:url => {:controller => "scheduler",action:"create"}, :method => "post") do  %>'
@@ -198,11 +203,11 @@
           '</tr>') ;
 
     if(sel=="selected")
-      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
+      $(".legend-labels > li:nth-child(1)").css("background-color","#5b9bd1")
     else if(sel=="selected-taken")
-        $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(2)").css("background-color","#5b9bd1")
+        $(".legend-labels > li:nth-child(2)").css("background-color","#5b9bd1")
     else
-        $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
+        $(".legend-labels > li:nth-child(3)").css("background-color","#5b9bd1")
   }
 
 
@@ -248,16 +253,20 @@
   //kopiranje urnika
   var copyScheduler="";
   var copyOpombe="";
-  function copyScheduler(){
-      copyScheduler=("#weekly-schedule").html();
+  function copiedScheduler(){
+      $("#copy-scheduler-button").effect( "shake", {times:3,distance :10}, 300 );
+      copyScheduler=$("#weekly-schedule").html();
       copyOpombe=opombe;
+      $("#paste-scheduler-button").prop('disabled', false);
+      $("#paste-scheduler-button").attr("src","/assets/clipboard-paste-button.png");
   }
 
   //prilepanje urnika
   function pasteScheduler(){
       if(copyScheduler!=""){
+        $("#paste-scheduler-button").effect( "shake", {times:3,distance :10}, 300 );
         opombe=copyOpombe;
-        ("#weekly-schedule").html(copyScheduler);
+        $("#weekly-schedule").html(copyScheduler);
       }
   }
 
@@ -336,9 +345,6 @@
       },
       "beforeShow": function () {
         selectCurrentWeek();
-      },
-      "onShow":function(){
-        $('#ui-datepicker-div > table > tbody > tr').css("background-color","black");
       },
       "beforeShowDay": function (date) {
         var cssClass = '';

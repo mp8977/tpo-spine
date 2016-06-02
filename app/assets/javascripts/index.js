@@ -1,13 +1,20 @@
 var sel='selected';
+var selecting='selecting1'
 var selectedColor='#238923';
 function setSerlectedValue(newSelected){
     sel=newSelected;
-    if(sel=="selected")
-        selectedColor='#238923';
-    else if(sel=="selected-taken")
+    if(sel=="selected") {
+        selectedColor = '#238923';
+        selecting='selecting1';
+    }
+    else if(sel=="selected-taken"){
         selectedColor="#891d00";
-    else
-        selectedColor="#ffb600";
+        selecting='selecting2';
+    }
+    else {
+        selectedColor = "#ffb600";
+        selecting='selecting3';
+    }
 }
 (function ($) {
 
@@ -123,8 +130,8 @@ function setSerlectedValue(newSelected){
         if (isSlotSelected($(this))) { plugin.deselect($(this)); }
         else {  // then start selecting
           plugin.$selectingStart = $(this);
-          $(this).attr('data-selecting', 'selecting');
-          $(this).css("background-color",selectedColor);
+          $(this).attr('data-selecting', selecting);
+          //$(this).css("background-color",selectedColor);
           plugin.$el.find('.time-slot').attr('data-disabled', 'disabled');
           plugin.$el.find('.time-slot[data-day="' + day + '"]').removeAttr('data-disabled');
         }
@@ -150,8 +157,8 @@ function setSerlectedValue(newSelected){
         end = $slots.index(this);
         if (end < 0) return;  // not hovering on the same column
         if (start > end) { temp = start; start = end; end = temp; }
-        $slots.slice(start, end + 1).attr('data-selecting', 'selecting');
-        $slots.slice(start, end + 1).css("background-color",selectedColor);
+        $slots.slice(start, end + 1).attr('data-selecting', selecting);
+       // $slots.slice(start, end + 1).css("background-color",selectedColor);
       }
     });
   };

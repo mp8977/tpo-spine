@@ -6,18 +6,18 @@
   <div class="izberi-sifrante">
     <select class="select">
       <option></option>
-      <option value="Users">Uporabnik</option>
-      <option value="Doctors">Zdravniki</option>
-      <option value="Nurses">Medicinske sestre</option>
-      <option value="Illnesses">Bolezni</option>
-      <option value="Medicines">Zdravila</option>
-      <option value="MedicineInstructions">Navodila za zdravila</option>
-      <option value="Diets">Diete</option>
-      <option value="DietInstructions">Navodila za diete</option>
-      <option value="Hospitals">Izvajalci zdravstvenih storitev</option>
-      <option value="MeasurementTypes">Elementi meritev</option>
-      <option value="Posts">Poste</option>
-      <option value="MeasurementCategories">Kategorije meritev</option>
+      <option value="<%= users_path %>">Uporabniki</option>
+      <option value="<%= doctors_path %>">Zdravniki</option>
+      <option value="<%= nurses_path %>">Medicinske sestre</option>
+      <option value="<%= illnesses_path %>">Bolezni</option>
+      <option value="<%= medicines_path %>">Zdravila</option>
+      <option value="<%= medicine_instructions_path %>">Navodila za zdravila</option>
+      <option value="<%= diets_path %>">Diete</option>
+      <option value="<%= diet_instructions_path %>">Navodila za diete</option>
+      <option value="<%= hospitals_path %>">Izvajalci zdravstvenih storitev</option>
+      <option value="<%= part_measurements_path %>">Elementi meritev</option>
+      <option value="<%= posts_path %>">Poste</option>
+      <option value="<%= measurement_categories_path %>">Kategorije meritev</option>
     </select>
   </div>
 
@@ -31,15 +31,17 @@
       $('#show-data_wrapper').remove();
       $('div.show-table').append("<table role='grid' id='show-data' class='display nowrap dataTable dtr-inline' width='100%' cellspacing='0'></table>");
       $('a.add-new-button').remove();
-      var izbira = $( "select.select option:selected" ).val();
-      if (izbira == "Users") {
+      var izbira = $( "select.select option:selected" ).text();
+      if (izbira == "Uporabniki") {
         $('#show-data').append('<thead><tr><th class="column-name">ID</th><th class="column-name">Email</th><th class="column-name">Izbrisan</th><th></th></tr></thead>');
 
         $.ajax({
-          url: "/users.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             //console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, user) {
@@ -47,7 +49,7 @@
               trHTML += '<td>' + user.id + '</td>';
               trHTML += '<td>' + user.email + '</td>';
               trHTML += '<td>' + user.deleted + '</td>';
-              trHTML += "<td align='right'><a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/users/" + user.id + "'>Izbrisi uporabnika</a>";
+              trHTML += "<td align='right'><a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + user.id + "'>Izbrisi uporabnika</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
@@ -57,15 +59,17 @@
           }
         });
       }
-      else if (izbira == "Doctors") {
+      else if (izbira == "Zdravniki") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td>' +
             '<td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Kategorija</td><td class="column-name">Telefon</td>' +
             '<td class="column-name">Max pac.</td><td class="column-name">Izvajalec ID</td><td class="column-name">Izbrisan</td><td></td></tr></thead>');
         $.ajax({
-          url: "/doctors.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             //console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, doctor) {
@@ -81,27 +85,29 @@
               trHTML += '<td>' + doctor.hospital_id + '</td>';
               trHTML += '<td>' + doctor.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs' href='/doctors/" + doctor.id + ".pdf'>pdf</a><br>" +
-                  "<a class='btn btn-info btn-xs' href='/doctors/" + doctor.id + "/edit'>Uredi profil</a><br>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/doctors/" + doctor.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs' href='" + path + "/" + doctor.id + ".pdf'>pdf</a><br>" +
+                  "<a class='btn btn-info btn-xs' href='" + path + "/" + doctor.id + "/edit'>Uredi profil</a><br>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + doctor.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/doctors/sign_up'>Registriraj zdravnika</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/sign_up'>Registriraj zdravnika</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Nurses") {
+      else if (izbira == "Medicinske sestre") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Email</td><td class="column-name">Ime</td><td class="column-name">Priimek</td><td class="column-name">Sifra</td><td class="column-name">Telefon</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/nurses.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             //console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, nurse) {
@@ -114,28 +120,29 @@
               trHTML += '<td>' + nurse.phone + '</td>';
               trHTML += '<td>' + nurse.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/nurses/" + nurse.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/nurses/" + nurse.id + "/edit'>Uredi profil</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/nurses/" + nurse.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + nurse.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + nurse.id + "/edit'>Uredi profil</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + nurse.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/nurses/sign_up'>Registriraj medicinsko sestro</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/sign_up'>Registriraj medicinsko sestro</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Illnesses") {
+      else if (izbira == "Bolezni") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Alergija</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/illnesses.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             var trHTML = '<tbody>';
             $.each(json, function (index, illness) {
               trHTML += '<tr>';
@@ -145,27 +152,29 @@
               trHTML += '<td>' + illness.isAllergy + '</td>';
               trHTML += '<td>' + illness.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/illnesses/" + illness.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/illnesses/" + illness.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/illnesses/" + illness.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + illness.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + illness.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + illness.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/illnesses/new'>Dodaj bolezen</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj bolezen</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Medicines") {
+      else if (izbira == "Zdravila") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">V uporabi</td><td class="column-name">Navodila ID</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/medicines.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, medicine) {
@@ -176,27 +185,29 @@
               trHTML += '<td>' + medicine.inUse + '</td>';
               trHTML += '<td>' + medicine.medicine_instruction_id + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/medicines/" + medicine.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/medicines/" + medicine.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/medicines/" + medicine.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + medicine.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + medicine.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete'  href='" + path + "/" + medicine.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/medicines/new'>Dodaj zdravilo</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj zdravilo</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "MedicineInstructions") {
+      else if (izbira == "Navodila za zdravila") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">URL</td><td class="column-name">Izbrisano</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/medicine_instructions.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, instr) {
@@ -205,26 +216,28 @@
               trHTML += '<td>' + instr.url_string + '</td>';
               trHTML += '<td>' + instr.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/medicine_instructions/" + instr.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/medicine_instructions/" + instr.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + instr.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + instr.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/medicine_instructions/new'>Dodaj navodilo</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj navodilo</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Diets") {
+      else if (izbira == "Diete") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/diets.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             console.log(JSON.stringify(json));
             var trHTML = '<tbody>';
             $.each(json, function (index, diet) {
@@ -234,29 +247,29 @@
               trHTML += '<td>' + diet.name + '</td>';
               trHTML += '<td>' + diet.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/diets/" + diet.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/diets/" + diet.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/diets/" + diet.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + diet.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + diet.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + diet.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/diets/new'>Dodaj dieto</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj dieto</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "DietInstructions") {
+      else if (izbira == "Navodila za diete") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">URL</td><td class="column-name">Dieta ID</td><td class="column-name">Izbrisano</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/diet_instructions.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
-            var trHTML = '<tbody>';
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);            var trHTML = '<tbody>';
             $.each(json, function (index, instr) {
               trHTML += '<tr>';
               trHTML += '<td>' + instr.id + '</td>';
@@ -264,28 +277,28 @@
               trHTML += '<td>' + instr.diet_id + '</td>';
               trHTML += '<td>' + instr.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/diet_instructions/" + instr.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/diet_instructions/" + instr.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + instr.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + instr.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/diet_instructions/new'>Dodaj navodilo</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj navodilo</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Hospitals") {
+      else if (izbira == "Izvajalci zdravstvenih storitev") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Sifra</td><td class="column-name">Ime</td><td class="column-name">Naslov ID</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/hospitals.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
-            var trHTML = '<tbody>';
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);            var trHTML = '<tbody>';
             $.each(json, function (index, hospital) {
               trHTML += '<tr>';
               trHTML += '<td>' + hospital.id + '</td>';
@@ -294,29 +307,30 @@
               trHTML += '<td>' + hospital.address_id + '</td>';
               trHTML += '<td>' + hospital.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/hospitals/" + hospital.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/hospitals/" + hospital.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/hospitals/" + hospital.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + hospital.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + hospital.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + hospital.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/hospitals/new'>Dodaj izvajalca</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj izvajalca</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "MeasurementTypes") {
+      else if (izbira == "Elementi meritev") {
         //TODO poglej ce so vse stvari required, da se ne posiljajo prazne + v modelih za meritve
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Min</td><td class="column-name">Max</td><td class="column-name">Kategorija ID</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/measurement_types.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             var trHTML = '<tbody>';
             $.each(json, function (index, measurement_type) {
               trHTML += '<tr>';
@@ -327,28 +341,29 @@
               trHTML += '<td>' + measurement_type.measurement_category_id + '</td>';
               trHTML += '<td>' + measurement_type.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_types/" + measurement_type.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_types/" + measurement_type.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurement_types/" + measurement_type.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + measurement_type.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + measurement_type.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + measurement_type.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/measurement_types/new'>Dodaj tip meritve</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj tip meritve</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "Posts") {
+      else if (izbira == "Poste") {
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Postna stevilka</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/posts.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             var trHTML = '<tbody>';
             $.each(json, function (index, post) {
               trHTML += '<tr>';
@@ -357,28 +372,29 @@
               trHTML += '<td>' + post.postNumber + '</td>';
               trHTML += '<td>' + post.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/posts/" + post.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/posts/" + post.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + post.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + post.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/posts/new'>Dodaj posto</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj posto</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }
         });
       }
-      else if (izbira == "MeasurementCategories") {
+      else if (izbira == "Kategorije meritev") {
         //TODO poglej ce so vse stvari required, da se ne posiljajo prazne + v modelih za meritve
         $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Stevilo elementov</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
-          url: "/measurement_categories.json",
+          url: $( "select.select option:selected" ).val() + ".json",
           dataType: "json",
           type: "GET",
           success: function(json) {
-            console.log(JSON.stringify(json));
+            var path = $( "select.select option:selected" ).val();
+            console.log(path);
             var trHTML = '<tbody>';
             $.each(json, function (index, measurement_category) {
               trHTML += '<tr>';
@@ -387,14 +403,14 @@
               trHTML += '<td>' + measurement_category.elements + '</td>';
               trHTML += '<td>' + measurement_category.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_categories/" + measurement_category.id + ".pdf'>pdf</a>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_categories/" + measurement_category.id + "/edit'>Uredi</a>" +
-                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurement_categories/" + measurement_category.id + "'>Izbrisi</a>";
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + measurement_category.id + ".pdf'>pdf</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='" + path + "/" + measurement_category.id + "/edit'>Uredi</a>" +
+                  "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='" + path + "/" + measurement_category.id + "'>Izbrisi</a>";
               trHTML += '</tr>';
             });
             trHTML += '</tbody>';
             $('#show-data').append(trHTML);
-            var new_button = $("<a class='btn btn-info add-new-button' href='/measurement_categories/new'>Dodaj kategorijo meritve</a>");
+            var new_button = $("<a class='btn btn-info add-new-button' href='" + path + "/new'>Dodaj kategorijo meritve</a>");
             $('.profile-content').append(new_button);
             makeTable();
           }

@@ -27,7 +27,7 @@
         <td align="right">Diete:</td>
         <td align="left">
           <div class="cloneable-unselected">
-            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
+            <%= f.collection_select(:diet_ids, Diet.where(deleted: false).order(:name), :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
             <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
           </div>
         </td>
@@ -43,7 +43,7 @@
             <td align="right">Bolezen ali alergija:</td>
             <td align="left">
               <div class="cloneable-unselected">
-                <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
+                <%= f.collection_select(:illness_ids, Illness.where(deleted: false).order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
                 <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
               </div>
             </td>
@@ -53,13 +53,13 @@
             <td align="right">Zdravila:</td>
             <td align="left">
               <div class="cloneable-unselected bolezni">
-                <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
+                <%= f.grouped_collection_select(:medicine_ids, Illness.where(deleted: false).order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
                 <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
-      </div>
+              </div>
             </td>
           </tr>
-          </table>
-          <br>
+        </table>
+        <br>
         <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
         <br>
         <br>
@@ -73,21 +73,21 @@
     <br>
     <!--polja za measurement k jih zdej nerabmo-->
     <!--%= f.fields_for :measurements do |m| %-->
-        <!--button id="btn<!--%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<!--%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <!--%= @headers[m.index]%></button><br-->
-        <!--div id="<!--%=m.index %>" class="hide"-->
-          <!--h3 class="inline"><!--%= @headers[m.index]%></h3-->
-          <!--button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<!--%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button-->
-          <!--%= render 'measurement_fields', :f => m %-->
-        <!--/div-->
-        <!--br-->
+    <!--button id="btn<!--%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<!--%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <!--%= @headers[m.index]%></button><br-->
+    <!--div id="<!--%=m.index %>" class="hide"-->
+    <!--h3 class="inline"><!--%= @headers[m.index]%></h3-->
+    <!--button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<!--%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button-->
+    <!--%= render 'measurement_fields', :f => m %-->
+    <!--/div-->
+    <!--br-->
     <!--% end %-->
 
 
     <% MeasurementCategory.where(deleted: false).each do |m| %>
         <% if m.elements > 0 %>
-          <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
-          <br>
-          <br>
+            <%= link_to_add_fields "Dodajanje meritve #{m.name}", f, m.name, :measurement_docs %>
+            <br>
+            <br>
         <% end %>
     <% end %>
 

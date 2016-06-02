@@ -2,7 +2,7 @@ class AppointmentDetailsController < ApplicationController
 
 
   def show
-    pregled=Appointment.find(params[:id])
+    pregled=CheckUp.find(params[:id])
     pastDate=pregled.date
     nextDate=Appointment.where("doctor_id=? AND patient_id=? AND date > ?",pregled.doctor_id,pregled.patient_id,pastDate).order('CAST(date AS DATETIME) asc').first
 
@@ -15,7 +15,7 @@ class AppointmentDetailsController < ApplicationController
     pastDoctor=Doctor.find(pregled.doctor_id)
     @pastDoctorType=pastDoctor.category
     @pastDoctor=pastDoctor.firstName+" "+pastDoctor.lastName
-    checkUpId=pregled.check_up_id
+    checkUpId=params[:id]
     @instructions=pregled.instruction
     if checkUpId!=nil
       dietChecks=DietCheck.where("check_up_id = ?",checkUpId)

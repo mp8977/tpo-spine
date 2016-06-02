@@ -27,7 +27,7 @@
         <td align="right">Diete:</td>
         <td align="left">
           <div class="cloneable-unselected">
-            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
+            <%= f.collection_select(:diet_ids, Diet.where(deleted: false).order(:name), :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
             <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
           </div>
         </td>
@@ -43,7 +43,7 @@
             <td align="right">Bolezen ali alergija:</td>
             <td align="left">
               <div class="cloneable-unselected">
-                <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
+                <%= f.collection_select(:illness_ids, Illness.where(deleted: false).order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
                 <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
               </div>
             </td>
@@ -53,7 +53,7 @@
             <td align="right">Zdravila:</td>
             <td align="left">
               <div class="cloneable-unselected bolezni">
-                <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
+                <%= f.grouped_collection_select(:medicine_ids, Illness.where(deleted: false).order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
                 <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
       </div>
             </td>
@@ -84,7 +84,7 @@
 
 
     <% MeasurementCategory.where(deleted: false).each do |m| %>
-      <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
+      <%= link_to_add_fields "Dodajanje meritve #{m.name}", f, m.name, :measurement_docs %>
       <br>
       <br>
     <% end %>

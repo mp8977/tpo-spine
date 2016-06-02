@@ -77,6 +77,7 @@ class PickDoctorController < ApplicationController
         @docMsg="Zdravnik "+Doctor.find(docId).firstName+" "+Doctor.find(docId).lastName+" ne sprejema novih pacientov."
       end
     end
+
     if denId != nil
       denPatientFree=Doctor.find(denId).limitPatient-DoctorHasPatient.where("doctor_id=?",denId).count
       if denPatientFree>0

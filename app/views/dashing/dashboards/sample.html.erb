@@ -29,7 +29,7 @@
         end
     end
     patId=patientIds[patientIndex]
-    allCheckUps=CheckUp.where("patient_id = ?",patId)
+    allCheckUps=CheckUp.where("patient_id = ?",patId).order('CAST(date AS DATETIME) asc')
     checkUp=allCheckUps.last
 
     if(patientIds.count>0)

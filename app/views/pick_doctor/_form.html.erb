@@ -1,4 +1,4 @@
-<%= form_tag(:url => {:controller => "pick_doctor",action:"create"}, :method => "get") do  %>
+<%= form_tag(:url => {:controller => "pick_doctor",action:"create"}, :method => "post") do  %>
 
 
     <table align="center">
@@ -39,6 +39,8 @@
     </div>
 
 <% end %>
+
+
 
 <script>
   seznamIzbranihZdravnikov=<%=@listOfDoctorIDsPD%>

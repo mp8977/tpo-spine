@@ -10,7 +10,6 @@ class Admins::SessionsController < Devise::SessionsController
   def create
     super
 
-    store_location_for(resource, '/static/admin_dashboard')
   end
 
 # DELETE /resource/sign_out
@@ -26,7 +25,7 @@ class Admins::SessionsController < Devise::SessionsController
   end
 
   def after_sign_in_path_for(resource)
-    '/static/user_dashboard' # oziroma kak pogled specificen za admina
+    static_admin_dashboard_path # oziroma kak pogled specificen za admina
   end
 
 

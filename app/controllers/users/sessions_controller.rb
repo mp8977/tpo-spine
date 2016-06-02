@@ -29,7 +29,7 @@ before_filter :configure_sign_in_params, only: [:create]
     if prazen_profil(resource) # prazen profil
       edit_patient_path(id: resource.patients.first.id) #vsaj od prvega profil mora biti kreairan
     else
-      '/static/user_dashboard'
+      static_user_dashboard_path
     end
   end
 

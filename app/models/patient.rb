@@ -1,5 +1,5 @@
 class Patient < ActiveRecord::Base
-  validates :cardNumber, uniqueness: true
+  validates :cardNumber, uniqueness: true, allow_nil: true
 
   #validates_format_of :firstName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/
   #validates_format_of :lastName,with:/\A[a-zA-Z]+(?: [a-zA-Z]+)?\z/

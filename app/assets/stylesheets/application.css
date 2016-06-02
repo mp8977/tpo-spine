@@ -402,6 +402,26 @@ div.panel {
     display:none !important;
 }
 
-button.long {
+.long {
     width: 50%;
+}
+
+/* za razclenjevanje form */
+div.form-box {
+    margin: 20px;
+    padding: 20px;
+    border: 2px solid lightgrey;
+
+}
+
+.form-inlay {
+    position: relative;
+}
+.form-inlay > *:last-child {
+    position: absolute;
+    top: 6px;
+    right: 32px;
+}
+.resizable_textarea{
+    resize: vertical;
 }

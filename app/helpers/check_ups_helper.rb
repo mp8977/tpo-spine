@@ -14,7 +14,7 @@ module CheckUpsHelper
     end
 
     ids=Array.new
-    fields = "<div data-no-turbolink>"
+    fields = "<div class = 'form-box' data-no-turbolink>"
     for i in 0..(st_elementov-1)
       new_object = f.object.send(association).klass.new
       id = new_object.object_id
@@ -29,7 +29,7 @@ module CheckUpsHelper
     end
     puts ids
     fields += "<br><button type='button' class='btn btn-danger btn-xs' onclick='removeElement(this.parentNode);'>Odstrani</button><br><br></div>"
-    link_to(name, '', class: "add_fields btn btn-info btn-xs", data: {no_turbolink: true,ids: ids, fields: fields.gsub("\n", "")})
+    link_to(name, '', class: "add_fields btn btn-info btn-sm long", data: {no_turbolink: true,ids: ids, fields: fields.gsub("\n", "")})
 
   end
 end

@@ -29,7 +29,7 @@ before_filter :configure_sign_in_params, only: [:create]
     if prazen_profil(resource) # prazen profil
       edit_doctor_path(id: resource.id)
     else
-      '/static/doctor_dashboard'
+      static_doctor_dashboard_path
     end
   end
 

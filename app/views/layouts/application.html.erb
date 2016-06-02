@@ -28,7 +28,7 @@
     <% if admin_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/admin-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
+            <%= image_tag('admin-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
@@ -55,7 +55,7 @@
                     Registriraj med. sestro </a>
                 </li> -->
                 <li>
-                  <a href="/admins/sifranti">
+                  <a href="<%= admins_sifranti_path %>">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Urejanje sifrantov </a>
                 </li>
@@ -82,7 +82,7 @@
     <% if nurse_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/nurse-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
+            <%= image_tag('nurse-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
@@ -99,7 +99,7 @@
             <div class="profile-usermenu">
               <ul class="nav">
                 <li>
-                  <a href="/nurses/<%= current_nurse.id%>/edit">
+                  <a href="<%= edit_nurse_path(current_nurse.id)%>">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
                 </li>
@@ -126,7 +126,7 @@
     <% if doctor_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/doctor-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
+            <%= image_tag('doctor-icon.png' , class: "profile-userpic", height: '256', width: '256')%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
@@ -143,21 +143,21 @@
             <div class="profile-usermenu">
               <ul class="nav">
                 <li>
-                  <a href="/dashing">
+                  <a href="<%= dashing_path %>">
                     <i class="glyphicon glyphicon-user"></i>
                     Dashboard</a>
                 </li>
                 <li>
-                  <a href="/check_ups/new" target="_top">
+                  <a href="<%= new_check_up_path %>" target="_top">
                     <i class="glyphicon glyphicon-list-alt"></i>
                     Vnos pregleda</a>
                 <li>
-                  <a href="/doctors/<%= current_doctor.id%>/edit">
+                  <a href="<%= edit_doctor_path(current_doctor.id)%>">
                     <i class="glyphicon glyphicon-pencil"></i>
                     Nastavitve profila</a>
                 </li>
                 <li>
-                  <a href="/scheduler">
+                  <a href="<%= scheduler_index_path %>">
                     <i class="glyphicon glyphicon-calendar"></i>
                     Urnik</a>
                 </li>
@@ -185,7 +185,7 @@
     <% if user_signed_in? %>
         <div class="col-md-3">
           <div class="profile-sidebar">
-            <%= image_tag('/assets/user-icon.png' , class: "profile-userpic" , height: '256', width: '256')%>
+            <%= image_tag('user-icon.png' , class: "profile-userpic" , height: '256', width: '256')%>
             <!-- SIDEBAR USER TITLE -->
             <div class="profile-usertitle">
               <div class="profile-usertitle-name">
@@ -201,35 +201,35 @@
             <div class="profile-usermenu">
               <ul class="nav">
                 <li>
-                  <a href="/dashing">
+                  <a href="<%= dashing_path %>">
                     <i class="glyphicon glyphicon-dashboard"></i>
                     Dashboard</a>
                 </li>
                 <% if  current_user.count_patients == 1 %>
                     <li>
-                      <a href="/patients/<%=current_user.patients.first.id %>/edit">
+                      <a href="<%= edit_patient_path(current_user.patients.first.id) %>">
                         <i class="glyphicon glyphicon-pencil"></i>
                         Urejanje profila</a>
                     </li>
                 <% else%>
                     <li>
-                      <a href="/patients/">
+                      <a href="<%= patients_path %>">
                         <i class="glyphicon glyphicon-pencil"></i>
                         Profili pacientov</a>
                     </li>
                 <% end %>
                 <li>
-                  <a href="/patients/new">
+                  <a href="<%= new_patient_path %>">
                     <i class="glyphicon glyphicon-user"></i>
                     Dodaj pacienta</a>
                 </li>
                 <li>
-                  <a href="/pick_doctor">
+                  <a href="<%= pick_doctor_index_path %>">
                     <i class="glyphicon glyphicon-heart"></i>
                     Izbira zdravnika </a>
                 </li>
                 <li>
-                  <a href="/users/<%=current_user.id %>/edit">
+                  <a href="<%= edit_user_path(current_user.id) %>">
                     <i class="glyphicon glyphicon-wrench"></i>
                     Urejanje uporabniskega racuna</a>
                 </li>

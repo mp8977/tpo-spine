@@ -7,10 +7,10 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/user-icon.png')%>
+          <%= image_tag('user-icon.png')%>
         </div>
         <div class="content">
-          <p><button type="button" class="btn btn-default" onclick="location.href = '/users/sign_in';">Uporabnik</button></p>
+          <p><button type="button" class="btn btn-default" onclick="location.href = '<%= new_user_session_path %>';">Uporabnik</button></p>
         </div>
       </div>
     </div>
@@ -18,10 +18,10 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/doctor-icon.png')%>
+          <%= image_tag('doctor-icon.png')%>
         </div>
         <div class="content">
-          <p><button type="button" class="btn btn-default" onclick="location.href = '/doctors/sign_in';">Zdravnik</button></p>
+          <p><button type="button" class="btn btn-default" onclick="location.href = '<%= new_doctor_session_path %>';">Zdravnik</button></p>
         </div>
       </div>
     </div>
@@ -29,10 +29,10 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/nurse-icon.png')%>
+          <%= image_tag('nurse-icon.png')%>
         </div>
         <div class="content">
-          <p><button type="button" class="btn btn-default" onclick="location.href = '/nurses/sign_in';">Medicinska sestra</button></p>
+          <p><button type="button" class="btn btn-default" onclick="location.href = '<%= new_nurse_session_path %>';">Medicinska sestra</button></p>
         </div>
       </div>
     </div>
@@ -40,10 +40,10 @@
       <div class="card">
         <canvas class="header-bg" width="250" height="70" id="header-blur"></canvas>
         <div class="avatar">
-          <%= image_tag('/assets/admin-icon.png')%>
+          <%= image_tag('admin-icon.png')%>
         </div>
         <div class="content">
-          <p><button type="button" class="btn btn-default" onclick="location.href = '/admins/sign_in';">Administrator</button></p>
+          <p><button type="button" class="btn btn-default" onclick="location.href = '<%= new_admin_session_path %>';">Administrator</button></p>
         </div>
       </div>
     </div>

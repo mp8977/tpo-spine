@@ -57,6 +57,14 @@ class MeasurementTypesController < ApplicationController
   # PATCH/PUT /measurement_types/1
   # PATCH/PUT /measurement_types/1.json
   def update
+    if params[:measurement_type][:measurement_category_id] != @measurement_type.measurement_category_id
+      # odstej trenutni enega
+      trenutna_kategorija = MeasurementCategory.where(id: @measurement_type.measurement_category_id).first
+      trenutna_kategorija.update(elements: (trenutna_kategorija.elements-1))
+      # pristej novi enega
+      nova_kategorija = MeasurementCategory.where(id: params[:measurement_type][:measurement_category_id]).first
+      nova_kategorija.update(elements: (nova_kategorija.elements+1))
+    end
     respond_to do |format|
       if @measurement_type.update(measurement_type_params)
         flash[:notice] = 'Element meritve je bil posodobljen'

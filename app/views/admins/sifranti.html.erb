@@ -309,7 +309,7 @@
       }
       else if (izbira == "MeasurementTypes") {
         //TODO poglej ce so vse stvari required, da se ne posiljajo prazne + v modelih za meritve
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Min</td><td class="column-name">Max</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Min</td><td class="column-name">Max</td><td class="column-name">Kategorija ID</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
           url: "/measurement_types.json",
@@ -324,6 +324,7 @@
               trHTML += '<td>' + measurement_type.name + '</td>';
               trHTML += '<td>' + measurement_type.min_value + '</td>';
               trHTML += '<td>' + measurement_type.max_value + '</td>';
+              trHTML += '<td>' + measurement_type.measurement_category_id + '</td>';
               trHTML += '<td>' + measurement_type.deleted + '</td>';
               trHTML += "<td align='right'>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_types/" + measurement_type.id + ".pdf'>pdf</a>" +
@@ -370,7 +371,7 @@
       }
       else if (izbira == "MeasurementCategories") {
         //TODO poglej ce so vse stvari required, da se ne posiljajo prazne + v modelih za meritve
-        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Min</td><td class="column-name">Max</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
+        $('#show-data').append('<thead><tr><td class="column-name">ID</td><td class="column-name">Ime</td><td class="column-name">Stevilo elementov</td><td class="column-name">Izbrisana</td><td></td></tr></thead>');
 
         $.ajax({
           url: "/measurement_categories.json",
@@ -386,7 +387,7 @@
               trHTML += '<td>' + measurement_category.elements + '</td>';
               trHTML += '<td>' + measurement_category.deleted + '</td>';
               trHTML += "<td align='right'>" +
-                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_categories/" + measurement_category.id + ".pdf'>pdfNE_DELA</a>" +
+                  "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_categories/" + measurement_category.id + ".pdf'>pdf</a>" +
                   "<a class='btn btn-info btn-xs right-padding-link' href='/measurement_categories/" + measurement_category.id + "/edit'>Uredi</a>" +
                   "<a class='btn btn-danger btn-xs' data-confirm='Ali ste prepricani?' data-method='delete' href='/measurement_categories/" + measurement_category.id + "'>Izbrisi</a>";
               trHTML += '</tr>';

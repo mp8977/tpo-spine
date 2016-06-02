@@ -12,6 +12,7 @@ class MeasurementTypesPdf < Prawn::Document
     text "Ime: #{@measurement_type.name}"
     text "Min: #{@measurement_type.min_value}"
     text "Max: #{@measurement_type.max_value}"
+    text "Pripadajoca kategorija: #{MeasurementCategory.where(id: @measurement_type.measurement_category_id).first.name}"
     if @measurement_type.deleted
       text "Izbrisana: DA"
     else

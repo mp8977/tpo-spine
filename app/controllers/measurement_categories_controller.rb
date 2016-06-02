@@ -7,11 +7,20 @@ class MeasurementCategoriesController < ApplicationController
     @measurement_categories = MeasurementCategory.all
   end
 
-  # GET /measurement_categories/1
-  # GET /measurement_categories/1.json
+  # GET /measurement_categories/1.pdf
   def show
+    if admin_signed_in?
+      respond_to do |format|
+        format.pdf do
+          # disposition: :inline namesto download ti odpre v browserju
+          pdf = MeasurementCategoryPdf.new(@measurement_category, view_context)
+          send_data pdf.render, filename:
+              "measurement_category_#{@measurement_category.created_at.strftime('%d/%m/%Y')}.pdf",
+                    type: "application/pdf"
+        end
+      end
+    end
   end
-
   # GET /measurement_categories/new
   def new
     @measurement_category = MeasurementCategory.new

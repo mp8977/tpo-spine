@@ -32,6 +32,41 @@
 }
 
 
+
+/*legenda*/
+.my-legend{ margin: 0 auto}
+
+.my-legend .legend-scale ul {
+
+    list-style: none;
+    max-width: 215px;
+    margin: 0 auto;
+}
+.my-legend .legend-scale ul li {
+    font-size: 80%;
+    list-style: none;
+    marging-bottom: 2px;
+    line-height: 18px;
+
+}
+#scheduler-scheduler > div.my-legend > div > ul > li{
+    margin-bottom: 3px;
+}
+
+.my-legend ul.legend-labels li span {
+    display: block;
+    float: left;
+    height: 18px;
+    width: 30px;
+    margin-right: 5px;
+
+    border: 1px solid #999;
+}
+
+#scheduler-scheduler > div.my-legend > div > ul > li{
+    cursor: pointer;
+}
+
 /*Urnik */
 #weekly-schedule{
     margin-left: 50px;
@@ -62,13 +97,17 @@
     text-align: right;
     position: relative;
     top: -12px;
+
 }
 #weekly-schedule > div > table > thead > tr > th{
     text-align: center;
 }
 
-.schedule-rows td[data-selected],
-.schedule-rows td[data-selecting] { background-color: #238923; }
+.schedule-rows td[data-selected=selected]{ background-color: #238923; }
+
+.schedule-rows td[data-selected=selected-taken] { background-color: #891d00; }
+
+.schedule-rows td[data-selected=selected-other] { background-color: #ffb600; }
 
 .schedule-rows td[data-disabled] { opacity: 0.55; }
 .schedule-table{

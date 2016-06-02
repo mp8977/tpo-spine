@@ -19,7 +19,7 @@
   <div>
     <table align="center">
       <tr>
-        <td align="right">Izbira prvega tedna:</td>
+        <td align="right">Izbira tedna:</td>
         <td align="left"><input type="text" id="weekpicker" required="required" name="newsdate"/>
         </td>
       </tr>
@@ -46,17 +46,22 @@
     </table>
     <br/>
   </div>
-  <button onclick="urejanjeUrnika1()" style="margin:0 auto;display:block;" class="btn btn-info">Urejanje urnika</button>
+
+  <div id="scheduler-scheduler">
+
+  </div>
+
+  <!--<button onclick="urejanjeUrnika1()" style="margin:0 auto;display:block;" class="btn btn-info">Urejanje urnika</button>-->
 </div>
 
 <script>
   var opombe=["","","","",""];
   var dnevi= ["ponedeljek:","torek:","sredo:","četrtek:","petek:","soboto:","nedeljo:"];
+  var elem = "";
   //lightbox
   function afterClose(){
     $('#lightbox').hide();
     $('html').css('overflow','scroll');
-    $("#chartdiv").remove();
   }
 
   //zapiranje lightboxa ko kliknemo izven njega
@@ -77,16 +82,20 @@
     $("#scheduler-popup > textarea").val(opombe[index]);
   }
 
-
+  //opomba potrditev
   function schedulerDetailsActionAccept(schedulerSelectedDay){
     $("#lightbox").hide();
     opombe[schedulerSelectedDay]=$("#scheduler-popup > textarea").val();
+    $("#schedulerNotes").val(opombe.toString());
+    $('html').css('overflow','scroll');
   }
 
+  //opomba izbris
   function schedulerDetailsActionDelete(schedulerSelectedDay){
     $("#lightbox").hide();
     opombe[schedulerSelectedDay]="";
-
+    $("#schedulerNotes").val(opombe.toString());
+    $('html').css('overflow','scroll');
   }
 
 
@@ -108,45 +117,72 @@
     $("#weekly-schedule > div > table > tbody > tr.scheduler-details").show();
   }
 
-
+  function selectOption(index){
+    $("#scheduler-scheduler > div.my-legend > div > ul > li").css("background-color","transparent")
+    if(index==1){
+      setSerlectedValue("selected");
+      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
+      $("td[data-selecting='selecting']").css("background-color","#238923");
+    }
+    else if(index==2){
+      setSerlectedValue("selected-taken");
+      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(2)").css("background-color","#5b9bd1")
+      $("td[data-selecting]").css("background-color","#891d00");
+    }
+    else {
+      setSerlectedValue("selected-other");
+      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(3)").css("background-color","#5b9bd1")
+      $("td[data-selecting]").css("background-color","#ffb600");
+    }
+  }
 
   function urejanjeUrnika1(){
-    if($("#weekpicker").val()==""){
-      $("#weekpicker").css("border-color", "red");
-      $("#scheduler-content > div:nth-child(1) > table > tbody > tr:nth-child(2)").show();
-      $("#neizpoljenDatum").html("Izberite datum!");
-    }
-    else{
       var interval=$("#interval-selector").val();
       var weekendStart=$("#weekpicker").val().slice(0,10);
       var numberOfWeeks=$("#number-of-weeks").val();
-      $("#scheduler-content").html('<div><br/><p>Določite proste termine za paciente</p><br/></div><div id="weekly-schedule"></div>');
-      $("#scheduler-content").append('<%= form_tag(:url => {:controller => "scheduler",action:"create"}, :method => "get") do  %>'
+      $(".my-legend").show();
+
+      //legenda
+      $("#scheduler-scheduler").html("<div class='my-legend'>"+
+                                        "<div class='legend-scale'>"+
+                                          "<ul class='legend-labels'>"+
+                                            "<li onClick='selectOption(1)'><span style='background:#238923;'></span>Prosti termini</li>"+
+                                            "<li onClick='selectOption(2)' ><span style='background:#891d00;'></span>Zasedeni termini</li>"+
+                                            "<li onClick='selectOption(3)' ><span style='background:#ffb600;'></span>Ostalo(malica,zamuda ...)</li>"+
+                                           "</ul>"+
+                                        "</div>"+
+                                      "</div>"+
+                                       "<br/>"+
+                                      "<br/>"+
+                                       "<br/><div id='weekly-schedule'></div>");
+
+    //forma
+      $("#scheduler-scheduler").append('<%= form_tag(:url => {:controller => "scheduler",action:"create"}, :method => "post") do  %>'
           +'<div class="actions"> <input id="schedulerInput" type="text" name="scheduler[hours]"/><br/>'
+          +'<input id="schedulerOther" type="text" name="scheduler[other]"/>'
           +'<input id="schedulerDate" type="text" name="scheduler[startDay]"/>'
-          +'<input id="schedulerWeeks" type="number" name="scheduler[weeks]"/>'
           +'<input id="schedulerDuration" type="number" name="scheduler[duration]"/>'
+          + '<input id="schedulerNotes" type="text" name="scheduler[notes]"/>'
           +'<%= submit_tag(value="Poslji",class:"btn btn-info",style:"left: 50%;position: relative",:onclick => "fillSchedulerInfo()" ) %>'
           +' </div> <%end%>');
 
+      //skrivanje obrazcov
       $("#schedulerInput").hide();
+      $("#schedulerOther").hide();
       $("#schedulerDate").hide();
       $("#schedulerWeeks").hide();
       $("#schedulerDuration").hide();
+      $("#schedulerNotes").hide();
       $("#schedulerDuration").val(interval);
-      $("#schedulerWeeks").val(numberOfWeeks);
       $("#schedulerDate").val(weekendStart);
       $("#weekly-schedule").dayScheduleSelector({
         interval :interval
       });
+
       //krčenje urnika
       $("#weekly-schedule > div > table > thead > tr > th:nth-child(1)").html('<input id="schedule-hide" type="image" height="24px" width="24px" onclick="schedulerAction()" title="Skrči urnik" src="/assets/shrink.png">');
 
 
-     var offset=-$("#scheduler-content > div:nth-child(1)").offset().left+$("#weekly-schedule > div > table").offset().left+$("#scheduler-content > div:nth-child(1) ").position().left;
-      $("#scheduler-content > div:nth-child(1)").css("position","relative");
-      $("#scheduler-content > div:nth-child(1)").css("left",offset+5+"px");
-      $("#scheduler-content > div:nth-child(1)").width("500");
 
       //opombe
       $(".schedule-table").append(
@@ -161,12 +197,18 @@
           '<td style="background-color: white"><input id="details-sun"  onClick="detailsScheduler(6)" style="margin-left:20px" type="image" height="24px" width="24px" src="/assets/write.png" title="Ned"> </td>' +
           '</tr>') ;
 
-    }
+    if(sel=="selected")
+      $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
+    else if(sel=="selected-taken")
+        $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(2)").css("background-color","#5b9bd1")
+    else
+        $("#scheduler-scheduler > div.my-legend > div > ul > li:nth-child(1)").css("background-color","#5b9bd1")
   }
 
 
-  function getHoursInDay(selector,day){
-    selectedHours=selector.find("[data-selected='selected']").filter("[data-day='"+day+"']");
+  //vse ure v dnevu za izbran data-selected==value
+  function getHoursInDay(selector,day,value){
+    selectedHours=selector.find("[data-selected='"+value+"']").filter("[data-day='"+day+"']");
     result=[]
     for(i=0;i<selectedHours.length;i++)
       result.push(selectedHours[i].getAttribute("data-time"));
@@ -174,15 +216,17 @@
     return result
   }
 
-  function getHoursInWeek(selector){
+  //vse ure v tednu za izbarn data-selected==value
+  function getHoursInWeek(selector,value){
     allHours=[]
     for(j=0;j<7;j++) {
       console.log(j);
-      allHours.push(getHoursInDay(selector, j))
+      allHours.push(getHoursInDay(selector, j,value))
     }
     return allHours;
   }
 
+  //formatiranje seznama
   function format2D(a) {
     var str="[";
     for (var i= 0; i<a.length; i++) {
@@ -193,15 +237,42 @@
     return str;
   }
 
+  //zapolnitev informacij o urah
   function fillSchedulerInfo(){
-    var cont=getHoursInWeek($("#weekly-schedule"));
+    var cont=getHoursInWeek($("#weekly-schedule"),"selected");
     $("#schedulerInput").val(format2D(cont));
+    cont=getHoursInWeek($("#weekly-schedule"),"selected-other");
+    $("#schedulerOther").val(format2D(cont));
+  }
+
+  //kopiranje urnika
+  var copyScheduler="";
+  var copyOpombe="";
+  function copyScheduler(){
+      copyScheduler=("#weekly-schedule").html();
+      copyOpombe=opombe;
+  }
+
+  //prilepanje urnika
+  function pasteScheduler(){
+      if(copyScheduler!=""){
+        opombe=copyOpombe;
+        ("#weekly-schedule").html(copyScheduler);
+      }
   }
 
   $(document).ready(function () {
     $("#scheduler-content > div:nth-child(1) > table > tbody > tr:nth-child(2)").hide();
     $("#lightbox").hide();
+    //$(".my-legend").hide();
 
+
+
+
+    $("#interval-selector").change(function(){
+      if($("#weekpicker").val()!="")
+        urejanjeUrnika1();
+    });
     var startDate,
         endDate,
         selectCurrentWeek = function () {
@@ -225,10 +296,49 @@
         endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - dayInWeek + 6);
         $('#weekpicker').val($.datepicker.formatDate(dateFormat, startDate, inst.settings) + ' - ' + $.datepicker.formatDate(dateFormat, endDate, inst.settings));
         selectCurrentWeek();
+        //prevod v slovenščino
+        ( function (factory) {
+          if (typeof define === "function" && define.amd) {
 
+            // AMD. Register as an anonymous module.
+            define(["../widgets/datepicker"], factory);
+          } else {
+
+            // Browser globals
+            factory(jQuery.datepicker);
+          }
+        }(function (datepicker) {
+
+          datepicker.regional.fr = {
+            closeText: "Zapri",
+            prevText: "&#x3C;Prejšnji",
+            nextText: "Naslednji&#x3E;",
+            currentText: "Trenutni",
+            monthNames: ["Januar", "Februar", "Marec", "April", "Maj", "Junij",
+              "Julij", "Avgust", "September", "Oktober", "November", "December"],
+            monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun",
+              "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
+            dayNames: ["Nedelja", "Ponedeljek", "Torek", "Sreda", "Četrtek", "Petek", "Sobota"],
+            dayNamesShort: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
+            dayNamesMin: ["Ne", "Po", "To", "Sr", "Če", "Pe", "So"],
+            weekHeader: "Teden",
+            dateFormat: "dd.mm.yy",
+            firstDay: 1,
+            isRTL: false,
+            showMonthAfterYear: false,
+            yearSuffix: ""
+          };
+          datepicker.setDefaults(datepicker.regional.fr);
+
+          return datepicker.regional.fr;
+
+        }) );
       },
       "beforeShow": function () {
         selectCurrentWeek();
+      },
+      "onShow":function(){
+        $('#ui-datepicker-div > table > tbody > tr').css("background-color","black");
       },
       "beforeShowDay": function (date) {
         var cssClass = '';
@@ -255,43 +365,20 @@
 
     });
 
-    //prevod v slovenščino
-    ( function (factory) {
-      if (typeof define === "function" && define.amd) {
 
-        // AMD. Register as an anonymous module.
-        define(["../widgets/datepicker"], factory);
-      } else {
+    $("#weekpicker").click(function(){
+      $('#ui-datepicker-div > table > tbody > tr').on('mousedown',function(){
+        $('#ui-datepicker-div > table > tbody > tr').on('mouseup',function(){
+            if(elem!=$("#weekpicker").val()|| elem==""){
+              urejanjeUrnika1();
+              opombe=["","","","",""];
+              elem= $("#weekpicker").val();
+            }
+        });
+      });
+    });
 
-        // Browser globals
-        factory(jQuery.datepicker);
-      }
-    }(function (datepicker) {
 
-      datepicker.regional.sl = {
-        closeText: "Zapri",
-        prevText: "&#x3C;Prejšnji",
-        nextText: "Naslednji&#x3E;",
-        currentText: "Trenutni",
-        monthNames: ["Januar", "Februar", "Marec", "April", "Maj", "Junij",
-          "Julij", "Avgust", "September", "Oktober", "November", "December"],
-        monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun",
-          "Jul", "Avg", "Sep", "Okt", "Nov", "Dec"],
-        dayNames: ["Nedelja", "Ponedeljek", "Torek", "Sreda", "Četrtek", "Petek", "Sobota"],
-        dayNamesShort: ["Ned", "Pon", "Tor", "Sre", "Čet", "Pet", "Sob"],
-        dayNamesMin: ["Ne", "Po", "To", "Sr", "Če", "Pe", "So"],
-        weekHeader: "Teden",
-        dateFormat: "dd.mm.yy",
-        firstDay: 1,
-        isRTL: false,
-        showMonthAfterYear: false,
-        yearSuffix: ""
-      };
-      datepicker.setDefaults(datepicker.regional.sl);
-
-      return datepicker.regional.sl;
-
-    }) );
 
     });
 

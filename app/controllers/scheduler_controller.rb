@@ -7,9 +7,8 @@ class SchedulerController < ApplicationController
     schedulerStartDate=params[:scheduler][:startDay]
     schedulerWeeks=params[:scheduler][:weeks]
     duration=params[:scheduler][:duration]
+    @notes=params[:scheduler][:notes].split(",")
 
-    puts(schedulerWeeks)
-    puts(duration)
 
     schedulerHours1D=schedulerHours[2..-3].split("],[")
     schedulerHours2D=[]
@@ -21,7 +20,7 @@ class SchedulerController < ApplicationController
     while i<7
       if  schedulerHours2D[i]!=nil
         schedulerHours2D[i].each do |el|
-          date=DateTime.strptime(schedulerStartDate, '%d.%m.%Y')+i
+          date=DateTime.strptime(schedulerStartDate, '%d/%m/%Y')+i
           date=date.change(hour:el[0..1].to_i,min:el[3..4].to_i)
           puts(current_doctor.id)
 

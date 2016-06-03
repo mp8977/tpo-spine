@@ -14,7 +14,7 @@ module CheckUpsHelper
     end
 
     ids=Array.new
-    fields = "<div class = 'form-box' data-no-turbolink>"
+    fields = "<div class = 'form-box'>"
     for i in 0..(st_elementov-1)
       new_object = f.object.send(association).klass.new
       id = new_object.object_id

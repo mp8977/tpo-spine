@@ -37,7 +37,7 @@ jQuery ->
       #console.log($(this).data('fields').closest("fieldset"))
       regexp=new RegExp(i, 'g')
       console.log(array)
-      y=y.replace(regexp,time)
+      y=y.replace(regexp, time + "" + Math.floor(Math.random() * 100000000))
     $(this).before(y)
     event.preventDefault()
 

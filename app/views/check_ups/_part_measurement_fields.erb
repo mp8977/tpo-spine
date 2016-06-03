@@ -1,8 +1,16 @@
 <!--toj je zdej za to povezavo k je measuremnt _docs povezan-->
 <fieldset>
-  <%=n%><%= f.hidden_field :name, :value => n %>
-  <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max} %>
-  <%=u%> <%= f.hidden_field :unit, :value => u %>
+  <div align="left">
+    <%=n%><%= f.hidden_field :name, :value => n %>
+  </div>
+
+  <div class ="form-inlay">
+    <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max, :class => 'form-control'} %>
+    <div>
+      <%=u%><%= f.hidden_field :unit, :value => u %>
+    </div>
+  </div>
+
 </fieldset>
 
 

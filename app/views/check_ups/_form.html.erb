@@ -11,61 +11,56 @@
         </div>
     <% end %>
 
-    <table align="center" width="100%">
-      <tr>
-        <td align="right">Datum:</td>
-        <td align="left"><%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
-                                           use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December) %></td>
-      </tr>
-      <tr>
-        <td align="right">Pacient:</td>
-        <td align="left"><%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: false},{:multiple => false}) %></td>
-      </tr>
+    <div class="form-box">
+        Datum:
+        <%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
+                                           use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December), :class => "form-control" %>
+        <div >
+          Pacient:
+          <%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: false},{:multiple => false, :class => "form-control"}) %>
+        </div >
+
       <%= f.hidden_field :doctor_id, :value => current_doctor.id %>
 
-      <tr>
-        <td align="right">Diete:</td>
-        <td align="left">
-          <div class="cloneable-unselected">
-            <%= f.collection_select(:diet_ids, Diet.all, :id, :name, {include_blank: true}, {:class => "check_up_diet_ids",:onchange => 'cloneDropdown(this);'})%>
+
+        Diete:
+
+          <div class="cloneable-unselected form-inlay">
+            <%= f.collection_select(:diet_ids, Diet.where(deleted: false).order(:name), :id, :name, {include_blank: true}, {:class => "check_up_diet_ids form-control",:onchange => 'cloneDropdown(this);'})%>
             <button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
           </div>
-        </td>
+
         <!--%= f.collection_check_boxes(:diet_ids, Diet.all, :id, :name) %-->
-      </tr>
 
-    </table>
+    </div>
 
-    <div align="center" id="kloni">
-      <div class="cloneable" hidden >
-        <table align="center">
-          <tr>
-            <td align="right">Bolezen ali alergija:</td>
-            <td align="left">
-              <div class="cloneable-unselected">
-                <%= f.collection_select(:illness_ids, Illness.order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids",:onchange => 'dirtyHack(this);'})%>
-                <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
-              </div>
-            </td>
-          </tr>
-          <tr>
 
-            <td align="right">Zdravila:</td>
-            <td align="left">
-              <div class="cloneable-unselected bolezni">
-                <%= f.grouped_collection_select(:medicine_ids, Illness.order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids",:onchange => 'cloneDropdown(this);'}) %>
-                <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
-      </div>
-            </td>
-          </tr>
-          </table>
-          <br>
-        <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+    <div id="kloni">
+      <div class="form-box cloneable" hidden >
+        Bolezen ali alergija:
+        <div class="cloneable-unselected">
+          <%= f.collection_select(:illness_ids, Illness.where(deleted: false).order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids form-control",:onchange => 'dirtyHack(this);'})%>
+          <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
+        </div>
+
+        <div>
+          Zdravila:
+          <div class="cloneable-unselected bolezni form-inlay">
+            <%= f.grouped_collection_select(:medicine_ids, Illness.where(deleted: false).order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids form-control",:onchange => 'cloneDropdown(this);'}) %>
+            <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
+          </div>
+        </div>
+        <br>
+        <div align="center">
+          <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode.parentNode);">Odstrani</button>
+        </div>
         <br>
         <br>
         <!--button class ="btn btn-secondary btn-xs" type="button" onclick="cloneDiv(this.parentNode.parentNode); this.classList.add('hide'); ">Dodaj bolezen</button-->
       </div>
-      <button class ="btn btn-info btn-xs" type="button" onclick="cloneDiv(this.parentNode); ">Dodaj bolezen in zdravila</button>
+      <div align="center">
+        <button class ="btn btn-info btn-sm long" type="button" onclick="cloneDiv(this.parentNode.parentNode); ">Dodaj bolezen in zdravila</button>
+      </div>
     </div>
 
 
@@ -73,31 +68,33 @@
     <br>
     <!--polja za measurement k jih zdej nerabmo-->
     <!--%= f.fields_for :measurements do |m| %-->
-        <!--button id="btn<!--%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<!--%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <!--%= @headers[m.index]%></button><br-->
-        <!--div id="<!--%=m.index %>" class="hide"-->
-          <!--h3 class="inline"><!--%= @headers[m.index]%></h3-->
-          <!--button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<!--%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button-->
-          <!--%= render 'measurement_fields', :f => m %-->
-        <!--/div-->
-        <!--br-->
+    <!--button id="btn<!--%=m.index %>" type="button" class="btn btn-secondary btn-xs long" onclick="document.getElementById('<!--%=m.index %>').classList.remove('hide'); this.classList.add('hide');">Dodaj meritev <!--%= @headers[m.index]%></button><br-->
+    <!--div id="<!--%=m.index %>" class="hide"-->
+    <!--h3 class="inline"><!--%= @headers[m.index]%></h3-->
+    <!--button type="button" class = "btn btn-danger btn-xs" onclick="document.getElementById('btn<!--%=m.index %>').classList.remove('hide'); this.parentNode.classList.add('hide')">Odstrani meritev</button-->
+    <!--%= render 'measurement_fields', :f => m %-->
+    <!--/div-->
+    <!--br-->
     <!--% end %-->
 
-
-    <% MeasurementCategory.where(deleted: false).each do |m| %>
-        <% if m.elements > 0 %>
-          <%= link_to_add_fields "Dodajanje #{m.name}", f, m.name, :measurement_docs %>
-          <br>
-          <br>
-        <% end %>
-    <% end %>
-
-    <div class="opombe">
-      <%= f.text_area :opombe %>
+    <div align =center>
+      <% MeasurementCategory.where(deleted: false).each do |m| %>
+          <% if m.elements > 0 %>
+              <%= link_to_add_fields "Dodajanje meritve #{m.name}", f, m.name, :measurement_docs %>
+              <br>
+              <br>
+          <% end %>
+      <% end %>
     </div>
+    <div class="form-box opombe">
+      Opombe:
+      <%= f.text_area :opombe, {:class => "form-control resizable-textarea", :rows =>  "3"} %>
+    </div>
+    <br>
 
 
 
-    <div class="actions">
+    <div class="actions" align="center">
       <%= f.submit class: "btn btn-info", value: "Poslji" %>
     </div>
 

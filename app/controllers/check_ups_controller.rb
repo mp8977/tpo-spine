@@ -108,19 +108,18 @@ class CheckUpsController < ApplicationController
     #medicine.uniq ne dela ce je nil class
 
     @check_up = CheckUp.new(check_up_params)
-    puts "stevec"
+
     dan=params[:check_up]["date(3i)"].to_i
     mesec=params[:check_up]["date(2i)"].to_i
     leto=params[:check_up]["date(1i)"].to_i
     ura=params[:check_up]["date(4i)"].to_i
     minuta=params[:check_up]["date(5i)"].to_i
-    puts ura
+
     daten =DateTime.new(leto,mesec,dan,ura,minuta)
-    puts daten
+
     @md=@check_up.measurement_docs
     @md.each do |m|
       m.part_measurement.measurement.date=daten
-      puts m.part_measurement.measurement.date
     end
 
 

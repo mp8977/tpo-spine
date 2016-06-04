@@ -278,7 +278,7 @@
     <% if doctor_signed_in?%>
         <% ind=0 %>
          <%patientNames.each do |patientName|%>
-            <%pacientNameList.push({"value":patientName,"url":"/dashing/dashboards?patientIndex="+ind.to_s})%>
+            <%pacientNameList.push({"value" => patientName,"url" => "/dashing/dashboards?patientIndex="+ind.to_s})%>
             <%ind+=1%>
         <%end%>
 

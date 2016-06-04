@@ -16,8 +16,8 @@ class CheckUpsController < ApplicationController
   def new
     @check_up = CheckUp.new
 
-    @md=@check_up.measurement_docs.build
-    @pm=@md.build_part_measurement
+    #@md=@check_up.measurement_docs.build
+    #@pm=@md.build_part_measurement
 
 
     #to je blo vse narjen za measurement
@@ -108,6 +108,21 @@ class CheckUpsController < ApplicationController
     #medicine.uniq ne dela ce je nil class
 
     @check_up = CheckUp.new(check_up_params)
+    puts "stevec"
+    dan=params[:check_up]["date(3i)"].to_i
+    mesec=params[:check_up]["date(2i)"].to_i
+    leto=params[:check_up]["date(1i)"].to_i
+    ura=params[:check_up]["date(4i)"].to_i
+    minuta=params[:check_up]["date(5i)"].to_i
+    puts ura
+    daten =DateTime.new(leto,mesec,dan,ura,minuta)
+    puts daten
+    @md=@check_up.measurement_docs
+    @md.each do |m|
+      m.part_measurement.measurement.date=daten
+      puts m.part_measurement.measurement.date
+    end
+
 
     respond_to do |format|
       if @check_up.save
@@ -164,7 +179,8 @@ class CheckUpsController < ApplicationController
   def check_up_params
     params.require(:check_up).permit(:date, :patient_id, :doctor_id, :opombe, :diet_ids => [],:illness_ids => [],:medicine_ids => [],
                                      measurement_docs_attributes: [:id,:name,
-                                                                              part_measurement_attributes: [:id,:unit, :name, :value]])
+                                                                              part_measurement_attributes: [:id,:unit, :name, :value,
+                                                                              measurement_attributes: [:id, :deleted]]])
 
   end
 end

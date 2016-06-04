@@ -1,14 +1,19 @@
 <!--toj je zdej za to povezavo k je measuremnt _docs povezan-->
 <fieldset>
-  <div align="left">
-    <%=n%><%= f.hidden_field :name, :value => n %>
-  </div>
-
-  <div class ="form-inlay">
-    <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max, :class => 'form-control'} %>
-    <div>
-      <%=u%><%= f.hidden_field :unit, :value => u %>
+  <div class="form-group">
+    <div align="left">
+      <%=n%><%= f.hidden_field :name, :value => n %>
     </div>
+
+    <div class ="form-inlay">
+      <%= f.text_field :value, {:placeholder => 'Vrednost', required: true, type: :number, step: 0.01, min: min, max: max, :class => 'form-control'} %>
+      <div>
+        <%=u%><%= f.hidden_field :unit, :value => u %>
+      </div>
+    </div>
+    <%= f.fields_for :measurement, (f.object.build_measurement) do |m| %>
+        <%= m.hidden_field :deleted, :value => false %>
+    <% end%>
   </div>
 
 </fieldset>

@@ -12,18 +12,20 @@
     <% end %>
 
     <div class="form-box">
-        Datum:
-        <%= f.date_select :date, include_blank: false, order: [:day, :month, :year], required: true,
-                                           use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December), :class => "form-control" %>
-        <div >
-          Pacient:
-          <%= f.collection_select(:patient_id, Patient.where(deleted: false).order(:lastName,:firstName), :id, :full_name ,{include_blank: false},{:multiple => false, :class => "form-control"}) %>
+      <div class="form-group">
+        Datum in ura
+        <%= f.datetime_select :date, {include_blank: false, order: [:day, :month, :year, :hour,:minute],
+                                           use_month_names: %w(Januar Februar Marec April Maj Junij Julij Avgust September Oktober November December)}, {required: true, class: ""} %>
+        </div>
+        <div class="form-group">
+          Pacient
+          <%= f.collection_select(:patient_id, current_doctor.patients, :id, :full_name ,{include_blank: true},{:required => true,:multiple => false, :class => "form-control"}) %>
         </div >
 
       <%= f.hidden_field :doctor_id, :value => current_doctor.id %>
 
 
-        Diete:
+        Diete
 
           <div class="cloneable-unselected form-inlay">
             <%= f.collection_select(:diet_ids, Diet.where(deleted: false).order(:name), :id, :name, {include_blank: true}, {:class => "check_up_diet_ids form-control",:onchange => 'cloneDropdown(this);'})%>
@@ -37,14 +39,14 @@
 
     <div id="kloni">
       <div class="form-box cloneable" hidden >
-        Bolezen ali alergija:
-        <div class="cloneable-unselected">
+        Bolezen ali alergija
+        <div class="form-group cloneable-unselected">
           <%= f.collection_select(:illness_ids, Illness.where(deleted: false).order(:name), :id, :name,{include_blank: true}, {:class => "check_up_illness_ids form-control",:onchange => 'dirtyHack(this);'})%>
           <!--button  class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button-->
         </div>
 
-        <div>
-          Zdravila:
+        <div >
+          Zdravila
           <div class="cloneable-unselected bolezni form-inlay">
             <%= f.grouped_collection_select(:medicine_ids, Illness.where(deleted: false).order(:name),:medicines,:name, :id, :name ,{include_blank: true},{:class => "check_up_medicine_ids form-control",:onchange => 'cloneDropdown(this);'}) %>
             <button class = "btn btn-danger btn-xs" onclick="removeElement(this.parentNode);">Odstrani</button>
@@ -87,7 +89,7 @@
       <% end %>
     </div>
     <div class="form-box opombe">
-      Opombe:
+      Opombe
       <%= f.text_area :opombe, {:class => "form-control resizable-textarea", :rows =>  "3"} %>
     </div>
     <br>

@@ -9,8 +9,7 @@ class CheckUp < ActiveRecord::Base
   has_and_belongs_to_many :medicines, join_table: :medicine_checks
   has_and_belongs_to_many :illnesses, join_table: :illness_checks
 
-  #has_many :prescriptions
-  #has_many :illnesses, through: :prescritions
+  
 
   accepts_nested_attributes_for :measurement_docs#, :allow_destroy => true, reject_if: proc { |a| a['part_measurement_id'].blank? }
 

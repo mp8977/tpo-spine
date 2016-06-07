@@ -16,6 +16,17 @@ function setSerlectedValue(newSelected){
         selecting='selecting3';
     }
 }
+
+
+function getEndOfWeek() {
+    date=new Date();
+    var result = new Date(date);
+    result.setDate(result.getDate() + 7-date.getDay());
+    result.setHours(23,59,59,999) ;
+
+    return result;
+}
+
 (function ($) {
 
   'use strict';
@@ -95,7 +106,7 @@ function setSerlectedValue(newSelected){
     return !!this.$selectingStart;
   }
 
-  //TODO ??
+
   DayScheduleSelector.prototype.select = function ($slot) { $slot.attr('data-selected', sel); }
   DayScheduleSelector.prototype.deselect = function ($slot) { $slot.removeAttr('data-selected'); }
 
@@ -118,49 +129,67 @@ function setSerlectedValue(newSelected){
   }
 
 
-    //TODO
+
   DayScheduleSelector.prototype.attachEvents = function () {
-    var plugin = this
-      , options = this.options
-      , $slots;
+     var dateSelected=$("#weekpicker").val().slice(0,10);
+     var d = new Date();
+     d.setDate(dateSelected.substring(0,2));
+     d.setMonth(dateSelected.substring(3,5)-1);//fuck you Date developers
+     d.setYear(dateSelected.substring(6,10));
+     if(d>getEndOfWeek()){
+      var plugin = this
+          , options = this.options
+          , $slots;
 
-    this.$el.on('click', '.time-slot', function () {
-      var day = $(this).data('day');
-      if (!plugin.isSelecting()) {  // if we are not in selecting mode
-        if (isSlotSelected($(this))) { plugin.deselect($(this)); }
-        else {  // then start selecting
-          plugin.$selectingStart = $(this);
-          $(this).attr('data-selecting', selecting);
-          //$(this).css("background-color",selectedColor);
-          plugin.$el.find('.time-slot').attr('data-disabled', 'disabled');
-          plugin.$el.find('.time-slot[data-day="' + day + '"]').removeAttr('data-disabled');
-        }
-      } else {  // if we are in selecting mode
-        if (day == plugin.$selectingStart.data('day')) {  // if clicking on the same day column
-          // then end of selection
-          plugin.$el.find('.time-slot[data-day="' + day + '"]').filter('[data-selecting]')
-            .attr('data-selected', sel).removeAttr('data-selecting');
-          plugin.$el.find('.time-slot').removeAttr('data-disabled');
-          plugin.$el.trigger(sel+'.artsy.dayScheduleSelector', [getSelection(plugin, plugin.$selectingStart, $(this))]);
-          plugin.$selectingStart = null;
-        }
-      }
-    });
+      this.$el.on('click', '.time-slot', function () {
 
-    this.$el.on('mouseover', '.time-slot', function () {
-      var $slots, day, start, end, temp;
-      if (plugin.isSelecting()) {  // if we are in selecting mode
-        day = plugin.$selectingStart.data('day');
-        $slots = plugin.$el.find('.time-slot[data-day="' + day + '"]');
-        $slots.filter('[data-selecting]').removeAttr('data-selecting');
-        start = $slots.index(plugin.$selectingStart);
-        end = $slots.index(this);
-        if (end < 0) return;  // not hovering on the same column
-        if (start > end) { temp = start; start = end; end = temp; }
-        $slots.slice(start, end + 1).attr('data-selecting', selecting);
-       // $slots.slice(start, end + 1).css("background-color",selectedColor);
-      }
-    });
+          var day = $(this).data('day');
+          if (!plugin.isSelecting()) {  // if we are not in selecting mode
+              if (isSlotSelected($(this))) {
+                  plugin.deselect($(this));
+              }
+              else {  // then start selecting
+                  plugin.$selectingStart = $(this);
+                  $(this).attr('data-selecting', selecting);
+                  //$(this).css("background-color",selectedColor);
+                  plugin.$el.find('.time-slot').attr('data-disabled', 'disabled');
+                  plugin.$el.find('.time-slot[data-day="' + day + '"]').removeAttr('data-disabled');
+              }
+          } else {  // if we are in selecting mode
+              if (day == plugin.$selectingStart.data('day')) {  // if clicking on the same day column
+                  // then end of selection
+                  plugin.$el.find('.time-slot[data-day="' + day + '"]').filter('[data-selecting]').html("");
+                  console.log(plugin.$el.find('.time-slot[data-day="' + day + '"]').filter('[data-selecting]'));
+                  plugin.$el.find('.time-slot[data-day="' + day + '"]').filter('[data-selecting]')
+                      .attr('data-selected', sel).removeAttr('data-selecting');
+
+
+                  plugin.$el.find('.time-slot').removeAttr('data-disabled');
+                  plugin.$el.trigger(sel + '.artsy.dayScheduleSelector', [getSelection(plugin, plugin.$selectingStart, $(this))]);
+                  plugin.$selectingStart = null;
+              }
+          }
+      });
+
+      this.$el.on('mouseover', '.time-slot', function () {
+          var $slots, day, start, end, temp;
+          if (plugin.isSelecting()) {  // if we are in selecting mode
+              day = plugin.$selectingStart.data('day');
+              $slots = plugin.$el.find('.time-slot[data-day="' + day + '"]');
+              $slots.filter('[data-selecting]').removeAttr('data-selecting');
+              start = $slots.index(plugin.$selectingStart);
+              end = $slots.index(this);
+              if (end < 0) return;  // not hovering on the same column
+              if (start > end) {
+                  temp = start;
+                  start = end;
+                  end = temp;
+              }
+              $slots.slice(start, end + 1).attr('data-selecting', selecting);
+              // $slots.slice(start, end + 1).css("background-color",selectedColor);
+          }
+      });
+    }
   };
 
   /**

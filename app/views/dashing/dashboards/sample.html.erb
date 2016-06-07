@@ -54,7 +54,7 @@
       allMeasurementsDoc=[]
       allPartMeasurementsIds=[]
       if checkUpIds.count>0
-        allMeasurementsDoc=MeasurementDoc.where(" check_up_id IN (?)", checkUpIds.join(","))
+        allMeasurementsDoc=MeasurementDoc.where(" check_up_id IN (?)", checkUpIds)
         if allMeasurementsDoc.count>0
           allMeasurementsDoc.each do |measurementDoc|
             allPartMeasurementsIds.push(measurementDoc.part_measurement_id)

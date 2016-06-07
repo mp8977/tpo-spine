@@ -11,9 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20160530142145) do
-
+ActiveRecord::Schema.define(version: 20160606165119) do
 
   create_table "addresses", force: :cascade do |t|
     t.string   "streetName",   limit: 255
@@ -50,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160530142145) do
     t.datetime "updated_at",                null: false
     t.text     "instruction", limit: 65535
     t.integer  "duration",    limit: 4
+    t.boolean  "isOther"
   end
 
   add_index "appointments", ["check_up_id"], name: "fk_rails_3d1ece398e", using: :btree
@@ -58,13 +57,12 @@ ActiveRecord::Schema.define(version: 20160530142145) do
 
   create_table "check_ups", force: :cascade do |t|
     t.date     "date"
-
     t.integer  "doctor_id",   limit: 4
     t.integer  "patient_id",  limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
     t.text     "instruction", limit: 65535
-
+    t.text     "opombe",      limit: 65535
   end
 
   add_index "check_ups", ["doctor_id"], name: "fk_rails_9948e4a45d", using: :btree

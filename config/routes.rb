@@ -12,7 +12,8 @@ Rails.application.routes.draw do
 
     get 'admins/sifranti'
 
-    # --> Must be ABOVE 'resources' !!!
+
+  # --> Must be ABOVE 'resources' !!!
     devise_for :users,
                controllers: { sessions: "users/sessions", registrations: "users/registrations",
                               confirmations: "users/confirmations", passwords: "users/passwords", unlocks: "users/unlocks"}
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
     resources :addresses
     resources :pick_doctor
     resources :scheduler
+    resources :scheduler_content
     #resource :appointment_details
 
     #resources :admins

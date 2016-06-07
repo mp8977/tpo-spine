@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 20160604194135) do
     t.integer  "patient_id",  limit: 4
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-    t.text     "opombe",      limit: 65535
     t.text     "instruction", limit: 65535
+    t.text     "opombe",      limit: 65535
   end
 
   add_index "check_ups", ["doctor_id"], name: "fk_rails_9948e4a45d", using: :btree

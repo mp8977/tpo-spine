@@ -9,7 +9,9 @@
         <option value="srce">Srce</option>
         <option value="temperatura">Telesna temperatura</option>
         <option value="teža">Teža</option>
-        <option value="holesterol">Holesterol</option>
+        <% if MeasurementCategory.where(name: 'Holesterol', deleted: false).any? %>
+          <option value="holesterol">Holesterol</option>
+        <% end %>
     </select>
     <br />
     <table id="measurement-table">

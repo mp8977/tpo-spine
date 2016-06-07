@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 admin = Admin.create! :email => 'plut.car@gmail.com', :password => 'bizjak12', :password_confirmation => 'bizjak12'
-zdravnik1=Doctor.create! :email => 'zdravnik1@gmail.com', :password => 'zdravnik1'
+
 
 post1 = Post.create! :postNumber => '1000', :postName => 'Ljubljana'
 post2 = Post.create! :postNumber => '4270', :postName => 'Jesenice'
@@ -31,6 +31,14 @@ address8 = Address.create! :streetName => 'Potrceva cesta', :streetNumber => '23
 address9 = Address.create! :streetName => 'Vodnikova cesta', :streetNumber => '1', :post_id => '9'
 address10 = Address.create! :streetName => 'Tovarniska cesta', :streetNumber => '3', :post_id => '10'
 
+
+#naslovi za paciente
+address11 = Address.create! :streetName => 'Cvetkova ulica', :streetNumber => '1', :post_id => '1'
+address12 = Address.create! :streetName => 'Cesta železarjev', :streetNumber => '8', :post_id => '2'
+address13 = Address.create! :streetName => 'Goričane', :streetNumber => '39', :post_id => '3'
+address14 = Address.create! :streetName => 'Premrlova ulica', :streetNumber => '1', :post_id => '4'
+address15 = Address.create! :streetName => 'Cankarjeva cesta', :streetNumber => '1', :post_id => '5'
+
 h1 = Hospital.create! :hospitalNumber => '05600', :hospitalName => 'ZD LJUBLJANA - VIČ - RUDNIK', :address_id => '1'
 h2 = Hospital.create! :hospitalNumber => '04201', :hospitalName => 'ZDRAVSTVENI DOM JESENICE', :address_id => '2'
 h3 = Hospital.create! :hospitalNumber => '50501', :hospitalName => 'ZD MEDVODE', :address_id => '3'
@@ -41,6 +49,82 @@ h7 = Hospital.create! :hospitalNumber => '06651', :hospitalName => 'ZD KOČEVJE'
 h8 = Hospital.create! :hospitalNumber => '07644', :hospitalName => 'BOLNIŠNICA PTUJ', :address_id => '8'
 h9 = Hospital.create! :hospitalNumber => '09502', :hospitalName => 'ZDRAVSTVENI DOM VELENJE', :address_id => '9'
 h10 = Hospital.create! :hospitalNumber => '00130', :hospitalName => 'ZDRAVSTVENI DOM AJDOVŠČINA', :address_id => '10'
+
+#zdravniki
+zdravnik1=Doctor.create! :email => 'marko.novak@gmail.com', :password => 'Markonovak1',:doctorNumber => '1234', :category => 'zdravnik',:lastName => 'Novak', :firstName => 'Marko', :phone => '031300300', :limitPatient => '3', :hospital_id => '1'
+zdravnik2=Doctor.create! :email => 'luka.krajnc@gmail.com', :password => 'Lukakrajnc1',:doctorNumber => '1235', :category => 'zdravnik',:lastName => 'Krajnc', :firstName => 'Luka', :phone => '031300301', :limitPatient => '1', :hospital_id => '2'
+zdravnik3=Doctor.create! :email => 'andrej.zupan@gmail.com', :password => 'Andrejzupan1',:doctorNumber => '1236', :category => 'zdravnik',:lastName => 'Zupan', :firstName => 'Andrej', :phone => '031300302', :limitPatient => '3', :hospital_id => '3'
+zdravnik4=Doctor.create! :email => 'janez.rozman@gmail.com', :password => 'Janezrozman1',:doctorNumber => '1237', :category => 'zdravnik',:lastName => 'Rozman', :firstName => 'Janez', :phone => '031300303', :limitPatient => '1', :hospital_id => '4'
+zdravnik5=Doctor.create! :email => 'matej.vidmar@gmail.com', :password => 'Matejvidmar1',:doctorNumber => '1238', :category => 'zdravnik',:lastName => 'Vidmar', :firstName => 'Matej', :phone => '031300304', :limitPatient => '3', :hospital_id => '5'
+zdravnik6=Doctor.create! :email => 'zdravnik1@gmail.com', :password => 'zdravnik1'
+zdravnik7=Doctor.create! :email => 'zdravnik2@gmail.com', :password => 'zdravnik2'
+zdravnik8=Doctor.create! :email => 'zdravnik3@gmail.com', :password => 'zdravnik3'
+zdravnik9=Doctor.create! :email => 'zdravnik4@gmail.com', :password => 'zdravnik4'
+zdravnik10=Doctor.create! :email => 'zdravnik5@gmail.com', :password => 'zdravnik5'
+
+#sestre
+nurse1=Nurse.create! :email => 'ana.horvat@gmail.com', :password => 'Anahorvat1',:nurseNumber => '1239', :lastName => 'Horvat', :firstName => 'Ana', :phone => '031300400', :hospital_id => '1'
+nurse2=Nurse.create! :email => 'mateja.zupanc@gmail.com', :password => 'Matejazupanc1',:nurseNumber => '1240', :lastName => 'Zupanc', :firstName => 'Mateja', :phone => '031300401', :hospital_id => '2'
+nurse3=Nurse.create! :email => 'rebeka.jereb@gmail.com', :password => 'Rebekajereb1',:nurseNumber => '1241', :lastName => 'Jereb', :firstName => 'Rebeka', :phone => '031300402', :hospital_id => '3'
+nurse4=Nurse.create! :email => 'maja.oblak@gmail.com', :password => 'Majaoblak1',:nurseNumber => '1242', :lastName => 'Oblak', :firstName => 'Maja', :phone => '031300403', :hospital_id => '4'
+nurse5=Nurse.create! :email => 'mojca.perko@gmail.com', :password => 'Mojcaperko1',:nurseNumber => '1243', :lastName => 'Perko', :firstName => 'Mojca', :phone => '031300404', :hospital_id => '5'
+nurse6=Nurse.create! :email => 'sestra1@gmail.com', :password => 'sestraa1'
+nurse7=Nurse.create! :email => 'sestra2@gmail.com', :password => 'sestraa2'
+nurse8=Nurse.create! :email => 'sestra3@gmail.com', :password => 'sestraa3'
+nurse9=Nurse.create! :email => 'sestra4@gmail.com', :password => 'sestraa4'
+nurse10=Nurse.create! :email => 'sestra5@gmail.com', :password => 'sestraa5'
+
+#uporabniki
+user1 = User.new(:email => "petra.furlan@gmail.com", :password => "Petrafurlan1", :password_confirmation => "Petrafurlan1")
+user2 = User.new(:email => "katja.vidic@gmail.com", :password => "Katjavidic1", :password_confirmation => "Katjavidic1")
+user3 = User.new(:email => "marjan.rupnik@gmail.com", :password => "Marjanrupnik1", :password_confirmation => "Marjanrupnik1")
+user4 = User.new(:email => "gregor.majcen@gmail.com", :password => "Gregormajcen1", :password_confirmation => "Gregormajcen1")
+user5 = User.new(:email => "rok.tomsic@gmail.com", :password => "Roktomsic1", :password_confirmation => "Roktomsic1")
+user6 = User.new(:email => "uporabnik1@gmail.com", :password => "uporabnik1", :password_confirmation => "uporabnik1")
+user7 = User.new(:email => "uporabnik2@gmail.com", :password => "uporabnik2", :password_confirmation => "uporabnik2")
+user8 = User.new(:email => "uporabnik3@gmail.com", :password => "uporabnik3", :password_confirmation => "uporabnik3")
+user9 = User.new(:email => "uporabnik4@gmail.com", :password => "uporabnik4", :password_confirmation => "uporabnik4")
+user10 = User.new(:email => "uporabnik5@gmail.com", :password => "uporabnik5", :password_confirmation => "uporabnik5")
+user1.skip_confirmation!
+user2.skip_confirmation!
+user3.skip_confirmation!
+user4.skip_confirmation!
+user5.skip_confirmation!
+user6.skip_confirmation!
+user7.skip_confirmation!
+user8.skip_confirmation!
+user9.skip_confirmation!
+user10.skip_confirmation!
+user1.save!
+user2.save!
+user3.save!
+user4.save!
+user5.save!
+user6.save!
+user7.save!
+user8.save!
+user9.save!
+user10.save!
+
+#pacienti
+pacient1=Patient.create! :cardNumber => '1000', :lastName => 'Furlan', :firstName => 'Petra', :phone => '041400400', :birthDate => '1970-02-04',:sex => 'ženski', :user_id => '1', :address_id => '11'
+pacient2=Patient.create! :cardNumber => '1001', :lastName => 'Vidic', :firstName => 'Katja', :phone => '041400401', :birthDate => '1961-03-05',:sex => 'ženski', :user_id => '2', :address_id => '12'
+pacient3=Patient.create! :cardNumber => '1002', :lastName => 'Rupnik', :firstName => 'Marjan', :phone => '041400402', :birthDate => '1972-04-06',:sex => 'moški', :user_id => '3', :address_id => '13'
+pacient4=Patient.create! :cardNumber => '1003', :lastName => 'Majcen', :firstName => 'Gregor', :phone => '041400403', :birthDate => '1973-05-07',:sex => 'moški', :user_id => '4', :address_id => '14'
+pacient5=Patient.create! :cardNumber => '1004', :lastName => 'Tomšič', :firstName => 'Rok', :phone => '041400404', :birthDate => '1954-06-08',:sex => 'moški', :user_id => '5', :address_id => '15'
+
+kontaktna1=ContactPerson.create! :lastName => 'Furlan', :firstName => 'Tomaž', :phone => '041400500', :relationship => 'mož', :patient_id => '1', :address_id => '11'
+kontaktna2=ContactPerson.create! :lastName => 'Vidic', :firstName => 'Nika', :phone => '041400501', :relationship => 'hči', :patient_id => '2', :address_id => '12'
+kontaktna3=ContactPerson.create! :lastName => 'Rupnik', :firstName => 'Tjaša', :phone => '041400502', :relationship => 'sestra', :patient_id => '3', :address_id => '13'
+kontaktna4=ContactPerson.create! :lastName => 'Majcen', :firstName => 'Polona', :phone => '041400503', :relationship => 'žena', :patient_id => '4', :address_id => '14'
+kontaktna5=ContactPerson.create! :lastName => 'Tomšič', :firstName => 'Nejc', :phone => '041400504', :relationship => 'sin', :patient_id => '5', :address_id => '15'
+
+dHasP1=DoctorHasPatient.create! :patient_id => '1', :doctor_id => '1'
+dHasP2=DoctorHasPatient.create! :patient_id => '2', :doctor_id => '1'
+dHasP3=DoctorHasPatient.create! :patient_id => '3', :doctor_id => '1'
+dHasP4=DoctorHasPatient.create! :patient_id => '4', :doctor_id => '2'
+dHasP5=DoctorHasPatient.create! :patient_id => '5', :doctor_id => '3'
+
 
 
 d1 = Diet.create! :name => 'Dieta pri celiakiji', :dietNumber => 'D001'
@@ -95,8 +179,8 @@ i22 = Illness.create! :name => 'Mieloična levkemija', :illnessNumber => 'C92', 
 i23 = Illness.create! :name => 'Zlom spodnjega dela koželjnice Bolečine', :illnessNumber => 'S52.5', :isAllergy => false, :deleted => true
 
 
-alergija1=Illness.create! :isAllergy => true, :illnessNumber =>'D69.0',:name => 'Alergijsi rinitis zaradi peloda'
-alergija2=Illness.create! :isAllergy => true, :illnessNumber =>'J30.1',:name =>'Pretežno alergijska astma'
+alergija1=Illness.create! :isAllergy => true, :illnessNumber =>'D69.0',:name => 'Alergijska purpura'
+alergija2=Illness.create! :isAllergy => true, :illnessNumber =>'J30.1',:name =>'Alergijsi rinitis zaradi peloda'
 alergija3=Illness.create! :isAllergy => true, :illnessNumber =>'J45.0', :name =>'Pretežno alergijska astma'
 alergija4=Illness.create! :isAllergy => true, :illnessNumber =>'K 52.2',:name =>'Alergijske in dietetični gastroenteritis in kolitis'
 alergija5=Illness.create! :isAllergy => true, :illnessNumber =>'L23',:name =>'Alergijski konatktni dermatitis'

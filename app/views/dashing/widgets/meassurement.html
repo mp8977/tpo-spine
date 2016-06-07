@@ -9,6 +9,7 @@
         <option value="srce">Srce</option>
         <option value="temperatura">Telesna temperatura</option>
         <option value="teža">Teža</option>
+        <option value="holesterol">Holesterol</option>
     </select>
     <br />
     <table id="measurement-table">
@@ -24,12 +25,14 @@
     var heart=$("#measurement").data("heart");
     var temperature=$("#measurement").data("temperature");
     var weight=$("#measurement").data("weight");
+    var holesterol=$("#measurement").data("holesterol");
     var content="";
     var limitMeasurement=8;
     var glucoseJson=[];
     var temperatureJson=[];
     var weightJson=[];
     var heartJson=heart;
+    var holesterolJson=holesterol;
 
     for(i=0;i<glucose.length;i++)
         glucoseJson.push({date:glucose[i]["date"],value:parseFloat(glucose[i]["glucose"])});
@@ -37,6 +40,7 @@
         weightJson.push({date:weight[i]["date"],value:weight[i]["weight"]});
     for(i=0;i<temperature.length;i++)
         temperatureJson.push({date:temperature[i]["date"],value:temperature[i]["temperature"]});
+
 
     function parseDate(a){
         return a.slice(12,16)+"-"+a.slice(9,11)+"-"+a.slice(6,8)+"T"+a.slice(0,5)+":00"
@@ -50,6 +54,7 @@
     weightJson=weightJson.sort(custom_sort);
     temperatureJson=temperatureJson.sort(custom_sort);
     heartJson=heartJson.sort(custom_sort);
+    holesterolJson=holesterolJson.sort(custom_sort);
 
 
     //sprememba izbira prikazane meritve na dashbordu
@@ -80,6 +85,12 @@
                     content+='<tr><td>'+weightJson[i]["date"].substring(6,16)+'</td><td>'+weightJson[i]["date"].substring(0,5)+'</td><td>'+weightJson[i]["value"]+'</td></tr>';
                 $("#measurement-table").html(content)
                 break;
+            case "holesterol":
+                content+='<tr><th>Datum</th><th>Čas</th><th>Skupni</th><th>LDL</th><th>HDL</th></tr>';
+                for(i=0;i<Math.min(limitMeasurement,holesterol.length);i++)
+                    content+='<tr><td>'+holesterolJson[i]["date"].substring(6,16)+'</td><td>'+holesterolJson[i]["date"].substring(0,5)+'</td><td>'+holesterolJson[i]["skupni"]+'</td><td>'+holesterolJson[i]["ldl"]+'</td><td>'+holesterolJson[i]["hdl"]+'</td></tr>';
+                $("#measurement-table").html(content)
+                break;
         }
 
     });
@@ -100,6 +111,7 @@
                     '<option value="srce">Srce</option>'+
                     '<option value="temperatura">Telesna temperatura</option>'+
                     '<option value="teža">Teža</option>'+
+                    '<option value="holesterol">Holesterol</option>'+
                 '</select> <br><br>' +
                 '<table id="measurement-table-extend">'+
                 '</table>'+
@@ -131,6 +143,12 @@
                     for(i=0;i<weight.length;i++)
                         content+='<tr><td>'+weightJson[i]["date"].substring(6,16)+'</td><td>'+weightJson[i]["date"].substring(0,5)+'</td><td>'+weightJson[i]["value"]+'</td></tr>';
                     $("#measurement-table-extend").html(content)
+                    break;
+                case "holesterol":
+                    content+='<tr><th>Datum</th><th>Čas</th><th>Skupni</th><th>LDL</th><th>HDL</th></tr>';
+                    for(i=0;i<Math.min(limitMeasurement,holesterol.length);i++)
+                        content+='<tr><td>'+holesterolJson[i]["date"].substring(6,16)+'</td><td>'+holesterolJson[i]["date"].substring(0,5)+'</td><td>'+holesterolJson[i]["skupni"]+'</td><td>'+holesterolJson[i]["ldl"]+'</td><td>'+holesterolJson[i]["hdl"]+'</td></tr>';
+                    $("#measurement-table").html(content)
                     break;
             }
 

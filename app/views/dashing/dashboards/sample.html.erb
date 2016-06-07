@@ -70,6 +70,7 @@
       measurementTemperature=[]
       measurementGlucose=[]
       measurementHeart=[]
+      measurementHolesterol=[]
 
       if allPartMeasurementsIds.count>0
         allPartMeasurementsIds.each do |allPartMeasurementsId|
@@ -79,43 +80,69 @@
         allPartMeasurements.each do |partMeasurement|
           name=partMeasurement.name
           puts "Imena"
-          puts name
+          puts '=' + name + '='
           date=Measurement.where("id=?",partMeasurement.measurement_id).first.date.strftime("%H:%M %d.%m.%Y")
           value=partMeasurement.value
-
           case name
-            when "Telesna teza"
-              measurementWeight.push({"weight"=>value, "date"=>date})
-            when "Glukoza"
-              measurementGlucose.push({"glucose"=>value, "date"=>date})
-            when "Telesna temperatura"
-              measurementTemperature.push({"temperature"=>value, "date"=>date})
+          when "Telesna teza"
+            measurementWeight.push({"weight"=>value, "date"=>date})
+          when "Glukoza"
+            measurementGlucose.push({"glucose"=>value, "date"=>date})
+          when "Telesna temperatura"
+            measurementTemperature.push({"temperature"=>value, "date"=>date})
+          when "Srcni utrip", "Diastolicni tlak", "Sistolicni tlak"
+            if name == "Diastolicni tlak"
+              name2 = "diastolic"
+            elsif name == "Sistolicni tlak"
+              name2 = "systolic"
             else
-              if name == "Diastolicni tlak"
-                name2 = "diastolic"
-              elsif name == "Sistolicni tlak"
-                name2 = "systolic"
+              name2 = "BPM"
+            end
+              if  measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}==nil
+                case name
+                  when "Diastolicni tlak"
+                     measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>value, "systolic"=>0, "BPM"=>0, "date"=>date})
+                  when "Sistolicni tlak"
+                     measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>0, "systolic"=>value, "BPM"=>0, "date"=>date})
+                  else
+                    measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>0, "systolic"=>0, "BPM"=>value, "date"=>date})
+                end
               else
-                name2 = "BPM"
+                case name
+                  when "Diastolicni tlak"
+                    measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["diastolic"]=value
+                  when "Sistolicni tlak"
+                    measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["systolic"]=value
+                  else
+                    measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["BPM"]=value
+                end
               end
-                if  measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}==nil
-               case name
-               when "Diastolicni tlak"
-                 measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>value, "systolic"=>0, "BPM"=>0, "date"=>date})
-               when "Sistolicni tlak"
-                 measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>0, "systolic"=>value, "BPM"=>0, "date"=>date})
-               else
-                 measurementHeart.push({"id"=>partMeasurement.measurement_id,"diastolic"=>0, "systolic"=>0, "BPM"=>value, "date"=>date})
-               end
-             else
-               case name
-               when "Diastolicni tlak"
-                 measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["diastolic"]=value
-               when "Sistolicni tlak"
-                 measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["systolic"]=value
-               else
-                 measurementHeart.find{|h1| h1["date"]==date and h1[name2]==0}["BPM"]=value
-               end
+          when "Skupni holesterol", "Holesterol LDL", "Holesterol HDL"
+            if name == "Skupni holesterol"
+              name2 = "skupni"
+            elsif name == "Holesterol LDL"
+              name2 = "ldl"
+            elsif name == "Holesterol HDL"
+              name2 = "hdl"
+            end
+            if  measurementHolesterol.find{|h1| h1["date"]==date and h1[name2]==0}==nil
+              case name
+                when "Skupni holesterol"
+                  measurementHolesterol.push({"id"=>partMeasurement.measurement_id,"skupni"=>value, "ldl"=>0, "hdl"=>0, "date"=>date})
+                when "Holesterol LDL"
+                  measurementHolesterol.push({"id"=>partMeasurement.measurement_id,"skupni"=>0, "ldl"=>value, "hdl"=>0, "date"=>date})
+                when "Holesterol HDL"
+                  measurementHolesterol.push({"id"=>partMeasurement.measurement_id,"skupni"=>0, "ldl"=>0, "hdl"=>value, "date"=>date})
+              end
+            else
+              case name
+                when "Skupni"
+                  measurementHolesterol.find{|h1| h1["date"]==date and h1[name2]==0}["skupni"]=value
+                when "Holesterol LDL"
+                  measurementHolesterol.find{|h1| h1["date"]==date and h1[name2]==0}["ldl"]=value
+                when "Holesterol HDL"
+                  measurementHolesterol.find{|h1| h1["date"]==date and h1[name2]==0}["hdl"]=value
+              end
             end
           end
         end
@@ -314,7 +341,7 @@
     </li>
     <% if allPartMeasurements!=nil and allPartMeasurements.count>0 %>
       <li id="measurement-li" data-row="1" data-col="1" data-sizex="2" data-sizey="2">
-        <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight="<%= measurementWeight.to_json%>"    data-temperature="<%= measurementTemperature.to_json%>"  data-glucose="<%= measurementGlucose.to_json%>"  data-heart="<%= measurementHeart.to_json%>"></div>
+        <div id="measurement"  data-view="Meassurement"  data-title="Meritve"  data-weight="<%= measurementWeight.to_json%>"    data-temperature="<%= measurementTemperature.to_json%>"  data-glucose="<%= measurementGlucose.to_json%>"  data-heart="<%= measurementHeart.to_json%>" data-holesterol="<%= measurementHolesterol.to_json%>"></div>
       </li>
     <%end%>
     <%if illnessN!=nil && illnessN.count>0%>

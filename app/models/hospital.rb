@@ -1,6 +1,6 @@
 class Hospital < ActiveRecord::Base
   #validates :hospitalName,presence: true,uniqueness: true
-  validates :hospitalNumber, uniqueness: true
+  validates :hospitalNumber, uniqueness: true, allow_nil: true
 
   belongs_to :address
   has_many :doctors

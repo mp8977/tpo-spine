@@ -49,7 +49,7 @@
   </div>
 
   <div id="appointment-illness">
-    <%if @illnessNames!=nil%>
+    <%if @illnessNames!=nil and @illnessNames.count>0%>
       <p class="appointment-subtitles">Bolezni:</p>
       <ul style="list-style-type:none">
       <% @illnessNames.each do |illnessName|%>
@@ -61,7 +61,7 @@
 
   </div>
   <div id="appointment-allergy">
-    <%if @allergyNames!=nil%>
+    <%if @allergyNames!=nil and @allergyNames.count>0%>
         <p class="appointment-subtitles">Alergije:</p>
         <ul style="list-style-type:none">
           <% @allergyNames.each do |allergyName|%>
@@ -74,7 +74,7 @@
 
 
   <div id="appointment-medicine">
-    <%if @medicineNames!=nil%>
+    <%if @medicineNames!=nil and @medicineNames.count>0 %>
         <p class="appointment-subtitles">Zdravila:</p>
         <ul style="list-style-type:none">
           <% i=0%>
@@ -88,23 +88,29 @@
   </div>
 
  <div id="appointment-measurement">
-  <% if @partMeasurementAll!=nil %>
+  <% if @partMeasurementAll!=nil and @partMeasurementAll.count>0%>
     <p class="appointment-subtitles">Meritve:</p>
     <ul style="list-style-type:none">
     <%@partMeasurementAll.each do |partMeasurement|%>
         <%case partMeasurement[0]%>
-           <%when "weight"%>
-              <li>Teža: <%=partMeasurement[1]%> kg<li>
-           <%when "glucose"%>
-              <li>Glukoza: <%=partMeasurement[1]%> mmol/l<li>
-           <%when "diastolic"%>
-              <li>Diastolični tlak: <%=partMeasurement[1]%> mmHg<li>
-           <%when "systolic"%>
-              <li>Siastolični tlak: <%=partMeasurement[1]%> mmHg<li>
-           <%when "HB"%>
-              <li>Srčni utrip: <%=partMeasurement[1].to_i%> BPM<li>
-           <%when "temperature"%>
-              <li>Temperatura: <%=partMeasurement[1]%> °C<li>
+           <%when "Telesna teza"%>
+              <li>Telesna teža: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Glukoza"%>
+              <li>Glukoza: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Diastolicni tlak"%>
+              <li>Diastolični tlak: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Sistolicni tlak"%>
+              <li>Siastolični tlak: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Srcni utrip"%>
+              <li>Srčni utrip: <%=partMeasurement[1].to_i%> <%=partMeasurement[2]%><li>
+           <%when "Telesna temperatura"%>
+              <li>Telesna temperatura: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Skupni holesterol"%>
+              <li>Skupni holesterol: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Holesterol LDL"%>
+              <li>Holesterol LDL: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
+           <%when "Holesterol HDL"%>
+              <li>Holesterol HDL: <%=partMeasurement[1]%> <%=partMeasurement[2]%><li>
         <%end%>
     <%end%>
     </ul>

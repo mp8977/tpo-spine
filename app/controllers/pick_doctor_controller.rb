@@ -5,16 +5,20 @@ class PickDoctorController < ApplicationController
       @patientsPD =Patient.where("user_id=? AND deleted='false'",current_user.id)
       listOfDoctorIds=[]
       Patient.where("user_id=? AND deleted='false'",current_user.id).each do |pat|
-        tmp=[0,0]
+        tmp=[0,0,"",""]
+
         DoctorHasPatient.where("patient_id=?",pat.id).each do |docPat|
           d=Doctor.where("id=? AND deleted='false'",docPat.doctor_id).first
           if d.category=='zdravnik'
             tmp[0]=d.id
+            tmp[2]=d.firstName+" "+d.lastName
           elsif d.category=="zobozdravnik"
             tmp[1]=d.id
+            tmp[3]=d.firstName+" "+d.lastName
           end
         end
         listOfDoctorIds.push(tmp)
+
       end
     end
 
@@ -77,6 +81,9 @@ class PickDoctorController < ApplicationController
         @docMsg="Zdravnik "+Doctor.find(docId).firstName+" "+Doctor.find(docId).lastName+" ne sprejema novih pacientov."
       end
     end
+    if DoctorHasPatient.where("patient_id=? AND doctor_id=?",patId,docId).count>0
+      @docMsg="Zdravnik "+Doctor.find(docId).firstName+" "+Doctor.find(docId).lastName+" je vaš trenuten zdravnik."
+    end
 
     if denId != nil
       denPatientFree=Doctor.find(denId).limitPatient-DoctorHasPatient.where("doctor_id=?",denId).count
@@ -89,6 +96,9 @@ class PickDoctorController < ApplicationController
       elsif denPatientFree<1
         @denMsg="Zobozdravnik "+Doctor.find(denId).firstName+" "+Doctor.find(denId).lastName+" ne sprejema novih pacientov."
       end
+    end
+    if DoctorHasPatient.where("patient_id=? AND doctor_id=?",patId,denId).count>0
+      @denMsg="Zobozdravnik "+Doctor.find(denId).firstName+" "+Doctor.find(denId).lastName+" je vaš trenuten zobozdravnik."
     end
   end
 

@@ -26,9 +26,11 @@
         <td align="right">Zobozdravnik:</td>
         <td align="left">
           <select id="dentist-select-pd" name="pick[dentist]">
+            <%haveDentist=false%>
             <%@dentistPD.each do |dentist| %>
                 <option  value="<%=dentist.id %>"><%=dentist.firstName+" "+dentist.lastName%></option>
             <%end%>
+
           </select>
         </td>
       </tr>
@@ -41,15 +43,85 @@
 <% end %>
 
 
-
 <script>
-  seznamIzbranihZdravnikov=<%=@listOfDoctorIDsPD%>
-  $("#doctor-select-pd").val(seznamIzbranihZdravnikov[0][0])
-  $("#dentist-select-pd").val(seznamIzbranihZdravnikov[0][1])
+
+  $("#pacient-select-pd").change(function() {
+    indexSelectePatient = $("#pacient-select-pd").prop('selectedIndex');
+
+  });
+  seznamIzbranihZdravnikov=[];
+  <%i=0%>
+  <%@listOfDoctorIDsPD.each do |el|%>
+    seznamIzbranihZdravnikov[<%=i%>]=[<%=el[0]%>,<%=el[1]%>,"<%=el[2]%>","<%=el[3]%>"];
+  <%
+    i=i+1
+  end
+  %>
+  var removeDoctor=false;
+  var removeDentist=false;
+  var pastIndex=0;
+  if ($("#doctor-select-pd option[value='"+seznamIzbranihZdravnikov[0][0]+"']").length > 0)
+    $("#doctor-select-pd").val(seznamIzbranihZdravnikov[0][0]);
+  else{
+    $("#doctor-select-pd").append($('<option>', {
+      value: seznamIzbranihZdravnikov[0][0],
+      text: seznamIzbranihZdravnikov[0][2]
+    }));
+    removeDoctor=true;
+    $("#doctor-select-pd").val(seznamIzbranihZdravnikov[0][0]);
+  }
+
+
+  if ($("#dentist-select-pd option[value='"+seznamIzbranihZdravnikov[0][1]+"']").length > 0)
+    $("#dentist-select-pd").val(seznamIzbranihZdravnikov[0][1]);
+  else{
+
+    $("#dentist-select-pd").append($('<option>', {
+      value: seznamIzbranihZdravnikov[0][1],
+      text: seznamIzbranihZdravnikov[0][3]
+    }));
+    removeDentist=true;
+    $("#dentist-select-pd").val(seznamIzbranihZdravnikov[0][1]);
+  }
+
+
+
+
   $("#pacient-select-pd").change(function(){
-    indexSelectePatient=$("#pacient-select-pd").prop('selectedIndex')
-    $("#doctor-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][0])
-    $("#dentist-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][1])
+    indexSelectePatient=$("#pacient-select-pd").prop('selectedIndex');
+
+    if(removeDoctor)
+      $("#doctor-select-pd option[value='"+seznamIzbranihZdravnikov[pastIndex][0]+"']").remove();
+    if(removeDentist)
+      $("#dentist-select-pd option[value='"+seznamIzbranihZdravnikov[pastIndex][1]+"']").remove();
+
+    pastIndex=indexSelectePatient;
+    if ($("#doctor-select-pd option[value='"+seznamIzbranihZdravnikov[indexSelectePatient][0]+"']").length > 0) {
+      $("#doctor-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][0]);
+      removeDoctor=false;
+    }
+    else{
+      $("#doctor-select-pd").append($('<option>', {
+        value: seznamIzbranihZdravnikov[indexSelectePatient][0],
+        text: seznamIzbranihZdravnikov[indexSelectePatient][2]
+      }));
+      removeDoctor=true;
+      $("#doctor-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][0]);
+    }
+
+    if ($("#dentist-select-pd option[value='"+seznamIzbranihZdravnikov[indexSelectePatient][1]+"']").length > 0) {
+      $("#dentist-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][1]);
+      removeDentist=false;
+    }
+    else{
+
+      $("#dentist-select-pd").append($('<option>', {
+        value: seznamIzbranihZdravnikov[indexSelectePatient][1],
+        text: seznamIzbranihZdravnikov[indexSelectePatient][3]
+      }));
+      $("#dentist-select-pd").val(seznamIzbranihZdravnikov[indexSelectePatient][1]);
+      removeDentist=true;
+    }
   });
 
 </script>

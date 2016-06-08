@@ -147,11 +147,11 @@
                     $("#measurement-table-extend").html(content)
                     break;
                 case "holesterol":
-                    content+='<tr><th>Datum</th><th>Čas</th><th>Skupni</th><th>LDL</th><th>HDL</th></tr>';
-                    for(i=0;i<Math.min(limitMeasurement,holesterol.length);i++)
-                        content+='<tr><td>'+holesterolJson[i]["date"].substring(6,16)+'</td><td>'+holesterolJson[i]["date"].substring(0,5)+'</td><td>'+holesterolJson[i]["skupni"]+'</td><td>'+holesterolJson[i]["ldl"]+'</td><td>'+holesterolJson[i]["hdl"]+'</td></tr>';
-                    $("#measurement-table").html(content)
-                    break;
+                  content+='<tr><th>Datum</th><th>Čas</th><th>Skupni</th><th>LDL</th><th>HDL</th></tr>';
+                  for(i=0;i<Math.min(limitMeasurement,holesterol.length);i++)
+                    content+='<tr><td>'+holesterolJson[i]["date"].substring(6,16)+'</td><td>'+holesterolJson[i]["date"].substring(0,5)+'</td><td>'+holesterolJson[i]["skupni"]+'</td><td>'+holesterolJson[i]["ldl"]+'</td><td>'+holesterolJson[i]["hdl"]+'</td></tr>';
+                  $("#measurement-table").html(content)
+                  break;
             }
 
             if($('#measurement-select-extend').find(":selected").val()!="")

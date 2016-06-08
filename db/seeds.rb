@@ -51,40 +51,40 @@ h9 = Hospital.create! :hospitalNumber => '09502', :hospitalName => 'ZDRAVSTVENI 
 h10 = Hospital.create! :hospitalNumber => '00130', :hospitalName => 'ZDRAVSTVENI DOM AJDOVŠČINA', :address_id => '10'
 
 #zdravniki
-zdravnik1=Doctor.create! :email => 'marko.novak@gmail.com', :password => 'Markonovak1',:doctorNumber => '1234', :category => 'zdravnik',:lastName => 'Novak', :firstName => 'Marko', :phone => '031300300', :limitPatient => '3', :hospital_id => '1'
-zdravnik2=Doctor.create! :email => 'luka.krajnc@gmail.com', :password => 'Lukakrajnc1',:doctorNumber => '1235', :category => 'zdravnik',:lastName => 'Krajnc', :firstName => 'Luka', :phone => '031300301', :limitPatient => '1', :hospital_id => '2'
-zdravnik3=Doctor.create! :email => 'andrej.zupan@gmail.com', :password => 'Andrejzupan1',:doctorNumber => '1236', :category => 'zdravnik',:lastName => 'Zupan', :firstName => 'Andrej', :phone => '031300302', :limitPatient => '3', :hospital_id => '3'
-zdravnik4=Doctor.create! :email => 'janez.rozman@gmail.com', :password => 'Janezrozman1',:doctorNumber => '1237', :category => 'zdravnik',:lastName => 'Rozman', :firstName => 'Janez', :phone => '031300303', :limitPatient => '1', :hospital_id => '4'
-zdravnik5=Doctor.create! :email => 'matej.vidmar@gmail.com', :password => 'Matejvidmar1',:doctorNumber => '1238', :category => 'zdravnik',:lastName => 'Vidmar', :firstName => 'Matej', :phone => '031300304', :limitPatient => '3', :hospital_id => '5'
-zdravnik6=Doctor.create! :email => 'zdravnik1@gmail.com', :password => 'zdravnik1'
-zdravnik7=Doctor.create! :email => 'zdravnik2@gmail.com', :password => 'zdravnik2'
-zdravnik8=Doctor.create! :email => 'zdravnik3@gmail.com', :password => 'zdravnik3'
-zdravnik9=Doctor.create! :email => 'zdravnik4@gmail.com', :password => 'zdravnik4'
-zdravnik10=Doctor.create! :email => 'zdravnik5@gmail.com', :password => 'zdravnik5'
+zdravnik1=Doctor.create! :email => 'marko.novak@gmail.com', :password => 'geslo123',:doctorNumber => '1234', :category => 'zdravnik',:lastName => 'Novak', :firstName => 'Marko', :phone => '031300300', :limitPatient => '3', :hospital_id => '1'
+zdravnik2=Doctor.create! :email => 'luka.krajnc@gmail.com', :password => 'geslo123',:doctorNumber => '1235', :category => 'zdravnik',:lastName => 'Krajnc', :firstName => 'Luka', :phone => '031300301', :limitPatient => '1', :hospital_id => '2'
+zdravnik3=Doctor.create! :email => 'andrej.zupan@gmail.com', :password => 'geslo123',:doctorNumber => '1236', :category => 'zdravnik',:lastName => 'Zupan', :firstName => 'Andrej', :phone => '031300302', :limitPatient => '3', :hospital_id => '3'
+zdravnik4=Doctor.create! :email => 'janez.rozman@gmail.com', :password => 'geslo123',:doctorNumber => '1237', :category => 'zdravnik',:lastName => 'Rozman', :firstName => 'Janez', :phone => '031300303', :limitPatient => '1', :hospital_id => '4'
+zdravnik5=Doctor.create! :email => 'matej.vidmar@gmail.com', :password => 'geslo123',:doctorNumber => '1238', :category => 'zdravnik',:lastName => 'Vidmar', :firstName => 'Matej', :phone => '031300304', :limitPatient => '3', :hospital_id => '5'
+zdravnik6=Doctor.create! :email => 'jure.plestenjak@gmail.com', :password => 'geslo123'
+zdravnik7=Doctor.create! :email => 'matej.panjan@gmail.com', :password => 'geslo123'
+zdravnik8=Doctor.create! :email => 'filip.kosmac@gmail.com', :password => 'geslo123'
+zdravnik9=Doctor.create! :email => 'luka.smukec@gmail.com', :password => 'geslo123'
+zdravnik10=Doctor.create! :email => 'toni.gergera@gmail.com', :password => 'geslo123'
 
 #sestre
-nurse1=Nurse.create! :email => 'ana.horvat@gmail.com', :password => 'Anahorvat1',:nurseNumber => '1239', :lastName => 'Horvat', :firstName => 'Ana', :phone => '031300400', :hospital_id => '1'
-nurse2=Nurse.create! :email => 'mateja.zupanc@gmail.com', :password => 'Matejazupanc1',:nurseNumber => '1240', :lastName => 'Zupanc', :firstName => 'Mateja', :phone => '031300401', :hospital_id => '2'
-nurse3=Nurse.create! :email => 'rebeka.jereb@gmail.com', :password => 'Rebekajereb1',:nurseNumber => '1241', :lastName => 'Jereb', :firstName => 'Rebeka', :phone => '031300402', :hospital_id => '3'
-nurse4=Nurse.create! :email => 'maja.oblak@gmail.com', :password => 'Majaoblak1',:nurseNumber => '1242', :lastName => 'Oblak', :firstName => 'Maja', :phone => '031300403', :hospital_id => '4'
-nurse5=Nurse.create! :email => 'mojca.perko@gmail.com', :password => 'Mojcaperko1',:nurseNumber => '1243', :lastName => 'Perko', :firstName => 'Mojca', :phone => '031300404', :hospital_id => '5'
-nurse6=Nurse.create! :email => 'sestra1@gmail.com', :password => 'sestraa1'
-nurse7=Nurse.create! :email => 'sestra2@gmail.com', :password => 'sestraa2'
-nurse8=Nurse.create! :email => 'sestra3@gmail.com', :password => 'sestraa3'
-nurse9=Nurse.create! :email => 'sestra4@gmail.com', :password => 'sestraa4'
-nurse10=Nurse.create! :email => 'sestra5@gmail.com', :password => 'sestraa5'
+nurse1=Nurse.create! :email => 'ana.horvat@gmail.com', :password => 'geslo123',:nurseNumber => '1239', :lastName => 'Horvat', :firstName => 'Ana', :phone => '031300400', :hospital_id => '1'
+nurse2=Nurse.create! :email => 'mateja.zupanc@gmail.com', :password => 'geslo123',:nurseNumber => '1240', :lastName => 'Zupanc', :firstName => 'Mateja', :phone => '031300401', :hospital_id => '2'
+nurse3=Nurse.create! :email => 'rebeka.jereb@gmail.com', :password => 'geslo123',:nurseNumber => '1241', :lastName => 'Jereb', :firstName => 'Rebeka', :phone => '031300402', :hospital_id => '3'
+nurse4=Nurse.create! :email => 'maja.oblak@gmail.com', :password => 'geslo123',:nurseNumber => '1242', :lastName => 'Oblak', :firstName => 'Maja', :phone => '031300403', :hospital_id => '4'
+nurse5=Nurse.create! :email => 'mojca.perko@gmail.com', :password => 'geslo123',:nurseNumber => '1243', :lastName => 'Perko', :firstName => 'Mojca', :phone => '031300404', :hospital_id => '5'
+nurse6=Nurse.create! :email => 'marko.starec@gmail.com', :password => 'geslo123'
+nurse7=Nurse.create! :email => 'anja.senja@gmail.com', :password => 'geslo123'
+nurse8=Nurse.create! :email => 'vanja.mraz@gmail.com', :password => 'geslo123'
+nurse9=Nurse.create! :email => 'sanja.vidmar@gmail.com', :password => 'geslo123'
+nurse10=Nurse.create! :email => 'marina.peresnik@gmail.com', :password => 'geslo123'
 
 #uporabniki
-user1 = User.new(:email => "petra.furlan@gmail.com", :password => "Petrafurlan1", :password_confirmation => "Petrafurlan1")
-user2 = User.new(:email => "katja.vidic@gmail.com", :password => "Katjavidic1", :password_confirmation => "Katjavidic1")
-user3 = User.new(:email => "marjan.rupnik@gmail.com", :password => "Marjanrupnik1", :password_confirmation => "Marjanrupnik1")
-user4 = User.new(:email => "gregor.majcen@gmail.com", :password => "Gregormajcen1", :password_confirmation => "Gregormajcen1")
-user5 = User.new(:email => "rok.tomsic@gmail.com", :password => "Roktomsic1", :password_confirmation => "Roktomsic1")
-user6 = User.new(:email => "uporabnik1@gmail.com", :password => "uporabnik1", :password_confirmation => "uporabnik1")
-user7 = User.new(:email => "uporabnik2@gmail.com", :password => "uporabnik2", :password_confirmation => "uporabnik2")
-user8 = User.new(:email => "uporabnik3@gmail.com", :password => "uporabnik3", :password_confirmation => "uporabnik3")
-user9 = User.new(:email => "uporabnik4@gmail.com", :password => "uporabnik4", :password_confirmation => "uporabnik4")
-user10 = User.new(:email => "uporabnik5@gmail.com", :password => "uporabnik5", :password_confirmation => "uporabnik5")
+user1 = User.new(:email => "petra.furlan@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user2 = User.new(:email => "katja.vidic@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user3 = User.new(:email => "marjan.rupnik@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user4 = User.new(:email => "gregor.majcen@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user5 = User.new(:email => "rok.tomsic@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user6 = User.new(:email => "sanja.ogenj@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user7 = User.new(:email => "lea.smrekar@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user8 = User.new(:email => "matic.bizjak@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user9 = User.new(:email => "denis.skala@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
+user10 = User.new(:email => "gregor.podlogar@gmail.com", :password => "geslo123", :password_confirmation => "geslo123")
 user1.skip_confirmation!
 user2.skip_confirmation!
 user3.skip_confirmation!

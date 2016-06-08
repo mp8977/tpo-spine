@@ -1,0 +1,2 @@
+module SchedulerContentHelper
+end

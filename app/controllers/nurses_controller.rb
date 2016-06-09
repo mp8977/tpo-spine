@@ -46,7 +46,7 @@ class NursesController < ApplicationController
         if admin_signed_in?
           format.html { redirect_to controller: "admins", action: "sifranti"}
         else
-          format.html { redirect_to controller: "nurses", action: "edit", id: nurse.id}
+          format.html { redirect_to controller: "nurses", action: "edit", id: @nurse.id}
         end
         format.json { render :show, status: :ok, location: @nurse }
       else

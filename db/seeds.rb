@@ -51,13 +51,13 @@ h9 = Hospital.create! :hospitalNumber => '09502', :hospitalName => 'ZDRAVSTVENI 
 h10 = Hospital.create! :hospitalNumber => '00130', :hospitalName => 'ZDRAVSTVENI DOM AJDOVŠČINA', :address_id => '10'
 
 #zdravniki
-zdravnik1=Doctor.create! :email => 'marko.novak@gmail.com', :password => 'geslo123',:doctorNumber => '1234', :category => 'zdravnik',:lastName => 'Novak', :firstName => 'Marko', :phone => '031300300', :limitPatient => '3', :hospital_id => '1'
+zdravnik1=Doctor.create! :email => 'marko.novak@gmail.com', :password => 'geslo123',:doctorNumber => '1234', :category => 'zdravnik',:lastName => 'Novak', :firstName => 'Marko', :phone => '031300300', :limitPatient => '4', :hospital_id => '1'
 zdravnik2=Doctor.create! :email => 'luka.krajnc@gmail.com', :password => 'geslo123',:doctorNumber => '1235', :category => 'zdravnik',:lastName => 'Krajnc', :firstName => 'Luka', :phone => '031300301', :limitPatient => '1', :hospital_id => '2'
 zdravnik3=Doctor.create! :email => 'andrej.zupan@gmail.com', :password => 'geslo123',:doctorNumber => '1236', :category => 'zdravnik',:lastName => 'Zupan', :firstName => 'Andrej', :phone => '031300302', :limitPatient => '3', :hospital_id => '3'
 zdravnik4=Doctor.create! :email => 'janez.rozman@gmail.com', :password => 'geslo123',:doctorNumber => '1237', :category => 'zdravnik',:lastName => 'Rozman', :firstName => 'Janez', :phone => '031300303', :limitPatient => '1', :hospital_id => '4'
 zdravnik5=Doctor.create! :email => 'matej.vidmar@gmail.com', :password => 'geslo123',:doctorNumber => '1238', :category => 'zdravnik',:lastName => 'Vidmar', :firstName => 'Matej', :phone => '031300304', :limitPatient => '3', :hospital_id => '5'
-zdravnik6=Doctor.create! :email => 'jure.plestenjak@gmail.com', :password => 'geslo123'
-zdravnik7=Doctor.create! :email => 'matej.panjan@gmail.com', :password => 'geslo123'
+zdravnik6=Doctor.create! :email => 'jure.plestenjak@gmail.com', :password => 'geslo123',:doctorNumber => '1239', :category => 'zobozdravnik',:lastName => 'Vidmaric', :firstName => 'Matejko', :phone => '031300305', :limitPatient => '10', :hospital_id => '5'
+zdravnik7=Doctor.create! :email => 'matej.panjan@gmail.com', :password => 'geslo123',:doctorNumber => '1240', :category => 'zobozdravnik',:lastName => 'Kolebar', :firstName => 'Miha', :phone => '031300306', :limitPatient => '10', :hospital_id => '6'
 zdravnik8=Doctor.create! :email => 'filip.kosmac@gmail.com', :password => 'geslo123'
 zdravnik9=Doctor.create! :email => 'luka.smukec@gmail.com', :password => 'geslo123'
 zdravnik10=Doctor.create! :email => 'toni.gergera@gmail.com', :password => 'geslo123'
